@@ -6,5 +6,5 @@ This repository icludes Data, Script, and Output for the purposes of the OCN 682
 
 **Folders:** 
 [Week_02](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02)
-Contains folders for [Data], [Script], and [Output] for Week of 2025_09_01.
+Contains folders for [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Data), [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Scripts), and [Output] for Week of 2025_09_01.
 
