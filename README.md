@@ -7,13 +7,74 @@ This repository icludes Data, Script, and Output for the purposes of the OCN 682
 **Folders:** 
 
 [Week_02](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02)  
-Contains folders for [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Data), [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Scripts), and [Output] for Week of 2025_09_01.
+Week of 2025_09_02  
+Contains folders for [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Data), [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Scripts), and [Output]
 
-Week_03  
-Contains folders for [Data], [Script], and [Output] for Week of 2025_09_08.
+[Week_03]  
+Week of 2025_09_09 
+_Reproducible Research and Workflow/Importing Data_  
+Contains folders for [Data], [Script], and [Output]
 
-Week_04  
-Contains folders for [Data], [Script], and [Output] for Week of 2025_09_15.
+[Week_04]  
+Week of 2025_09_16  
+_Visuals and ggplots_  
+Contains folders for [Data], [Script], and [Output]
 
-Week_05  
-Contains folders for [Data], [Script], and [Output] for Week of 2025_09_22.
+[Week_05]  
+Week of 2025_09_23  
+_Data Wrangling_  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_06]  
+Week of 2025_09_30  
+_Relational Data and Dates/Times_
+Contains folders for [Data], [Script], and [Output]
+
+[Week_07]  
+Week of 2025_10_07  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_08]  
+Week of 2025_10_14  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_09]  
+Week of 2025_10_21  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_10]  
+Week of 2025_10_28  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_11]  
+Week of 2025_11_04  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_12]  
+Week of 2025_11_11  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_13]  
+Week of 2025_11_18  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_14]  
+Week of 2025_11_25  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_15]  
+Week of 2025_12_02  
+Contains folders for [Data], [Script], and [Output]
+
+[Week_16]  
+Week of 2025_12_09  
+Contains folders for [Data], [Script], and [Output]
+
+[Final Project]  
+Mālama Maunalua  
+Contains folders for [Data], [Script], and [Output]
+
+
+[ReadMe.md]  
+
+
