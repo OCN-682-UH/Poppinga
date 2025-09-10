@@ -2,7 +2,7 @@
 ### OCN 682 Data Science Fundamentals in R
 This repository icludes Data, Script, and Output for the purposes of the OCN 682 course.
 
-#### Repository Contents:  ######There are folders of each week, R Project, and a README.md file.
+#### Repository Contents:  ###### There are folders of each week, R Project, and a README.md file.
 
 ##### Folders:
 
