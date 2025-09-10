@@ -2,12 +2,11 @@
 ### OCN 682 Data Science Fundamentals in R
 This repository icludes Data, Script, and Output for the purposes of the OCN 682 course.
 
-#### Repository Contents: 
-There are folders of each week, R Project, and a README.md file.
+#### Repository Contents:  ######There are folders of each week, R Project, and a README.md file.
 
 ##### Folders:
 
-[Week_01]((https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01) _Data, Collecting Data, Metadata_  
+[Week_01](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01) _Data, Collecting Data, Metadata_  
 * 2025_08_26  
 * Contains folders for [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01/Lectures)  
 
