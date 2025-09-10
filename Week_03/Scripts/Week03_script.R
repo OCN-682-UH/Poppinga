@@ -6,51 +6,52 @@
 ### Load libraries ########## 
 library(tidyverse)
 library(here)
-glimpse(penguins)
+library(ggplot2)
 
 ### Read in data ###
+glimpse(penguins)
+
 #.green[ggplot2] is a data visualization package  
 #Structure of the plot can be summarized like this:
   
 #ggplot(data = [dataset], 
        #mapping = aes(x = [x-variable], 
  #                    y = [y-variable])) +
- # geom_xxx() +
- # other options
-```
-#
-#*aes()#means aesthetics*  
- # *geom_xx* means *geometry*
+       # geom_xxx() +
+#other options
+#aes() means aesthetics 
+#geom_xx means geometry
   
 
-  # Data: Palmer Penguins
-  ### Measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.  
+# Data: Palmer Penguins
+### Measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.  
 # Set-up your script and don't forget to comment.
 
 # We will make this plot
 
-ggplot(data=penguins,
-       mapping = aes(x = bill_dep, #should be common in between every function
-                     y = bill_len,
+ggplot(data=penguins, #should be comma in between every function
+       mapping = aes(x = bill_dep, #map bill depth to the x-axis 
+                     y = bill_len,#map bill length to the y-axis
                      color = species)) + #change in aesthetic
-      geom_point() +
+      geom_point() +          #Represent each observation with a point and map species to the colour of each point
       labs(title = "Bill Depth and Length", #change labels and titles  #everything related to a title you can change in lab function
            subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
-           x = "Bill Depth (mm)", y = "Bill Length (mm)", #check: if you press enter, lines should line up with each other if done correctly
-           color = "Species",
-           caption = "Source: Palmer Station LTER / palmerpenguins package") +
-  scale_color_viridis_d() #color pallette better for color blind
+           x = "Bill Depth (mm)", y = "Bill Length (mm)", 
+           color = "Species",  #label the legend
+           caption = "Source: Palmer Station LTER / palmerpenguins package") + #add caption for source of data
+  scale_color_viridis_d() #discrete color scale palette better for colorblind
+#check: if you press enter, lines should line up with each other if done correctly
 
 #Aesthetic Options
 #if directly related to data set, it goes in aesthetics
-# color, shape, size, alpha (transperency)
+# color, shape, size, alpha (transparency)
 
-#shape, size, alpha
+#Shape, Size, Alpha
 ggplot(data=penguins,
        mapping = aes(x = bill_dep,
                      y = bill_len,
                      color = species,
-                     shape = island,
+                     shape = island, #mapped to a different variable than color (can also map to same variable as color)
                      size = body_mass, #adding size to points
                      alpha = flipper_len)) + #good for adding p-values to make it pop #adding a shape legend
   geom_point() +
@@ -59,6 +60,8 @@ ggplot(data=penguins,
        x = "Bill Depth (mm)", y = "Bill Length (mm)", 
        color = "Species",
        shape = "Island", #capitalizing the title of legend
+       size = "Body Mass (g)",
+       alpha = "Flipper Length (mm)",
        caption = "Source: Palmer Station LTER / palmerpenguins package") +
   scale_color_viridis_d()
 
@@ -70,65 +73,66 @@ ggplot(data=penguins,
                      
 #Mapping
 ggplot(data=penguins, 
-       mapping = aes(x = bill_depth_mm,
-                     y = bill_length_mm,
-                     size = body_mass_g, #<<
-                     alpha = flipper_length_mm #<<
-       )) +
+       mapping = aes(x = bill_dep,
+                     y = bill_len,
+                     size = body_mass, 
+                     alpha = flipper_len)) +
   geom_point()
+
 #setting
 ggplot(data=penguins, 
-       mapping = aes(x = bill_depth_mm,
-                     y = bill_length_mm)) +
+       mapping = aes(x = bill_dep,
+                     y = bill_len)) +
   geom_point(size = 2, alpha = 0.5)
 
 
 #Faceting
 #automatically adds labels                 
- #Smaller plots that display different subsets of the data
+#Smaller plots that display different subsets of the data
 #Useful for exploring conditional relationships and large data
-  ## Note:
- # In the next few slides I do not put proper titles, axis labels, etc. because I am focusing on faceting. However, remember to always label your plots!
-  
+
+#Note: Did not put proper titles, axis labels, etc. because I am focusing on faceting.
+#However, remember to always label your plots!
 
 ggplot(penguins, 
-       aes(x = bill_depth_mm,
-           y = bill_length_mm))+
+       aes(x = bill_dep,
+           y = bill_len))+
   geom_point()+
-  facet_grid(species~sex) #grid will always be perfectly gridded, cant control how many rows and columns
+  facet_grid(species~sex) #grid will always be perfectly grided, cant control how many rows and columns
 # make multiple plots groups by species on the y (rows) and and sex on the x (columns) 
 
-#Notice there is a section labeled **NA** for sex. This is because there were some birds where they did not know the sex.  We will learn how to clean this up next week.
+#Notice there is a section labeled **NA** for sex. This is because there were some birds where they did not know the sex.  
+#We will learn how to clean this up next week.
 
 ggplot(penguins, 
-       aes(x = bill_depth_mm,
-           y = bill_length_mm))+
+       aes(x = bill_dep,
+           y = bill_len))+
   geom_point()+
   facet_grid(sex~species) #
 # make multiple plots groups by sex on the y (rows) and and species on the x (columns) 
 
 
-ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+ggplot(penguins, aes(x = bill_dep, y = bill_len)) + 
   geom_point() +
   facet_wrap(~ species) #describe exactly how many rows and columns you want, wraps it down
 
-ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+ggplot(penguins, aes(x = bill_dep, y = bill_len)) + 
   geom_point() +
   facet_wrap(~ species, ncol=2) # make it two columns 
 
-  # Faceting summary
-  
+# Faceting summary
 #facet_grid():
   #2D grid
   #rows ~ columns
 
-#facet_wrap(): 1d ribbon wrapped according to numbers of rows and columns specified or available plotting area
+#facet_wrap(): 
+#1d ribbon wrapped according to numbers of rows and columns specified or available plotting area
 
 # Facet and color
 #multiple ways to visualize data
     ggplot(data=penguins, 
-           mapping = aes(x = bill_depth_mm,
-                         y = bill_length_mm,
+           mapping = aes(x = bill_dep,
+                         y = bill_len,
                          color = species)) +
       geom_point()+
       scale_color_viridis_d()+
@@ -136,8 +140,8 @@ ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
 
 #Facet and color, no legend
     ggplot(data=penguins, 
-           mapping = aes(x = bill_depth_mm,
-                         y = bill_length_mm,
+           mapping = aes(x = bill_dep,
+                         y = bill_len,
                          color = species, #<<
            )) +
       geom_point()+
@@ -145,15 +149,14 @@ ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
       facet_grid(species~sex)+
       guides(color = FALSE) #delete specifically
     
-
-  # ggplot2 resources
+# ggplot2 resources
     
-    [Data to viz](https://www.data-to-viz.com/#histogram)  
-    [ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)  
-                  [All the geoms](https://ggplot2.tidyverse.org/reference/)  
-                  [A master list of visuals](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)   
-                  [Practical ggplot](https://wilkelab.org/practicalgg/)   
-                  [R graph gallery](https://www.r-graph-gallery.com/)   
+# [Data to viz](https://www.data-to-viz.com/#histogram)  
+# [ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)  
+# [All the geoms](https://ggplot2.tidyverse.org/reference/)  
+# [A master list of visuals](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)   
+# [Practical ggplot](https://wilkelab.org/practicalgg/)   
+# [R graph gallery](https://www.r-graph-gallery.com/)   
   
                      
                      
