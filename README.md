@@ -2,25 +2,26 @@
 #### OCN 682 Data Science Fundamentals in R
 This repository icludes Data, Script, and Output for the purposes of the OCN 682 course.
 
-####**Repository Contents:** There are folders of each week, R Project, and a README.md file.
+####Repository Contents: 
+There are folders of each week, R Project, and a README.md file.
 
-#####**Folders:** 
+#####Folders:
 
 [Week_01]((https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01) _Data, Collecting Data, Metadata_  
-*2025_08_26  
-*Contains folders for [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01/Lectures)  
+* 2025_08_26  
+* Contains folders for [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01/Lectures)  
 
 [Week_02](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02) _Reproducible Research and Workflow/Importing Data_  
-*2025_09_02  
-*Contains folders for [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Data), [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Scripts), and [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Lectures)
+* 2025_09_02  
+* Contains folders for [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Data), [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Scripts), and [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Lectures)
 
 [Week_03](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03) _Visuals and ggplots_  
-*2025_09_09  
-*Contains folders for [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Scripts) and [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Lectures)  
+* 2025_09_09  
+* Contains folders for [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Scripts) and [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Lectures)  
 
 [Week_04](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04) _Data Wrangling_  
-*2025_09_16  
-*Contains folders for [Data], [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Scripts), and [Output]  
+* 2025_09_16  
+* Contains folders for [Data], [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Scripts), and [Output]  
 
 [Week_05]  
 2025_09_23  
