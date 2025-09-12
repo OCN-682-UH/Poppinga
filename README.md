@@ -4,7 +4,7 @@ This repository icludes Data, Script, and Output for the purposes of the OCN 682
 
 #### Repository Contents:
 There are folders of each week, R Project, and a README.md file.
-##### Folders:
+#### Folders:
 
 [Week_01](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01) _Data, Collecting Data, Metadata_  
 * 2025_08_26  
@@ -18,7 +18,7 @@ There are folders of each week, R Project, and a README.md file.
 
 [Week_03](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03) _Visuals and ggplots_  
 * 2025_09_09  
-* Contains folders for [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Scripts) and [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Lectures)  
+* Contains folders for [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Scripts), [Output] and [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Lectures)  
 
 
 [Week_04](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04) _Data Wrangling_  
@@ -79,7 +79,10 @@ Contains folders for [Data], [Script], and [Output]
 _Mālama Maunalua_  
 Contains folders for [Data], [Script], and [Output]
 
+---------------------------------------------------
 
+###Contact
+Feel free to contact me at hpopping@hawaii.edu
 
 [ReadMe.md]  
 
