@@ -1,44 +1,90 @@
-### Introduction to Plotting and Plotting 2
-### Created by: Haley Poppinga
-### Created on: 2025_09_09
-###########################################
+---
+title: "Week 03 Notes"
+author: "Haley Poppinga"
+date: "2025-09-09"
+output: github_document
+---
 
-### Load libraries ########## 
+## Introduction to Plotting and Plotting 2
+
+Load libraries 
+```{r}
 library(tidyverse)
 library(here)
 library(ggplot2)
 library(palmerpenguins)
+```
 
-### Read in data ###
-#The data is part of the package and is called penguins
+Read in data
+The data is part of the package and is called penguins
+
+```{r}
 glimpse(penguins)
+```
 
-#Making plots for second lecture found after ggplot resources
+Making plots for second lecture found after ggplot resources
 
+.green[ggplot2] is a data visualization package  
 
-#.green[ggplot2] is a data visualization package  
-#Structure of the plot can be summarized like this:
+Structure of the plot can be summarized like this:
   
-#ggplot(data = [dataset], 
-       #mapping = aes(x = [x-variable], 
- #                    y = [y-variable])) +
-       # geom_xxx() +
-#other options
-#aes() means aesthetics 
-#geom_xx means geometry
+ggplot(data = [dataset], 
+       mapping = aes(x = [x-variable], 
+                     y = [y-variable])) +
+    geom_xxx() +
+
+Other options:
+aes() means aesthetics 
+geom_xx means geometry
   
 
-# Data: Palmer Penguins
-### Measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.  
-# Set-up your script and don't forget to comment.
+Data: Palmer Penguins
+Measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.  
 
-# We will make this plot
+Set-up your script and don't forget to comment. _See script file_
 
+### We will make this plot:
+```{r}
 ggplot(data=penguins, #should be comma in between every function
-       mapping = aes(x = bill_depth_mm, #map bill depth to the x-axis 
-                     y = bill_length_mm,#map bill length to the y-axis
+       mapping = aes(x = bill_depth_mm,  #map bill depth to the x-axis 
+                     y = bill_length_mm, #map bill length to the y-axis
+      geom_point() +                     #Represent each observation with a point and map species to the colour of each point
+      labs(title = "Bill Depth and Length", #change labels and titles  #everything related to a title you can change in lab function
+           subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+           x = "Bill Depth (mm)", y = "Bill Length (mm)") 
+           
+```
+
+### Aesthetic Options. 
+* if directly related to data set, it goes in aesthetics
+* color, shape, size, alpha (transparency)
+* change everythihng related to title in labs function
+```{r}
+ggplot(data=penguins,
+       mapping = aes(x = bill_depth_mm,  
+                     y = bill_length_mm, 
                      color = species)) + #change in aesthetic
-      geom_point() +          #Represent each observation with a point and map species to the colour of each point
+      geom_point() +
+      labs(title = "Bill Depth and Length", 
+           subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+           x = "Bill Depth (mm)", y = "Bill Length (mm)", 
+           color = "Species",  #label the legend
+           caption = "Source: Palmer Station LTER / palmerpenguins package") + #add caption for source of data
+  scale_color_viridis_d() #discrete color scale palette better for colorblind
+```
+
+```{r}
+ggplot(data=penguins,
+       mapping = aes(x = bill_depth_mm,  
+                     y = bill_length_mm, 
+                     color = species)) + #change in aesthetic
+      geom_point()                    
+```
+** need to finish editing
+```{r}
+
+```
+
       labs(title = "Bill Depth and Length", #change labels and titles  #everything related to a title you can change in lab function
            subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
            x = "Bill Depth (mm)", y = "Bill Length (mm)", 
@@ -47,9 +93,7 @@ ggplot(data=penguins, #should be comma in between every function
   scale_color_viridis_d() #discrete color scale palette better for colorblind
 #check: if you press enter, lines should line up with each other if done correctly
 
-#Aesthetic Options
-#if directly related to data set, it goes in aesthetics
-# color, shape, size, alpha (transparency)
+
 
 #Shape, Size, Alpha
 ggplot(data=penguins,

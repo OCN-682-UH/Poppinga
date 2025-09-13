@@ -1,0 +1,367 @@
+---
+title: "Week 01 Notes"
+author: "Haley Poppinga"
+date: "2025-08-26"
+output: github_document
+---
+
+### Week 1a: In-Class Lecture
+Forms of Data:
+-	Athletic performance
+-	Timeseries of polls
+-	Sequence Data
+-	Measurements of physical properties
+-	Spatial data (e.g., Maps)
+-	Timing of events
+-	Images
+-	Networks
+-	Plain Text
+-	So much more....
+
+*Reproducible and Transparent data*
+Import > Tidy > Understand: Transform/Visualize/Model > Communicate
+
+Tidy Tuesday
+-	Random data to plot (split it from our own serious data so we’re less scared)
+
+GitHub
+-	Everything will be on here
+
+What is Data?
+-	Characters
+  * Letter or combo of letters enclosed by quotes
+  * Alphabets or #s
+  * Ex: “a”, “my name is”
+* Numeric
+  * Numbers that have a decimal value or are a fraction in nature have a data type as a numeric 
+* Also called a “double”
+o	Ex: 2.0, 14.5563
+-	Integers
+o	Numbers that do not contain decimal values have a data type as an integer
+o	Ex: 1,2,3,4
+-	Logical
+o	A variable that can have a value of True and False
+	Ex: TRUE, FALSE
+-	Complex: 
+o	An imaginary number
+o	Ex: 1+4j
+-	Factor: 
+o	A data type that is used to refer to a qualitative relationship like colors, good & bad, course or movie ratings, etc. 
+o	Useful in statistical modeling
+o	Ex: “Good”, “Better”, “Best”
+
+Structures
+-	R Data Structures: Vector, List, Matrix, Dataframe
+-	Homogenous (same data type)
+o	Atomic vector (1D)
+	Ex: 1, 2, 3
+	Ex: [1] 9 1 3 6 
+o	Matrix (2D)
+	Column of integers or column of characters
+o	Array (3D or ND)
+	Multiple matrices on top of each other
+	Micro CT: numbers that represent colors, etc.
+-	Heterogenous (different data type)
+o	List (1D)
+o	DataFrame (Tibble) (2D)
+
+What is R?
+-	Open source
+-	What is R Studio?
+o	“R is a language and an environment for statistical computing and graphics”
+o	R is a FREE program and completely open-source (you can see all the source code)
+o	R is an object-oriented and functional language
+o	Cant run R studio without having R on computer
+o	Two ways to interact with R:
+	Scripts: what you are going to do, top left
+•	A place to create and save code. You can send the code that you write in a script to the console in a few different ways.
+•	Write and _ code here
+•	> means R is ready for you, if not here, R is processing something else 
+•	+ means R is waiting for you to enter more data b/c it is missing something
+•	<- means to assign an object
+o	x <- 3 (anytime you type x, it will mean 3)
+•	= will work for simple things but will cause problems with complex coding, so don’t use this
+•	# used for comments, anything to right of # is ignored by R
+o	Used to explain what you are doing
+•	R is a literal language and cant read stuff if spelled wrong
+o	Spelling, capitalization, and punctuation all matter. The computer only knows what you tell it and it assumes that you mean exactly what you say.
+•	Functions are canned scripts
+o	Automate something complicated or conviennt or both
+o	Example: you can use the function sum() to add together a bunch of objects instead of writing out a long equation
+	Sum(1,4,3)
+	Plot(x,y) will create a simple plot
+	Plot(1:5, 5:9)
+•	? in front of a function and R will tell you what it is
+•	Help.search() if looking for a function to do a task
+•	Apropos(“”) when cant remember what it is called
+•	Google stuff you don’t know
+	Console: what you are currently doing, below scripts
+•	the place where R is waiting for you to tell it what to do. You can type commands directly into the console, but the command will be forgotten once you close R.
+•	Don’t type stuff here b/c it will disappear, use for tests
+•	R as a calculator
+o	Type stuff in here but it will not save
+o	To save: answer <- 1+1 #saves it as an answer
+o	Functions and equations
+	Naming off of objects and saving
+o	Environment: shows you what you already done (top right)
+o	Working Directory: the folder you are working in (bottom right)
+	Files, Libraries, and plots: where everything is stored
+-	Benefits of using R: 
+o	free, open-source, quality graphics
+o	scripts to better look at exactly what was done
+o	ask yourself why putting certain values for functions
+o	good data management and manipulation capabilities
+o	Reproducibility and transparency: R uses scripts instead of clicking on things with a mouse
+o	You can write functions for specific needs
+o	Google knows everything about R
+-	Constraints: 
+o	open source good and bad- know code well enough to know what’s good and what’s something junk that someone added
+o	multiple functions do the same thing (which one is better for our purposes)
+
+What is coding?
+-	Directly telling the computer what to do
+-	Manipulate exactly how you want
+-	Script: multiple lines of code
+
+______________________
+
+### Week 1b Video Lecture: Collecting and Recording Data
+
+
+Dimensions of your data.  
+  -	# of complete observations. 
+-	# of things measured per observation. 
+-	Wide data. 
+o	One observation per row and all the different variables and columns. 
+	Ex: Unique sample id, treatment, 3 parameters. 
+-	Long data
+o	One unique measurement per row and all information about that measurement in same row
+	Ex: sample id repeated, treatment, measurement type, values, units
+-	DO NOT WANT: hybrid data
+
+Metadata
+-	Data about our data
+o	Title and description
+o	Tags and categories
+o	Who last modified and when
+o	Who can access or update
+o	Units of measurement for each parameter
+	Important for us
+o	Notes associated with the collection
+-	Use metadata in our lives ex: a picture, info about pixels
+o	Books: cover, front page, etc.
+-	What do you think is important metadata for your research?
+o	Dates in same format as would put into spreadsheets
+o	Start and end times 
+o	Distance start and end
+o	Location of research
+	Coordinates?
+o	Who is recording, who is sampling, etc.
+o	Weather conditions
+	Rainy/sunny/clouds, winds, tide, waves, current, temperature
+o	For field sheet: emergency contacts, leaders, contact info
+o	Notes about what we are doing (purpose), the surrounding crowd (people)
+-	Required metadata for different biological databases
+o	BCO-DMO (oceanographic data: Dataset metadata form )
+o	NCBI (Sequence data/GenBank: GenBank metadata)
+o	EML (Ecological metadata: EML Guide)
+-	Creating a good data collection sheet
+o	Missing things from the data sheet then we miss it in our analysis
+o	How easy it to read?
+o	Are column and row definitions clear?
+o	Is there metadata?
+o	How similar is it to your data entry sheet?
+o	Can you use it at 4am?
+o	Example
+	Site name, description plant, date, time, personnel names, weather: % cloud cover, wind, humidity, temp, other notes
+Making a data sheet for the field/lab
+-	Keep in mind
+o	Font size
+o	Bolding is helpful
+o	Well defined lines
+o	Space to write down who took the data
+o	When were the data taken
+o	Where were the data taken
+o	Sheet fit into one piece of paper
+	All information for one unit of measurement should be on one sheet
+	So not flipping sheet
+o	Make more sense to have your sheet in landscape or portrait
+o	Print/check how data sheet looks before its finalized, write on it to check
+o	Enough space to write data into boxes
+-	Some tips
+o	Alternate white/gray shading to make it easier to match species to plots
+o	Print the sheet and test it with both wide and long format
+o	Ask someone not on the project to preview it and talk it over to make sure nothing is missing
+o	Write dates and names of note-takers
+o	Space for comments/observations
+	Everything they want to remember about that day’s fieldwork
+	Write it down or they will forget
+o	Traceability of data as it is compiled and analyzed
+o	Put finalized sheets on waterproof paper (b/c of rain)
+-	Examples of not good field or lab data sheets
+o	Voice recording data
+	Keep a hard/original copy of everything
+	Photos of that data sheet at end every single time
+
+Paper: Browman and Woo (2017)
+-	Creating good spreadsheets for analysis (from data collection sheet to analysis)
+-	Tips
+1)	Be consistent
+2)	Choose good names
+3)	Write dates as YYYY-MM-DD
+4)	No empty cells
+5)	Just put one thing in a cell
+6)	Make it a rectangle
+7)	Create a data dictionary
+8)	No calculations in the raw data file
+9)	Do not use color/highlights
+10)	Make back-ups
+11)	Use data validation to avoid errors
+12)	Save as plain text
+1)	Be consistent
+a.	Use consistent terminology throughout
+i.	Do: male/female; m/f; Male/Female
+ii.	Do not: Male/female; M/female; or change throughout data sheet
+b.	Use consistent variable names
+i.	Do: High_treatment/Low_treatment; Glucose_6wk/Glucose_10wk
+ii.	Don’t: High_treatment/Treatment_14C
+c.	Be careful with spaces
+i.	Copy and paste instead of typing each cell
+ii.	Do not: “Site A” is different than “ Site A” and “Site A “
+d.	Use consistent file names
+i.	Data collected across multiple days and multiple sites
+ii.	Easier to automate files that look like: 
+1.	CondData_S32_011721.csv/ CondData_S32_011821.csv
+2)	Choose good names
+a.	Avoid space in names
+i.	Site 1: Site_1 is best option instead of the space
+ii.	Be careful about extra spaces at the beginning or end of a variable
+b.	Do not use special characters
+i.	$#@%&*^!?/(), etc.
+ii.	These have different meanings in coding languages
+iii.	Names short, but meaningful
+c.	Never name a document as “final”
+3)	Write dates in ISO 8601 Format
+a.	YYYY-MM-DD  2025-08-29
+b.	Excel can make lots of mistakes with different date formats
+c.	Universal and everybody will understand what it means
+4)	No empty cells in word doc
+a.	Missing data and 0 mean very different things
+i.	An empty box makes that info unknown
+b.	If data are missing or not useful anymore put NA
+c.	If there are 0 count of something put 0
+d.	Do not leave it in blanks
+5)	Put only one thing in each cell
+a.	Plate example: instead of plate-well as “13_A01” 
+i.	have one column for plate and one column for well (13, A01)
+b.	don’t put units in your cells (important in data dictionaries)
+i.	can have one column for value and one for the units
+c.	don’t put notes within data column
+i.	just put value and have another column for notes
+6)	Make spreadsheets a rectangle
+a.	One row for variable names on top and single row of headers
+i.	Do not have multiple rows of headers
+b.	Make every row an individual measurement (or subject or sample ID) and every column one unique variable
+i.	Bad examples: mix of long and wide data format
+c.	It is okay to have multiple rectangles, just put them on different spreadsheets
+7)	Make a data dictionary
+a.	Contains important metadata for your datasheet
+b.	It should contain (at least): name, plot_name, description
+i.	Exact variable name as in the data file
+1.	Example: all columns in data file you can just copy and paste them in the first name column
+ii.	A version of the variable name that might be used in data visualizations
+1.	A “pretty” name or plot_name
+2.	Can use capital letters, putting into actual plot
+iii.	Longer explanation of what the variable means
+1.	Description
+a.	Define abbreviations here
+2.	Can add “group” column too
+a.	Time series or discrete/continuous
+iv.	Measurement units
+8)	NO calculations in your spreadsheets
+a.	Calculations are not transparent data analysis
+b.	Once your file is saved outside of excel (like a .csv) you may loose what those calculations are
+c.	Will lead to major errors in data analysis that is not easily traceable
+d.	All calculations should be within your code for true transparency
+i.	If you do it in coding instead, you will know exactly what you did, when you did it, how you did it
+9)	Do not use highlight or colors in spreadsheet
+a.	Will also lose that information
+b.	Example: an outlier is highlighted, will disappear in .csv format
+i.	Instead of highlighting  add column that says outlier and put TRUE/FALSE
+10)	Make back-ups
+a.	Using an online repository called GitHub
+b.	Can also use box, dropbox, or google drive
+c.	Never have your data just on your harddrive
+11)	Use data validation feature to avoid errors
+a.	Set up rules for columns to make sure you don’t have a typo
+b.	In excel
+i.	Select a column
+ii.	In the menu bar, choose Data  Validation
+iii.	Choose appropriate validation criteria
+1.	Whole number in some range
+2.	Decimal number in some range
+3.	List of possible values
+4.	Text, but with a limit on length
+iv.	An error will pop-up when typing if it is outside the range
+12)	Save data as plain text file
+a.	Always save spreadsheets as .csv
+b.	Non-proprietary format that can be opened in any spreadsheet program
+
+Examples
+-	What is wrong with data sheet #1?
+o	Everything has a highlight
+o	Mixed long and wide format
+o	Calculations in spreadsheet while also highlighted
+o	Headers primarily have spaces instead of hyphens or underscores
+o	Tide height name uses full word and doesn’t match the notation for it in parentheses in the title
+-	What is wrong with data sheet #2?
+o	Some things are highlighted
+o	Mixed long and wide format
+	June and august should be included as a column and not separated into two different formats
+o	Has a mix of notations for missing data “x” and “-“ or just blank
+o	Uses symbols in headers
+-	What is wrong with data sheet #3?
+o	Date is in wrong format and has blank cells below it
+o	Time should also be repeated for every cell instead of blank
+o	Calculations in the “total” column
+o	Plots made on the same sheet—should be in a separate one
+o	Lots and lots of blank cells which should have 0 or NA
+
+Notes:
+-	Can technically make anything a factor and R will order it
+o	Order might not make sense to you
+o	Factor and not a character
+-	Ex: Factor for tide
+o	Set levels to low, mid, high
+
+
+
+
+
+_______________________________________
+
+Markdown Information:
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
