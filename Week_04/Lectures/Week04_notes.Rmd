@@ -5,3 +5,983 @@ date: "2025-09-16"
 output: github_document
 ---
 
+Lecture In-Class: Intro to {dplyr}
+ - a set of verbs for manipulating data:
+  - filtering rows, selecting columns, grouping by objects, getting summary statistics, mutating columns, removing NAs
+
+Homework 
+1. Practice with dplyr
+
+[dplyr cheat sheet.](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf) Download this now to use as a resource.
+
+---
+# Review
+
+1. Where do I change the font size of my x and y labels?
+
+1. How do I save my plot?
+---
+# Intro to the {dplyr} package (part of the TidyVerse)
+
+.center[
+<img src = "https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/fc9b748b-db96-4ed4-aa23-f6e0ffc866ee_rw_1920.jpg?h=8fa394b572089354aa87b1d602b0f887", width=70% />
+]
+
+Illustrations from the Openscapes blog [Tidy Data for reproducibility, efficiency](https://www.openscapes.org/blog/2020/10/12/tidy-data/), and collaboration by Julia Lowndes and Allison Horst
+
+---
+# dplyr: verbs for manipulating data
+![verbs](libs/images/dplyr_verbs.PNG)
+---
+# Penguin data again.
+
+```{r, message=FALSE, warning=FALSE}
+### Today we are going to plot penguin data ####
+### Created by: Haley Poppinga #############
+### Updated on: 2025-09-17 ####################
+
+
+#### Load Libraries ######
+library(palmerpenguins)
+library(tidyverse)
+library(here)
+
+
+### Load data ######
+# The data is part of the package and is called penguins
+glimpse(penguins) 
+
+
+
+```
+
+---
+# Filter
+
+<img src ="https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/cb8d9c50-f48e-4c6d-a5b3-1d30ce0be2ad_rw_1920.png?h=1a879eda58a5efbf709ad0a59d784f98"/>
+
+---
+#Filter 
+### Extract rows that meet some critera
+
+```{r}
+filter(.data = DATA, ...)
+```
+
+
+DATA = Data frame to transform  
+
+... = One or more criteria  
+filter() returns each row for which the criteria is TRUE
+
+---
+# filter only the female penguins
+### As always, exact spelling and capitalization matters
+
+Before filtering
+```{r}
+head(penguins)
+```
+
+---
+# filter only the female penguins
+### As always, exact spelling and capitalization matters
+
+After filtering
+```{r}
+filter(.data = penguins, sex == "female" )
+```
+
+---
+# filter
+
+```{r, eval=FALSE}
+filter(.data = penguins, 
+       sex == "female" ) #<<
+```
+
+One = sets an argument in the function  
+
+Two == reads as "is exactly equal to." It is a question that returns a TRUE or FALSE.  Here, filter keeps every TRUE
+
+---
+# A list of logical expressions 
+
+![logicals](libs/images/logical_test.PNG)
+
+
+---
+# How would I use filter to...
+
+1. Penguins measured in the year 2008?
+
+1. Penguins that have a body mass greater than 5000
+
+--
+
+# Think, pair, share.  
+
+Spend 2 minutes to *think* about it. Spend 2 minutes *paired* with a neighbor to discuss your answers. *Share* with the class.
+
+---
+# Common mistakes
+
+## Using = instead of ==
+
+```{r}
+filter(.data = penguins,
+  sex = "females")
+
+filter(.data = penguins, 
+       sex == "females")
+```
+
+
+## Forgetting quotes  
+
+```{r}
+filter(.data == penguins, 
+        sex == females) #<<
+
+filter(.data = penguins, 
+       sex == "females")
+```
+
+
+---
+
+# Filter with multiple conditions
+
+Select females that are also greater than 5000 g
+
+```{r}
+filter(.data = penguins, sex == "female", body_mass_g >5000)
+
+```
+
+---
+![operators](libs/images/operators.PNG)
+
+---
+# Default for filter is **&**
+
+These do the same exact thing
+
+```{r}
+filter(.data = penguins, sex == "female", body_mass_g >5000)
+
+filter(.data = penguins, sex == "female" & body_mass_g >5000)
+
+```
+
+---
+
+# Think, pair, share
+
+Use filter and boolean logical to show:
+
+1. Penguins that were collected in *either* 2008 *or* 2009
+
+2. Penguins that *are not* from the island Dream
+
+3. Penguins in the species Adelie and Gentoo
+
+---
+# Common mistakes
+
+### Collapsing multiple tests into one 
+penguins between 3000 and 5000 g
+```{r}
+#Wrong
+filter(.data = penguins,
+       3000 < body_mass_g <5000) #<<
+
+#Right
+filter(.data = penguins, 
+       body_mass_g <5000, #<<
+       body_mass_g >3000 #<<
+
+```
+
+### Using multiple tests instead of %in%
+penguins in dream and biscoe
+
+```{r, eval=FALSE}
+# Wrong
+filter(.data = penguins,
+       island == "Dream", #<<
+       island == "Biscoe") #<<
+
+# Right
+filter(.data = penguins,
+       island %in% c("Dream","Biscoe")) #<<
+
+```
+
+
+---
+![syntax](libs/images/syntax.PNG)
+
+---
+# mutate: add new columns
+
+
+<img src ="https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/bd4ae264-ae51-4d18-bd60-7a058ab42fba_rw_1920.png?h=a3757d1f46f418c59e7e7946d026344e", width=70%/>
+
+---
+# mutate
+
+![mutate](libs/images/mutate.PNG)
+
+---
+# mutate
+
+Add a new column converting body mass in g to kg and save the new dataframe
+
+```{r}
+data2<-mutate(.data = penguins, 
+       body_mass_kg = body_mass_g/1000) #<<
+
+View(data2)
+
+```
+
+--
+
+### Change multiple columns at once
+```{r}
+data2<-mutate(.data = penguins, 
+       body_mass_kg = body_mass_g/1000, #<<
+       bill_length_depth = bill_length_mm/bill_depth_mm) #<<
+
+# convert mass to kg 
+# calculate the ratio of bill length to depth
+
+View(data2)
+
+```
+---
+## Mutating multiple columns at once based on some criteron (i.e. mutate all the numeric columns in one line)?
+
+On your own, look up *mutate_if()*, *mutate_at()*, *mutate_all()*
+
+[Some examples here](https://dplyr.tidyverse.org/reference/mutate_all.html)
+
+---
+![ifelse](libs/images/ifelse.PNG)
+
+---
+# mutate with ifelse
+
+```{r}
+data2<- mutate(.data = penguins,
+               after_2008 = ifelse(year>2008, "After 2008", "Before 2008"))
+
+View(data2)
+```
+
+
+
+---
+# Think, pair, share
+
+1. Use mutate to create a new column to add flipper length and body mass together
+
+1. Use mutate and ifelse to create a new column where body mass greater than 4000 is labeled as big and everything else is small 
+
+---
+# What if you have multiple verbs that you want to do to the same dataframe?
+
+--
+
+# The pipe  
+# %>%
+
+## The "pipe" says "and then do"
+
+Dataframe %>%  # select the dataframe **and then** 
+> verb1() %>%  # do verb 1 **and then** 
+
+>verb2()      # do verb 2
+
+---
+# %>%
+
+```{r}
+me %>%
+  wake_up(time = "6:00") %>%
+  music(turn = "on", to = "Beyonce") %>%
+  shower(wash_hair = TRUE) %>%
+  get_dressed(pants = TRUE, shirt = TRUE) %>%
+  leave_house(car = TRUE)
+
+```
+
+---
+# What about this new *native* pipe that I keep seeing on stack exchange?
+
+# %>%   
+# vs  
+# |>
+
+**magrittr** (from the tidyverse) vs **native** (new pipe that comes with base R so you don't need to load any libraries) 
+
+In this class I stick with %>%, but you are welcome to learn and use |>, with the understanding that there will be some minor differences in the code.
+
+[Please Read Here!](https://r4ds.hadley.nz/data-transform#sec-the-pipe)
+---
+# %>%
+
+Filter only female penguins and add a new column that calculates the log body mass  
+When you use %>% the dataframe carries over so you don't need to write it out anymore
+
+
+```{r}
+penguins %>% # use penguin dataframe
+  filter(sex == "female") %>% #select females
+  mutate(log_mass = log(body_mass_g)) #calculate log biomass
+
+```
+
+---
+# Select
+
+Use select() to select certain columns to remain in the dataframe
+
+```{r}
+penguins %>% # use penguin dataframe
+  filter(sex == "female") %>% #select females
+  mutate(log_mass = log(body_mass_g)) %>% #calculate log biomass
+  select(species, island, sex, log_mass)
+
+```
+
+---
+# Select
+
+You can also use select() to rename columns.  
+Here, we are renaming species to have a capital S
+
+```{r}
+penguins %>% # use penguin dataframe
+  filter(sex == "female") %>% #select females
+  mutate(log_mass = log(body_mass_g)) %>% #calculate log biomass
+  select(Species = species, island, sex, log_mass)
+
+```
+---
+# Summarize 
+ Computer a table of summarized data  
+  Calculate the mean flipper length (and exclude any NAs)
+ 
+```{r}
+ penguins %>% # 
+  summarise(mean_flipper = mean(flipper_length_mm, na.rm=TRUE)) #<<
+```
+
+--
+
+Calculate mean and mean flipper length
+ 
+```{r}
+ penguins %>% # 
+  summarise(mean_flipper = mean(flipper_length_mm, na.rm=TRUE), #<<
+            min_flipper = min(flipper_length_mm, na.rm=TRUE))   #<<
+```
+
+---
+# group_by
+You can summarize values by certain groups.  
+group_by() by itself doesn't do anything, but it is powerful when put before summarize.
+
+
+Let's calculate the mean and max bill length by island
+
+```{r}
+penguins %>%
+  group_by(island) %>% #<<
+  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
+            max_bill_length = max(bill_length_mm, na.rm=TRUE))
+```
+
+---
+# group by
+
+Group by both island **and** sex
+
+```{r}
+penguins %>%
+  group_by(island, sex) %>% #<<
+  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
+            max_bill_length = max(bill_length_mm, na.rm=TRUE))
+```
+
+
+---
+# remove NAs
+
+drop_na() 
+  - drops rows with NAs from a specific column
+
+drop all the rows that are missing data on sex
+```{r}
+penguins %>%
+  drop_na(sex) #<<
+
+```
+---
+# remove NAs
+
+drop_na() 
+  - drops rows with NAs from a specific column
+
+drop all the rows that are missing data on sex
+calculate mean bill length by sex
+
+```{r}
+penguins %>%
+  drop_na(sex) %>%
+  group_by(island, sex) %>% #<<
+  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+
+```
+---
+# Pipe into a ggplot
+You can connect your *data wrangling* to a ggplot with the pipe (you won't need to call the dataframe in ggplot if you pipe to it).
+
+Drop NAs from sex, and then plot boxplots of flipper length by sex
+
+```{r, fig.height=4}
+penguins %>%
+  drop_na(sex) %>%
+  ggplot(aes(x = sex, y = flipper_length_mm)) + #<<
+  geom_boxplot()
+
+```
+
+---
+# Before homeworks... "Totally Awesome R package of the day"
+
+```{r, eval=FALSE}
+library(devtools) # load the development tools library
+devtools::install_github("jhollist/dadjoke")
+```
+
+```{r}
+library(dadjoke)
+dadjoke()
+```
+
+---
+# Homework
+
+Write a script that:
+
+1. calculates the mean and variance of body mass by species, island, and sex without any NAs
+
+1. filters out (i.e. excludes) male penguins, then calculates the log body mass, then selects only the columns for species, island, sex, and log body mass, then use these data to make any plot. Make sure the plot has clean and clear labels and follows best practices. Save the plot in the correct output folder.
+
+Include both part 1 and part 2 in your script and push it to github in the appropriate folders.
+
+----------------------------
+
+## Lecture 2: Data wrangling: tidyr
+
+# Outline of class
+
+1. Intro to {tidyr}
+  - Separate and unite columns
+  - Pivot data between long and wide formats
+
+1. Export csv with summary statistics
+
+
+Homework 
+1. Practice with tidyr
+
+
+---
+# Review
+
+1. What function do you use to subset rows by some criterion?  
+
+1. How do I add a new column to my data frame?
+---
+# Intro to the {tidyr} package (part of the TidyVerse)
+
+.center[
+<img src = "https://media.robotwealth.com/wp-content/uploads/2020/05/21161912/tidyr.png", width=50% />
+]
+
+---
+# New dataset!
+
+We are going to use a subset of data from Silbiger et al. 2020 Proceedings of the Royal Society: B.
+
+In the data folder for this week in Fall-2025, you will see two .csv files:
+
+1. chemicaldata_manualua.csv
+1. chem_data_dictionary.csv
+
+Move both of them to the data folder of YOUR repo.
+
+Explore the data dictionary to understand what you will be working with.
+
+Basics: I collected biogeochemistry data at sites in Hawai'i with submarine groundwater discharge (fresh groundwater that flows into coastal oceans through cracks in the reef plate). We have data on nutrient and carbonate chemistry from two sites, two seasons, high and low tide, and during the day and night.
+
+---
+# Set up your script for today
+```{r}
+### Today we are going to practice tidy with biogeochemistry data from Hawaii ####
+### Created by: Haley Poppinga #############
+### Updated on: 2025-09-19 ####################
+
+
+#### Load Libraries ######
+library(tidyverse)
+library(here)
+
+
+### Load data ######
+ChemData<-read_csv(here("Week_04","data", "chemicaldata_maunalua.csv"))
+View(ChemData)
+glimpse(ChemData)
+
+```
+---
+# Another way to remove all the NAs
+
+There are several ways we can remove all the NAs in a data set
+
+```{r}
+ChemData_clean<-ChemData %>%
+  filter(complete.cases(.)) #filters out everything that is not a complete row
+
+View(ChemData_clean)  
+
+```
+
+![clean1](libs/images/clean1.PNG)
+---
+# Separate function
+
+We notice a silly column named Tide_time, which has tide (low/high) paired with time of day (day/night).  
+
+Nyssa did NOT follow directions for tidy data from the first week of class... Now we have to fix it.
+
+.center[
+<img src ="https://media.tenor.com/images/6a3223dda90636415530c9521d4a5a2a/tenor.gif"/>
+]
+
+---
+# Separate function
+
+Notice that I have two bits of information: Low_Day is low tide during the day.  It would be way easier to plot and analyze the data if we separate those into separate columns.
+
+hit ?separate to see all the things you can do, but the simplest use is:  
+
+separate(  
+  data = [data frame you are using],  
+  col = [column that you want to separate],  
+  into = [name of the new columns],  
+  sep = [what are you separating by?])  
+
+---
+# Separate
+
+Let's continue to build off our data frame
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col #<<
+           into = c("Tide","Time"), # separate it into two columns Tide and time #<<
+           sep = "_" ) # separate by _ #<<
+
+head(ChemData_clean)  
+
+```
+
+---
+# Separate
+
+Notice this deletes the original column.  If we wanted to keep it we would add *remove = FALSE*.
+
+---
+# Separate
+
+Let's continue to build off our data frame
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) # keep the original tide_time column #<<
+
+head(ChemData_clean)  
+
+```
+
+Notice this deletes the original column.  If we wanted to keep it we would add *remove = FALSE*.
+
+---
+# Unite
+What if we have the opposite problem and what to *unite* two columns into one? 
+
+Let's say we want a new column that *unites* site with zone.  We use the unite() function which has the same arguments as separate() 
+
+--
+
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>% # keep the original tide_time column
+  unite(col = "Site_Zone", # the name of the NEW col #<<
+         c(Site,Zone), # the columns to unite #<<
+        sep = ".", # lets put a . in the middle #<<
+        remove = FALSE) # keep the original #<<
+
+head(ChemData_clean)
+```
+
+---
+# Pivoting the dataset between wide and long
+
+### Review
+
+--
+# Wide data
+
+ ### One observation per row and all the different variables are columns
+
+
+| Sample ID| Treatment   |      Nitrate      | Temp | Salinity | 
+|----------|:-------------:|------:|----:|-----:|
+| 1 | High|  1.2 | 7.2| 34.1|
+| 2 | High|    3.0   | 7.8| 34.0|
+| 3 | Low |2.4 | 8.0|34.2|
+| 4 | Low |5.1| 8.0| 33.0|
+| 5 | Low| 1.1| 7.9| 34.5|
+
+
+---
+
+# Long  data
+
+ ### One unique measurement per row and all the info about that measurement in the same row
+
+
+| Sample ID| Treatment   |      Measurement_Type      | Value | Units | 
+|----------|:-------------:|------:|----:|
+| 1 | High|  Nitrate | 1.2| uM_L|
+| 1 | High|    Temp   | 7.2| deg_C |
+| 1 | High |Salinity | 34.1|psu|
+| 2 | High |Nitrate| 3.0| uM_L|
+| 2 | High| Temp| 7.9| deg_C|
+| 2 | High| Salinity| 34.0| psu|
+
+---
+# Pivoting between long and wide in R
+
+- Wide to long: pivot_longer()
+- Long to wide: pivot_wider()
+
+.center[
+<img src = "https://www.fromthebottomoftheheap.net/assets/img/posts/tidyr-longer-wider.gif"/>
+]
+---
+# Is our data wide or long?
+
+![wide](libs/images/wide.PNG)
+
+--
+
+## Let's *pivot* our data so that it is in long format.
+
+- We want one column with all the names of the biogeochemical parameters (i.e., NN, P, Si, etc)
+- Paired with one column with all the values associated with those variables
+- We want all the metadata (lat, long, tide, etc.) to be preserved in the correct order
+
+--
+
+## Why is long format helpful?
+
+- Easier to summarize using group_by(). You would only need to group by the variable name to get all summary statistics for every variable
+- Easier to facet_wrap() by each variable if all the plots are going to be identical instead of making 10 individual plots
+
+---
+# Pivot_longer()
+
+Start with our ChemData_clean dataframe (note, you can also just pipe what we are about to do to your existing lines of code as well)
+
+```{r}
+ChemData_long <-ChemData_clean %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  #<<
+               names_to = "Variables", # the names of the new cols with all the column names #<<
+               values_to = "Values") # names of the new column with all the values #<<
+
+```
+```{r, eval=FALSE}
+View(ChemData_long)
+```
+
+--
+
+![long](libs/images/Long.PNG)
+
+---
+# What can we do with the long data set?
+
+Let's calculate the mean and variance for all variables at each site
+
+```{r}
+ChemData_long %>%
+  group_by(Variables, Site) %>% # group by everything we want #<<
+  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean #<<
+            Param_vars = var(Values, na.rm = TRUE)) # get variance #<<
+
+```
+---
+# Think, Pair, Share
+
+Calculate **mean, variance, and standard deviation** for all variables by **site, zone, and tide**  
+
+Here is your starter code:
+
+```{r, eval = FALSE}
+ChemData_long %>%
+  group_by(Variables, Site) %>% # group by everything we want 
+  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean 
+            Param_vars = var(Values, na.rm = TRUE)) # get variance 
+
+```
+---
+# Example using facet_wrap with long data
+
+Create boxplots of every parameter by site
+
+```{r}
+ChemData_long %>%
+  ggplot(aes(x = Site, y = Values))+ #<<
+  geom_boxplot()+ #<<
+  facet_wrap(~Variables) #<<
+  
+
+```
+
+---
+Create boxplots of every parameter by site, .orange[fix the axes.]
+
+scales = "free" releases both the x and y axes
+
+```{r}
+ChemData_long %>%
+  ggplot(aes(x = Site, y = Values))+ 
+  geom_boxplot()+ 
+  facet_wrap(~Variables, scales = "free") #<<
+  
+
+```
+
+---
+# Let's say we got data in long format and need to convert it to wide
+
+We use pivot_wider()
+
+```{r}
+ChemData_wide<-ChemData_long %>%
+  pivot_wider(names_from = Variables, # column with the names for the new columns #<<
+              values_from = Values) # column with the values #<<
+```
+```{r, eval=FALSE}
+View(ChemData_wide)
+
+```
+
+--
+
+![wide again](libs/images/Wide again.PNG)
+
+---
+# Let's calculate some summary statistics and export the csv file
+
+Start from the beginning and work through our entire flow again, ending with data export.  
+.orange[Remove all NAs.]
+
+
+```{r, eval=FALSE}
+ChemData_clean<-ChemData %>%
+  drop_na()  #filters out everything that is not a complete row #<<
+ 
+View(ChemData_clean)
+```
+
+---
+
+# Let's calculate some summary statistics and export the csv file
+.orange[Separate Tide_time into two columns.]
+
+
+```{r, eval=FALSE}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col #<<
+           into = c("Tide","Time"), # separate it into two columns Tide and time #<<
+           sep = "_", # separate by _ #<<
+           remove = FALSE) #<<
+
+View(ChemData_clean)
+```
+
+---
+
+# Let's calculate some summary statistics and export the csv file
+.orange[Pivot the data longer.]
+
+
+```{r, eval = FALSE}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  #<<
+               names_to = "Variables", # the names of the new cols with all the column names #<<
+               values_to = "Values") # names of the new column with all the values #<<
+
+View(ChemData_clean)
+
+```
+---
+
+# Let's calculate some summary statistics and export the csv file
+.orange[Group by Variable, Site, Time and calculate means.]
+
+
+```{r, eval = FALSE}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  
+               names_to = "Variables", # the names of the new cols with all the column names 
+               values_to = "Values") %>% # names of the new column with all the values 
+  group_by(Variables, Site, Time) %>% #<<
+  summarise(mean_vals = mean(Values, na.rm = TRUE)) #<<
+
+View(ChemData_clean)
+
+```
+---
+# Let's calculate some summary statistics and export the csv file
+.orange[Convert back to wide]
+
+
+```{r, eval = FALSE}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  
+               names_to = "Variables", # the names of the new cols with all the column names 
+               values_to = "Values") %>% # names of the new column with all the values 
+  group_by(Variables, Site, Time) %>% 
+  summarise(mean_vals = mean(Values, na.rm = TRUE)) %>%
+  pivot_wider(names_from = Variables, #<<
+              values_from = mean_vals) # notice it is now mean_vals as the col name #<<
+
+View(ChemData_clean)
+
+```
+---
+# Let's calculate some summary statistics and export the csv file
+.orange[Export the csv file of your summary statistics using write_csv().]
+
+
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  
+               names_to = "Variables", # the names of the new cols with all the column names 
+               values_to = "Values") %>% # names of the new column with all the values 
+  group_by(Variables, Site, Time) %>% 
+  summarise(mean_vals = mean(Values, na.rm = TRUE)) %>%
+  pivot_wider(names_from = Variables, 
+              values_from = mean_vals) %>% # notice it is now mean_vals as the col name
+  write_csv(here("Week_04","output","summary.csv"))  # export as a csv to the right folder #<<
+
+
+
+```
+---
+# Today's totally awesome R package
+
+### Put a Bernie on it
+
+
+```{r, eval=FALSE, message = FALSE}
+devtools::install_github("R-CoderDotCom/ggbernie@main")
+
+```
+
+```{r, message=FALSE, warning=FALSE, fig.height=4, fig.width=5}
+library(ggbernie)
+
+ggplot(ChemData) +
+  geom_bernie(aes(x = Salinity, y = NN), bernie = "sitting")
+```
+---
+class: center, middle
+
+# Update on final independent project.
+See rubric under "Syllabus_and_Schedule" folder.
+
+---
+# Homework
+
+Using the chemistry data:
+- Create a new clean script
+- Remove all the NAs
+- Separate the Tide_time column into appropriate columns for analysis
+- Filter out a subset of data (your choice)
+- use either pivot_longer or pivot_wider at least once
+- Calculate some summary statistics (can be anything) and export the csv file into the output folder
+- Make any kind of plot (it cannot be a boxplot) and export it into the output folder
+- Make sure you comment your code and your data, outputs, and script are in the appropriate folders
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
