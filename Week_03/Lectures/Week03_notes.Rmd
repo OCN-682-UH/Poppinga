@@ -13,6 +13,9 @@ library(tidyverse)
 library(here)
 library(ggplot2)
 library(palmerpenguins)
+library(ggthemes)
+library(lattice)
+library(directlabels)
 ```
 
 Read in data
@@ -23,31 +26,200 @@ glimpse(penguins)
 ```
 
 Making plots for second lecture found after ggplot resources
-
-.green[ggplot2] is a data visualization package  
+ggplot2 is a data visualization package  
 
 Structure of the plot can be summarized like this:
-  
 ggplot(data = [dataset], 
        mapping = aes(x = [x-variable], 
                      y = [y-variable])) +
     geom_xxx() +
 
-Other options:
-aes() means aesthetics 
-geom_xx means geometry
-  
+Other options:  
+aes() means aesthetics  
+geom_xx means geometry. 
+
 
 Data: Palmer Penguins
 Measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.  
 
 Set-up your script and don't forget to comment. _See script file_
 
+Script Sections
+-	Introduction to script
+-	Load your libraries
+-	Read in your data
+-	Data analysis and plotting
+
+Why you should always look at your data
+-	We have to really understand our data to be able to decide on the appropriate analyses to answer our research questions. It can also lead to unexpected & interesting research questions. That requires first looking at your data, usually in a number of ways, to ask questions like:
+o	Are there interesting patterns, groups, trends or relationships?
+o	How are observations distributed?
+o	Are there outliers?
+o	Is there notable bias in observations or missing observations?
+-	When do I need to look at my data and think about it really hard before analyzing it?
+EVERY TIME
+-	When can I just make assumptions about the data and some some regression or hypothesis testing or anything else without exploring it?
+NEVER
+
+-	Statistics should come after your visualization
+
+Visualizations that don’t hide or assume anything about data
+
+-	For continuous (measured) observations you might start with:
+o	Jitter plots (if logical groups exist)
+o	Beeswarm plots (ggbeeswarm)
+o	Scatterplots (2 variables, or map additional)
+o	Histograms or density plots
+o	More variables: map w/ colors, size?
+
+Jitter plots:
+-	X discrete y continuous
+-	Moves point left and right to see spread and distribution of data better
+-	Show values of observations within a group, adding some amount of “jitter” so that they don’t all overlap
+
+Bee Swarm Plots
+-	Moves it in x and y 
+-	Shifts visualization of data
+-	Points not exact
+-	Wouldn’t use this as publiscation data set
+-	Lose understanding of wehre outliers might be
+-	Show values of observations within a group, with amount of jitter dependent on density around values
+
+Density Plots
+-	Visualize spread and compare between variables
+-	Show values of observations within a group
+
+Scatter plots
+-	X and y that are both continuous
+-	Do not use jitter on top of scatter plot
+-	Use jitter or bee swarm when one variable is discrete
+-	Show relationship between two measured variables
+
+Website with other ways to visualize the same data 
+-	same data set and building off to more visualizations
+
+why cant we just look at the summary statistic?
+-	Hide important information
+-	need to visualize all the raw data 
+-	also need to show summary stastitics but need to visualize every single aspect of raw data
+don’t hide your data
+-	same error bars for all those data sets
+
+Hierarchy of data viz
+1)	is it correct?
+2)	Is it clear?
+3)	Does it communicate data responsibly?
+4)	Does it look awesome?
+
+
+Is it correct?
+-	Observations and experimental design
+-	Avoid data wrangling and calculation mistkakes
+o	Easier to find mistakes in code than csv
+o	Checking that outcome is what it is expected to be
+o	Run code and visualize what that data means
+o	See values that make sense?
+-	Units and labels
+
+Is it clear?
+-	Too many points, variables, or series
+-	Too many points, variables, or series
+-	Overwhelming legends
+-	Lack of useful emphasis
+-	Are things put in context?
+-	Is it a pie graph? (Don't do it)
+-	Overmapping aesthetics
+-	Is it 3D? (please no)
+-	Cant look at 3D in 2 dimensions- deal with is with facets or colors
+-	Too many of everything
+
+Whole point of data visualization is to get audience to see/understand it better
+-	Emphasize the things you want the audience or readers to remember
+-	Black and white all the other lines but color the line you want to emphasize in the plot
+
+Legends
+-	Put them somewhere that reduces eyes jumping bnack and forth across the whole page
+-	Labels easier with legends
+-	Should follow logical order
+-	Relative background info, keep things in contect when you have parts of a whole
+
+Is it responsible?
+-	Is your graph type/model/presentation even appropriate?
+-	Misleading axes ranges or direction
+-	Masking data within summary statistics
+-	Does it include a measure of uncertainty (if applicable)?
+
+
+Misleading axes ranges or direction
+-	Examples showring reversing scale direction, manipulating scales
+-	Reversing scale direction
+-	Manipulating scale increments or data to make differences seem larger/less than they are
+-	Cropping value scale to exaggerate differences
+
+
+Show me the data
+-	Adding summary statisitcs, models, etc. is good but try to also show actual data
+o	Ex: swarm plots on top of box plots
+-	Another option to show data and summary: marginal plots
+o	Show distribution on outside of plots
+
+Does it look awesome?
+-	Never sacrifice clarity for creativity
+-	Decluttering your graphs
+-	Empty & inked space balance
+-	Thoughtful color schemes (always clarity > beauty)
+o	Color schemes
+	Color blind people, colors not too close to each other
+
+Declutter your graphs
+-	Every element should exist to improve audience understanding
+
+For each element and design decision of your plot, ask:
+•	Is this element necessary/helpful for audience understanding?
+•	Is it presented in the best way to encourage audience understanding & retention of the things that I have decided are the most critical?
+•	This includes
+o	Gridlines
+o	Symbols/images
+o	Tick marks & increments
+o	Axis labels & tick mark labels
+o	Angled text
+o	Points, columns, lines, etc.
+o	Legends (avoid redundancy)
+o	Value labels & annotation
+o	Colors & formatting
+
+ggplot2 defaults after their own issues
+-	Things you must change here:
+o	Update axis labels
+o	Reduce width of each groups
+-	Things you should consider changing:
+o	BG color
+o	X & Y limits & expansion
+o	Often overused/unnecessary gridlines
+o	Not prompted to auto-update axis labels
+o	Abbreviations are hard
+
+
+Things that are almost always bad, or a symptom of badness
+-	Color gradients with a single element
+-	Shadows. Why are there shadows?
+-	3D. With rare exceptions.
+
+
+Things that can be bad, or a symptom of badness
+-	Multiple legends (probably means you've plotted too much)
+-	Overuse of colors
+-	Many symbols of line types
+-	Labels for values (esp. if many) - consider a table of exact value is important
+-	Really creative fonts
+
+
+
 ### We will make this plot:
 ```{r}
 ggplot(data=penguins, #should be comma in between every function
-       mapping = aes(x = bill_depth_mm,  #map bill depth to the x-axis 
-                     y = bill_length_mm, #map bill length to the y-axis
+       mapping = aes(x = bill_depth_mm,#map bill depth to the x-axis 
+                     y = bill_length_mm)) + #map bill length to the y-axis
       geom_point() +                     #Represent each observation with a point and map species to the colour of each point
       labs(title = "Bill Depth and Length", #change labels and titles  #everything related to a title you can change in lab function
            subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
@@ -73,36 +245,32 @@ ggplot(data=penguins,
   scale_color_viridis_d() #discrete color scale palette better for colorblind
 ```
 
+Add in a caption.
+Good check: if you press enter, lines should line up with each other if done correctly
 ```{r}
 ggplot(data=penguins,
        mapping = aes(x = bill_depth_mm,  
                      y = bill_length_mm, 
                      color = species)) + #change in aesthetic
-      geom_point()                    
-```
-** need to finish editing
-```{r}
-
-```
-
-      labs(title = "Bill Depth and Length", #change labels and titles  #everything related to a title you can change in lab function
+      geom_point()  + 
+  labs(title = "Bill Depth and Length", 
            subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
            x = "Bill Depth (mm)", y = "Bill Length (mm)", 
            color = "Species",  #label the legend
-           caption = "Source: Palmer Station LTER / palmerpenguins package") + #add caption for source of data
-  scale_color_viridis_d() #discrete color scale palette better for colorblind
-#check: if you press enter, lines should line up with each other if done correctly
+           caption = "Source: Palmer Station LTER / palmerpenguins package") + 
+  scale_color_viridis_d() 
+```
 
-
-
-#Shape, Size, Alpha
+### Shape, Size, Alpha
+mapping to a different variable than color (can also map to same variable as color)
+```{r}
 ggplot(data=penguins,
        mapping = aes(x = bill_depth_mm,
                      y = bill_length_mm,
                      color = species,
-                     shape = island, #mapped to a different variable than color (can also map to same variable as color)
-                     size = body_mass, #adding size to points
-                     alpha = flipper_len)) + #good for adding p-values to make it pop #adding a shape legend
+                     shape = island, 
+                     size = body_mass_g, #adding size to points
+                     alpha = flipper_length_mm)) + #good for adding p-values to make it pop #adding a shape legend
   geom_point() +
   labs(title = "Bill Depth and Length", 
        subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
@@ -113,13 +281,16 @@ ggplot(data=penguins,
        alpha = "Flipper Length (mm)",
        caption = "Source: Palmer Station LTER / palmerpenguins package") +
   scale_color_viridis_d()
+```
 
+### Mapping vs Setting. 
+*Mapping*: Determine the size, shape, alpha, etc. of points **based on the values of a variable** in the data goes into. 
 
-#Mapping vs Setting
-#Mapping: Determine the size, shape, alpha, etc. of points **based on the values of a variable** in the data goes into
-#Setting: Determine the size, shape, alpha, etc. of points **not** based on the values of a variable in the data goes into .orange[geom_*()]. 
-#This was geom_point() in the previous example, but we will learn more geoms soon.   
+*Setting*: Determine the size, shape, alpha, etc. of points **not** based on the values of a variable in the data goes into .orange[geom_*()].   
+
+This was geom_point() in the previous example, but we will learn more geoms soon.   
                      
+```{r}
 #Mapping
 ggplot(data=penguins, 
        mapping = aes(x = bill_depth_mm,
@@ -127,91 +298,135 @@ ggplot(data=penguins,
                      size = body_mass_g, 
                      alpha = flipper_length_mm)) +
   geom_point()
+```
 
-#setting
+```{r}
+#Setting
 ggplot(data=penguins, 
        mapping = aes(x = bill_depth_mm,
                      y = bill_length_mm)) +
   geom_point(size = 2, alpha = 0.5)
 
+```
 
-#Faceting
-#automatically adds labels                 
-#Smaller plots that display different subsets of the data
-#Useful for exploring conditional relationships and large data
+### Faceting. 
+* Automatically adds labels                 
+* Smaller plots that display different subsets of the data
+* Useful for exploring conditional relationships and large data
 
-#Note: Did not put proper titles, axis labels, etc. because I am focusing on faceting.
-#However, remember to always label your plots!
+Note: Did not put proper titles, axis labels, etc. because I am focusing on faceting.
+However, remember to always label your plots!
 
+Face Grid
+```{r}
 ggplot(penguins, 
        aes(x = bill_depth_mm,
            y = bill_length_mm))+
   geom_point()+
   facet_grid(species~sex) #grid will always be perfectly grided, cant control how many rows and columns
 # make multiple plots groups by species on the y (rows) and and sex on the x (columns) 
+```
 
-#Notice there is a section labeled **NA** for sex. This is because there were some birds where they did not know the sex.  
-#We will learn how to clean this up next week.
+Notice there is a section labeled **NA** for sex. This is because there were some birds where they did not know the sex.  
+We will learn how to clean this up next week.
 
+```{r}
 ggplot(penguins, 
        aes(x = bill_depth_mm,
            y = bill_length_mm))+
   geom_point()+
-  facet_grid(sex~species) #
-# make multiple plots groups by sex on the y (rows) and and species on the x (columns) 
+  facet_grid(sex~species) #make multiple plots groups by sex on the y (rows) and and species on the x (columns) 
+```
 
-
-ggplot(penguins, aes(x = bill_dep, y = bill_len)) + 
+Face Wrap
+```{r}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
   geom_point() +
   facet_wrap(~ species) #describe exactly how many rows and columns you want, wraps it down
+```
 
-ggplot(penguins, aes(x = bill_dep, y = bill_len)) + 
+```{r}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
   geom_point() +
   facet_wrap(~ species, ncol=2) # make it two columns 
+```
 
 # Faceting summary
-#facet_grid():
-  #2D grid
-  #rows ~ columns
+facet_grid():  
+* 2D grid. 
+* rows ~ columns. 
 
-#facet_wrap(): 
-#1d ribbon wrapped according to numbers of rows and columns specified or available plotting area
+facet_wrap(): 
+* 1d ribbon wrapped according to numbers of rows and columns specified or available plotting area
 
-# Facet and color
-#multiple ways to visualize data
-    ggplot(data=penguins, 
-           mapping = aes(x = bill_dep,
-                         y = bill_len,
+Facet and color
+multiple ways to visualize data
+```{r}
+ggplot(data=penguins, 
+           mapping = aes(x = bill_depth_mm,
+                         y = bill_length_mm,
                          color = species)) +
       geom_point()+
       scale_color_viridis_d()+
       facet_grid(species~sex)
+```
 
-#Facet and color, no legend
-    ggplot(data=penguins, 
-           mapping = aes(x = bill_dep,
-                         y = bill_len,
+Facet and color, no legend
+```{r}
+ggplot(data=penguins, 
+           mapping = aes(x = bill_depth_mm,
+                         y = bill_length_mm,
                          color = species, #<<
            )) +
       geom_point()+
       scale_color_viridis_d()+
       facet_grid(species~sex)+
       guides(color = FALSE) #delete specifically
+```
+
+ggplot2 resources:  
     
-# ggplot2 resources
+[Data to viz](https://www.data-to-viz.com/#histogram) 
+[ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)  
+[All the geoms](https://ggplot2.tidyverse.org/reference/)  
+[A master list of visuals](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)   
+[Practical ggplot](https://wilkelab.org/practicalgg/)   
+[R graph gallery](https://www.r-graph-gallery.com/)
     
-# [Data to viz](https://www.data-to-viz.com/#histogram)  
-# [ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)  
-# [All the geoms](https://ggplot2.tidyverse.org/reference/)  
-# [A master list of visuals](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)   
-# [Practical ggplot](https://wilkelab.org/practicalgg/)   
-# [R graph gallery](https://www.r-graph-gallery.com/)
     
-###########################################
-#Plotting 2 (2nd Lecture)
     
-#Make a simple plot
-#Data analyisis section
+    
+__________________________________________________________________________________
+## Plotting 2 (2nd Lecture). 
+
+Grammar of graphics, data visualization package. 
+Call ggplot directly in. 
+Name data frame. 
+
+Mapping describes aesthetics based off data. 
+* X and y variable
+* Density plots don’t have x and y
+* Geom_line (example)
+* Order of layers 
+
+Mapping vs. Setting
+* Mapping: directly related to data
+* Settings: changing everything in data
+    * Ex: everything blue
+
+Adding multiple Geoms. 
+Geom_smooth
+* Data mapping default but can add in a new data se
+    * Standard error, new method
+    * Lots of methods to set and new formula (polynomial, log, etc.)
+* Add layer after geom_point
+    * Gives a weird fit line that doesn’t tell us anything
+* Run a linear model
+
+
+Make a simple plot
+Data analysis section. 
+```{r}
 ggplot(data = penguins, 
        mapping = aes(x = bill_depth_mm,   #bill depth
                      y = bill_length_mm,
@@ -222,13 +437,559 @@ ggplot(data = penguins,
       geom_smooth(method = "lm") + #adds new data set/method, "lm" adds linear model, can also add standard error (se = FALSE)
       labs(x = "Bill Depth (mm)",
            y = "Bill Length (mm)") +
-      scale_color_viridis_d() #chnage color scale
-    
-    
-    
-    
-    
-    
-    
-    
+      scale_color_viridis_d() #change color scale
+```
+A side: celebrate R victories with {Praise} package. 
+library(praise)  
+praise()  
+
+### Scales
+Naming scheme for scale has 3 parts:  
+1) scale. 
+2) the name of the primary aesthetic (e.g. color, shape, or x axis). 
+3) the name of the scale (e.g) continuous, discrete, manual). 
+
+Example: if you want to change the scale of a continuous color it would be:  
+scale_color_continuous()
+
+if you want to change the scale of a continuous x axis it would be:  
+scale_x_continuous()
+
+What is the parameter you want to change?  
+
+Change Scales 
+change x scale limits (0,20)
+Note: any time you create a vector of numbers. need to use c (catatenate) function of everything in parentheses.
+
+```{r}
+ggplot(data = penguins, 
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     group = species,
+                     color = species)) + 
+      geom_point() +
+      geom_smooth(method = "lm") + 
+      labs(x = "Bill Depth (mm)",
+           y = "Bill Length (mm)") + 
+      scale_color_viridis_d() + 
+  scale_x_continuous(limits = c(0,20)) +# set x limits from 0 to 20 
+  scale_y_continuous(limits = c(0,50)) #change y axis 0 to 50
+
+# Note anytime you make a vector you need to put "c" which means "concatenate
+```
+Change scales: 
+Change x breaks  
+May be important for analysis of a particular size indicative of sex
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_viridis_d()+
+  scale_x_continuous(breaks = c(14, 17, 21)) #change x breaks
+ 
+# Note anytime you make a vector you need to put "c" which means "concatenate
+```
+Change x break labels. 
+can do this at scale y continuous too
+can change breaks, labels, etc.
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_viridis_d()+
+  scale_x_continuous(breaks = c(14, 17, 21), 
+                     labels = c("low", "medium", "high")) #catatenating a vector at 14, 17, and 21
+```
+
+Change scales: manually change color scale. 
+Can also put any hex code of specific colors
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  #scale_color_viridis_d() #<<
+  scale_color_manual(values = c("orange", "purple", "green")) #manually chnage color values 
+```
+Custom color scales. 
+There are **so many** custom color palettes to play with.  
+
+[Most popular color palettes](https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/)  
+[Beyonce - tumblr!!!](https://beyoncepalettes.tumblr.com/)  
+[Beyonce - color palette](https://github.com/dill/beyonce)  
+[Wes Anderson palette](https://github.com/karthik/wesanderson)  
+[Colors of California](https://github.com/an-bui/calecopal)                     
+[Colors of the Pacific Northwest](https://github.com/jakelawlor/PNWColors)    
+
+___
+Aside on downloading packages that are *in development*.  
+There are several packages on GitHub that are not yet published and are still being developed.  You can still use them, but you need to install them directly from github.
+Some hobbists don't want to go through the review process for packages.
+
+First, you need to install the *{devtools}* package (Development tools)   
+
+```{r}
+install.packages('devtools')
+```
+
+
+Instead of using *install.packages("PackageName")*, we use:    *install_github("username/packagename")*.
+
+
+Let's download the beyonce color palette.  
+
+1. Ask google where the "Beyonce color palette in R" is. 
+2. Go to the [github page](https://github.com/dill/beyonce) and follow the directions
+3. In your **console** (not your script): copy and paste:
+4. In the **libraries section of your script**: copy and paste
+
+```{r}
+devtools::install_github("dill/beyonce")
+```
+
+```{r}
+library(beyonce)
+```
+
+___
+
+Change scales: Use one of the Beyonce color palettes.  
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(2)) #uses beyonce color pallette instead of values = color green and blue e.g.
+```
+Change scales: Use one of the Beyonce color palettes. 
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) #uses a different palette
+```
+
+---
+### Coordinates
+
+The default coordinates for ggplot is *cartesian*, where the 2D position of an element is given by the x and y position in *aes()*.
+
+We can manipulate the coordinates system in a few different ways.
+
+We will run through the following examples
+
+- coord_flip(): Cartesian coordinate system with x and y axes flipped. Flip x and y coordinstes
+
+- coord_fixed(): Cartesian coordinate system with a fixed aspect ratio. Length or widsth of what one unit is on x for y
+
+- coord_trans(): Apply arbitrary transformations to x and y positions, after the data has been processed by the stat.
+
+- coord_polar(): Polar coordinates.
+
+Later when we learn how to make a map  
+
+- coord_map()/coord_quickmap()/coord_sf(): Map projections.
+
+---
+Change coordinates: Flip the axes
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) +
+  coord_flip() # flip x and y axes
+```
+
+Control the aspect ratio
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(20)) +
+  coord_fixed(ratio = 1.5) # fix axes
+# coord fixed gives it an exact 1:1 ratio. Squeezed so that one point on the x is the same as one point on the y
+# add ratio = 1.5 in parentheses to change aspect ratio and change scale of that ratio
+```
+
+Change coordinates: Transform the x and y-axis (log10)
+
+I am going to use a different example with exponential data so it shows more clearly
+glimpse(diamonds)
+
+```{r}
+ggplot(diamonds, aes(carat, price)) +
+  geom_point() 
+```
+not a linear relationship above. It is exponential
+Let's say we want to log the data itself. We could log the data by putting log in front of price and carat and it linearalizes it.
+
+We want to keep the data scaled but log just the visual itself.
+Axes has the same natural value but the space between them is now log10 scaled.
+
+```{r}
+ggplot(diamonds, aes(carat, price)) +
+  geom_point() +
+  coord_trans(x = "log10", y = "log10") #changes coordinate system but keeps the data exactly the same
+```
+Change coordinates: make them polar
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) +
+  coord_polar("x") # make the polar
+
+
+```
+
+---
+
+### Themes
+The theming system is composed of four main components:
+
+* Theme **elements** specify the non-data elements that you can control.  
+For example, the plot.title element controls the appearance of the plot title; axis.ticks.x, the ticks on the x axis; legend.key.height, the height of the keys in the legend.
+
+
+* Each element is associated with an **element function**, which describes the visual properties of the element. For example, element_text() sets the font size, color and face of text elements like plot.title.  
+
+
+* The theme() function which allows you to override the default theme elements by calling element functions, like theme(plot.title = element_text(color = "red")). This will make the plot title red.
+  * thing of plot title we want to change is the text so we use element = text
+  * the argument that we want to change is the color
+
+
+* **Complete themes**, like theme_grey() set all of the theme elements to values designed to work together harmoniously. These are nicely packaged themes where you do not have to change much to make it look good. Ones on ggplot and ones we can download.
+
+
+#### Complete themes
+
+![theme 1](libs/Images/theme1.PNG)
+
+To look at other themes:  
+[https://www.datanovia.com/en/blog/ggplot-themes-gallery/](https://www.datanovia.com/en/blog/ggplot-themes-gallery/)
+
+Change theme: Make it theme_classic()
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) +
+  theme_classic()  #no grid lines of grey background
+
+```
+
+# Change theme: Make it theme_bw()
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) +
+  theme_bw()  #got rid of grey background and adds in axes lines 
+#can also add in theme_grey()
+```
+
+---
+Custom themes
+Install this package in the console:
+install.packages("ggthemes") # do this in the console. 
+
+Put the code below in the libraries section of your script
+library(ggthemes)
+
+Cool website to use cool themes:  
+[See here for ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/)
+
+
+---
+### Themes: You can customize your theme further. 
+Change the font size for the axis labels. (within theme function). 
+Ådd theme function > layer in thing you want to change > element you want to change > what within the element you want to change. 
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill Depth (mm)", 
+        y = "Bill Length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) +
+  theme_wsj() + #Wall Street Journal Theme
+  theme(axis.title = element_text(size = 20)) #increase axis title text size
+```
+
+Change the color of the axis labels.  
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) +
+  theme_bw() +
+  theme(axis.title = element_text(size = 20,
+                                  color = "red")) #also want to chane the color of the titles
+```
+Change the background color  
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) +
+  theme_bw() +
+  theme(axis.title = element_text(size = 20,
+                                  color = "red"),
+        panel.background = element_rect(fill = "linen")) #change the panel background
+#fill fills in an area of a polygon and color just changes the outline
+```
+
+
+Type ?theme() to console to see all the different elements that you can change.
+
+Play around with your plot for ~ 2 minutes and change the theme in a way that you want.
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill depth (mm)", 
+        y = "Bill length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(10)) +
+  theme_bw() +
+  theme(axis.title = element_text(size = 20,
+                                  color = "purple"),
+        legend.background = element_rect(fill = "purple")) #another function
+```
+
+
+---
+# Save your plot
+Can see within ggfame.eps all the different ways to save
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill Depth (mm)", 
+        y = "Bill Length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(2)) +
+  theme_bw() +
+  theme(axis.title = element_text(size = 20),
+        panel.background = element_rect(fill = "linen")) 
+
+  ggsave(here("Week_03","Output","penguin.png")) #can save as .jpg, .pdf too
+```
+
+Save your plot: change the width and height
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill Depth (mm)", 
+        y = "Bill Length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(2)) +
+  theme_bw() +
+  theme(axis.title = element_text(size = 20),
+        panel.background = element_rect(fill = "linen")) 
+
+  ggsave(here("Week_03","Output","penguin.png"),
+         width = 7, height = 5) # specify width and height in inches
+```
+
+Save your plot as an object. 
+This allows you to modify the plot further later.  
+Shows up in environment and recall it later in our script.  
+Like saving a vector or data frame where you give it a name and an assign to function
+
+
+Give it a plot1 and an assign to:
+does not show up in the plot
+
+```{r}
+plot1<-ggplot(data=penguins, #
+  mapping = aes(x = bill_depth_mm,
+                y = bill_length_mm,
+                group = species,
+                color = species)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")+ 
+   labs(x = "Bill Depth (mm)", 
+        y = "Bill Length (mm)"
+        ) +
+  scale_color_manual(values = beyonce_palette(2)) +
+  theme_bw() +
+  theme(axis.title = element_text(size = 20),
+        panel.background = element_rect(fill = "linen")) 
+```
+
+Recall it anywhere in script and it will show you plot 1:
+```{r}
+plot1 # you need to type it out to view it now. 
+```
+
+
+
+ggplot2 extensions. 
+
+[There are over 100 ggplot2 extentions](https://exts.ggplot2.tidyverse.org/gallery/)  
+[Great resource for ggploting](https://ggplot2-book.org/index.html)
+
+
+Homework
+
+Come up with the best possible plot with the penguin data that you can in **1 hour**.  
+
+- It CANNOT be the same plot that we just made. Look through the data and make a new visual.
+- Make something other than a scatter plot. Look at the other possible geoms from the resources I have given you over the past two classes.  
+- Your script must be formatted correctly (according to the lecture on transparent scripts).  
+- Comment your code appropriately
+- Push to github in the appropriate folders (you will only need a scripts and output folder for this week).  
+
+- **Due on github by Tuesday at 1pm.**
+
+Homework:
+
+#Load libraries 
+```{r}
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(palmerpenguins)
+library(ggthemes)
+library(RColorBrewer)
+glimpse(penguins)
+```
+
+```{r}
+ggplot(data=penguins, 
+  mapping = aes(x = body_mass_g)) +
+  geom_histogram(aes(fill = species), #creates a histogram of body mass frequencies of each species
+                 alpha = 0.5,
+                 position = "identity") +
+   labs(x = "Body Mass (g)", 
+        y = "Frequency",
+        title = "Penguin Body Mass Distribution",
+        fill = "Species") +
+  scale_fill_brewer(palette = "PiYG") + #from RColoBrewer package
+  theme_igray() + #inverse grey theme
+  theme(axis.title = element_text(size = 10), 
+        legend.background = element_rect(color = "pink"), #puts a legend color frame 
+        panel.border = element_rect(color = "pink", #adds a pink border to the plot
+                                    fill = NA)) #keeps the plot inside (would be removed otherwise)
+
+ggsave(here("Week_03","Output","Week03_homework_plot.jpg")) #saving to correct folder
+```
+
+Direct Labels?
+library(lattice)
+library(directlabels)
+direct.label(xyplot(jitter(Sepal.Length)~jitter(Petal.Length),iris,groups=Species))
+Could not figure it out
     
