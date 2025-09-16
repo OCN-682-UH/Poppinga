@@ -14,8 +14,8 @@ library(here)
 library(ggplot2)
 library(palmerpenguins)
 library(ggthemes)
-library(lattice)
-library(directlabels)
+library(RColorBrewer)
+library(ghibli)
 ```
 
 Read in data
@@ -964,6 +964,7 @@ library(ggplot2)
 library(palmerpenguins)
 library(ggthemes)
 library(RColorBrewer)
+library(ghibli)
 glimpse(penguins)
 ```
 

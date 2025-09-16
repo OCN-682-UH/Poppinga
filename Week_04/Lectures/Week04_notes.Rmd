@@ -23,7 +23,6 @@ Homework
 ---
 # Intro to the {dplyr} package (part of the TidyVerse)
 
-.center[
 <img src = "https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/fc9b748b-db96-4ed4-aa23-f6e0ffc866ee_rw_1920.jpg?h=8fa394b572089354aa87b1d602b0f887", width=70% />
 ]
 
@@ -35,7 +34,7 @@ Illustrations from the Openscapes blog [Tidy Data for reproducibility, efficienc
 ---
 # Penguin data again.
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 ### Today we are going to plot penguin data ####
 ### Created by: Haley Poppinga #############
 ### Updated on: 2025-09-17 ####################
@@ -95,7 +94,7 @@ filter(.data = penguins, sex == "female" )
 ---
 # filter
 
-```{r, eval=FALSE}
+```{r}
 filter(.data = penguins, 
        sex == "female" ) #<<
 ```
