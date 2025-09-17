@@ -18,10 +18,15 @@ Homework
 # Review
 
 1. Where do I change the font size of my x and y labels?
+Theme
 
-1. How do I save my plot?
+2. How do I save my plot?
+ggsave
+
+
 ---
 # Intro to the {dplyr} package (part of the TidyVerse)
+Don't need to load dplyr. Just TidyVerse
 
 <img src = "https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/fc9b748b-db96-4ed4-aa23-f6e0ffc866ee_rw_1920.jpg?h=8fa394b572089354aa87b1d602b0f887", width=70% />
 ]
@@ -31,6 +36,13 @@ Illustrations from the Openscapes blog [Tidy Data for reproducibility, efficienc
 ---
 # dplyr: verbs for manipulating data
 ![verbs](libs/images/dplyr_verbs.PNG)
+
+filtering extracts rows
+select() extracts columns
+arrange() 
+mutate() adds new columns, same length of rows but longer
+group_by() %>% summarize() makes shorter
+
 ---
 # Penguin data again.
 
@@ -59,6 +71,12 @@ glimpse(penguins)
 
 <img src ="https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/cb8d9c50-f48e-4c6d-a5b3-1d30ce0be2ad_rw_1920.png?h=1a879eda58a5efbf709ad0a59d784f98"/>
 
+dplyr::filter()
+call the package name first
+filter(df, type == "otter" & site == "blah")
+
+== reads as is exactly equal to
+
 ---
 #Filter 
 ### Extract rows that meet some critera
@@ -68,9 +86,9 @@ filter(.data = DATA, ...)
 ```
 
 
-DATA = Data frame to transform  
+* DATA = Data frame to transform  
 
-... = One or more criteria  
+* ... = One or more criteria  
 filter() returns each row for which the criteria is TRUE
 
 ---
@@ -90,13 +108,15 @@ After filtering
 ```{r}
 filter(.data = penguins, sex == "female" )
 ```
+is sex exactly equal to female?
+argument = .data
 
 ---
 # filter
 
 ```{r}
 filter(.data = penguins, 
-       sex == "female" ) #<<
+       sex == "female" ) #filter keeps every TRUE
 ```
 
 One = sets an argument in the function  
@@ -108,13 +128,35 @@ Two == reads as "is exactly equal to." It is a question that returns a TRUE or F
 
 ![logicals](libs/images/logical_test.PNG)
 
+Test Meaning
+x < y less than
+x > y greater than
+== equal to (if you only have one thing to pull out)
+x <= y less than or equal to
+x >= y greater than or equal to
+x != y not equal to (! can be used with anything)
+x %in% y in group membership (pull out more than one thing, e.g is the species within the vector)
+is.na(x) is missing
+!is.na(x) is not missing (is it not an NA, if so retain it)
+
+Note: these used universally in all coding languages
 
 ---
 # How would I use filter to...
 
 1. Penguins measured in the year 2008?
+```{r}
+filter(.data = penguins, 
+       year == 2008)
+```
 
-1. Penguins that have a body mass greater than 5000
+
+2. Penguins that have a body mass greater than 5000
+```{r}
+filter(.data = penguins, 
+       body_mass_g > 5000)
+```
+
 
 --
 
@@ -140,7 +182,7 @@ filter(.data = penguins,
 
 ```{r}
 filter(.data == penguins, 
-        sex == females) #<<
+        sex == females) #for things that are characters
 
 filter(.data = penguins, 
        sex == "females")
@@ -152,20 +194,24 @@ filter(.data = penguins,
 # Filter with multiple conditions
 
 Select females that are also greater than 5000 g
-
+comma means "and" --> do this and that
 ```{r}
 filter(.data = penguins, sex == "female", body_mass_g >5000)
 
 ```
 
+
 ---
 ![operators](libs/images/operators.PNG)
+Boolean operators
+a & b --> and
+a | b --> or
+!a --> not
 
 ---
 # Default for filter is **&**
 
 These do the same exact thing
-
 ```{r}
 filter(.data = penguins, sex == "female", body_mass_g >5000)
 
@@ -178,12 +224,25 @@ filter(.data = penguins, sex == "female" & body_mass_g >5000)
 # Think, pair, share
 
 Use filter and boolean logical to show:
+#always need quotes for calling a character
 
 1. Penguins that were collected in *either* 2008 *or* 2009
+```{r}
+filter(.data = penguins, year == 2008 | year == 2009)
+```
+
 
 2. Penguins that *are not* from the island Dream
+```{r}
+filter(.data = penguins, island != "Dream")
+```
+
 
 3. Penguins in the species Adelie and Gentoo
+```{r}
+filter(.data = penguins, species %in% c("Adelie","Gentoo"))
+```
+
 
 ---
 # Common mistakes
@@ -193,12 +252,12 @@ penguins between 3000 and 5000 g
 ```{r}
 #Wrong
 filter(.data = penguins,
-       3000 < body_mass_g <5000) #<<
+       3000 < body_mass_g <5000) #
 
 #Right
 filter(.data = penguins, 
-       body_mass_g <5000, #<<
-       body_mass_g >3000 #<<
+       body_mass_g <5000, #need to recall both 
+       body_mass_g >3000 #can only have one logical statement per question
 
 ```
 
@@ -213,13 +272,15 @@ filter(.data = penguins,
 
 # Right
 filter(.data = penguins,
-       island %in% c("Dream","Biscoe")) #<<
+       island %in% c("Dream","Biscoe")) #pull from within
 
 ```
 
 
 ---
 ![syntax](libs/images/syntax.PNG)
+Common syntax
+every dplyr verb function follows 
 
 ---
 # mutate: add new columns
@@ -229,12 +290,14 @@ filter(.data = penguins,
 
 ---
 # mutate
-
 ![mutate](libs/images/mutate.PNG)
 
 ---
 # mutate
-
+*Create new columns*
+mutate(.data,...)
+* DATA = data frame to transform
+* ... = columns to make
 Add a new column converting body mass in g to kg and save the new dataframe
 
 ```{r}
@@ -250,11 +313,12 @@ View(data2)
 ### Change multiple columns at once
 ```{r}
 data2<-mutate(.data = penguins, 
-       body_mass_kg = body_mass_g/1000, #<<
-       bill_length_depth = bill_length_mm/bill_depth_mm) #<<
+       body_mass_kg = body_mass_g/1000, #new column
+       bill_length_depth = bill_length_mm/bill_depth_mm) #new column
 
-# convert mass to kg 
-# calculate the ratio of bill length to depth
+# both data frames now within data2
+# first line is convert mass to kg 
+# second line is calculate the ratio of bill length to depth
 
 View(data2)
 
@@ -262,12 +326,26 @@ View(data2)
 ---
 ## Mutating multiple columns at once based on some criteron (i.e. mutate all the numeric columns in one line)?
 
-On your own, look up *mutate_if()*, *mutate_at()*, *mutate_all()*
+On your own, look up
+* *mutate_if()* asks if its logical, eg log or squareroot everything
+* *mutate_at()* selects specific variables
+* *mutate_all()* mutates every single column in whatever way you want it to
 
 [Some examples here](https://dplyr.tidyverse.org/reference/mutate_all.html)
 
 ---
 ![ifelse](libs/images/ifelse.PNG)
+ifelse()
+Do conditional tests within mutate()
+
+ifelse(TEST,
+      VALUE_IF_TRUE,
+      VALUE_IF_FALSE)
+
+* TEST = a logical test
+* VALUE_IF_TRUE = what happens if test is true
+* VALUE_IF_FALSE = what happensif test is false
+
 
 ---
 # mutate with ifelse
@@ -275,7 +353,7 @@ On your own, look up *mutate_if()*, *mutate_at()*, *mutate_all()*
 ```{r}
 data2<- mutate(.data = penguins,
                after_2008 = ifelse(year>2008, "After 2008", "Before 2008"))
-
+# if the word is greater than 2008, what 
 View(data2)
 ```
 
@@ -285,8 +363,20 @@ View(data2)
 # Think, pair, share
 
 1. Use mutate to create a new column to add flipper length and body mass together
+```{r}
+data2<-mutate(penguins, 
+      length_body_mass = flipper_length_mm + body_mass_g) 
+view(data2)
+```
 
-1. Use mutate and ifelse to create a new column where body mass greater than 4000 is labeled as big and everything else is small 
+
+2. Use mutate and ifelse to create a new column where body mass greater than 4000 is labeled as big and everything else is small 
+```{r}
+data2<- mutate(.data = penguins,
+               big = ifelse(body_mass_g>4000, "big","small"))
+view(data2)
+```
+
 
 ---
 # What if you have multiple verbs that you want to do to the same dataframe?
@@ -319,21 +409,23 @@ me %>%
 ---
 # What about this new *native* pipe that I keep seeing on stack exchange?
 
-# %>%   
+# %>%   (need to load TidyVerse in order for it to run, more universal than native)
 # vs  
-# |>
+# |> 
 
 **magrittr** (from the tidyverse) vs **native** (new pipe that comes with base R so you don't need to load any libraries) 
 
 In this class I stick with %>%, but you are welcome to learn and use |>, with the understanding that there will be some minor differences in the code.
 
 [Please Read Here!](https://r4ds.hadley.nz/data-transform#sec-the-pipe)
+
+
 ---
 # %>%
 
 Filter only female penguins and add a new column that calculates the log body mass  
 When you use %>% the dataframe carries over so you don't need to write it out anymore
-
+* pipe and then new line, pipe and then new line, everything is connected
 
 ```{r}
 penguins %>% # use penguin dataframe
@@ -392,7 +484,7 @@ Calculate mean and mean flipper length
 # group_by
 You can summarize values by certain groups.  
 group_by() by itself doesn't do anything, but it is powerful when put before summarize.
-
+* use to make bar plots and standard errors in summary statistics
 
 Let's calculate the mean and max bill length by island
 
@@ -405,7 +497,7 @@ penguins %>%
 
 ---
 # group by
-
+Groupe by multiple things
 Group by both island **and** sex
 
 ```{r}
@@ -413,6 +505,8 @@ penguins %>%
   group_by(island, sex) %>% #<<
   summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
             max_bill_length = max(bill_length_mm, na.rm=TRUE))
+#sumarise() has grouped output by 'island'. you can override using the 
+# .groups argument
 ```
 
 
@@ -433,6 +527,7 @@ penguins %>%
 
 drop_na() 
   - drops rows with NAs from a specific column
+  - only use if you want to drop every single missing data from sex
 
 drop all the rows that are missing data on sex
 calculate mean bill length by sex
@@ -440,21 +535,23 @@ calculate mean bill length by sex
 ```{r}
 penguins %>%
   drop_na(sex) %>%
-  group_by(island, sex) %>% #<<
+  group_by(island, sex) %>% #cleans up NAs
   summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
 
 ```
 ---
 # Pipe into a ggplot
 You can connect your *data wrangling* to a ggplot with the pipe (you won't need to call the dataframe in ggplot if you pipe to it).
+* pipe straight into ggplot
 
 Drop NAs from sex, and then plot boxplots of flipper length by sex
 
 ```{r, fig.height=4}
 penguins %>%
   drop_na(sex) %>%
-  ggplot(aes(x = sex, y = flipper_length_mm)) + #<<
+  ggplot(aes(x = sex, y = flipper_length_mm)) + #go back to + when in ggplot
   geom_boxplot()
+#if you assign something to this it'll be a plot not a data set
 
 ```
 
@@ -462,7 +559,7 @@ penguins %>%
 # Before homeworks... "Totally Awesome R package of the day"
 
 ```{r, eval=FALSE}
-library(devtools) # load the development tools library
+library(devtoosls) # load the development tools library
 devtools::install_github("jhollist/dadjoke")
 ```
 
@@ -482,7 +579,21 @@ Write a script that:
 
 Include both part 1 and part 2 in your script and push it to github in the appropriate folders.
 
-----------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------
 
 ## Lecture 2: Data wrangling: tidyr
 

@@ -28,7 +28,7 @@ glimpse(penguins)
 Making plots for second lecture found after ggplot resources
 ggplot2 is a data visualization package  
 
-Structure of the plot can be summarized like this:
+### Structure of the plot can be summarized like this:
 ggplot(data = [dataset], 
        mapping = aes(x = [x-variable], 
                      y = [y-variable])) +
@@ -44,13 +44,13 @@ Measurements for penguin species, island in Palmer Archipelago, size (flipper le
 
 Set-up your script and don't forget to comment. _See script file_
 
-Script Sections
+### Script Sections
 -	Introduction to script
 -	Load your libraries
 -	Read in your data
 -	Data analysis and plotting
 
-Why you should always look at your data
+#### Why you should always look at your data
 -	We have to really understand our data to be able to decide on the appropriate analyses to answer our research questions. It can also lead to unexpected & interesting research questions. That requires first looking at your data, usually in a number of ways, to ask questions like:
 o	Are there interesting patterns, groups, trends or relationships?
 o	How are observations distributed?
@@ -214,6 +214,13 @@ Things that can be bad, or a symptom of badness
 -	Really creative fonts
 
 
+Correct code if you want to change a
+ggplot(data=penguins, 
+       mapping = aes(x = body_mass_g,
+                     y = flipper_length_mm)), color = "red" + 
+      geom_point()                    
+
+
 
 ### We will make this plot:
 ```{r}
@@ -230,7 +237,7 @@ ggplot(data=penguins, #should be comma in between every function
 ### Aesthetic Options. 
 * if directly related to data set, it goes in aesthetics
 * color, shape, size, alpha (transparency)
-* change everythihng related to title in labs function
+* change everythihng related to title in labs() function
 ```{r}
 ggplot(data=penguins,
        mapping = aes(x = bill_depth_mm,  
