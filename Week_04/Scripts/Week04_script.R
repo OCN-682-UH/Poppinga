@@ -206,12 +206,13 @@ dadjoke()
 #1)
 #calculate the mean and variance body mass by species, island, sex
 penguins %>%
-  drop_na(species, island, sex) %>%
-  group_by(species, island, sex) %>%
-  summarise(mean_body_mass = mean(body_mass_g, na.rm = TRUE),
-            variance_body_mass = var(body_mass_g, na.rm = TRUE)) %>%
+  drop_na(species, island, sex) %>% #removes NAs for species, island, and sex
+  group_by(species, island, sex) %>% #body mass by species, island, and sex
+  summarise(mean_body_mass = mean(body_mass_g, na.rm = TRUE), #remove NAs from body mass
+            variance_body_mass = var(body_mass_g, na.rm = TRUE)) %>% #calculate mean and variance
 #2)
-  filter(sex != "male") %>%
+  filter(sex != "male") %>% #filter out males
+  mutate(log_mass = log(body_mass_g)) %>% #calculate log body mass
 
 
 
