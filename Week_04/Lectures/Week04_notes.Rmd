@@ -27,8 +27,6 @@ ggsave
 # Intro to the {dplyr} package (part of the TidyVerse)
 Don't need to load dplyr. Just TidyVerse
 
-https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/fc9b748b-db96-4ed4-aa23-f6e0ffc866ee_rw_1920.jpg?h=8fa394b572089354aa87b1d602b0f887
-
 Illustrations from the Openscapes blog [Tidy Data for reproducibility, efficiency](https://www.openscapes.org/blog/2020/10/12/tidy-data/), and collaboration by Julia Lowndes and Allison Horst
 
 
@@ -66,8 +64,6 @@ glimpse(penguins)
 
 
 # Filter
-
-<img src ="https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/cb8d9c50-f48e-4c6d-a5b3-1d30ce0be2ad_rw_1920.png?h=1a879eda58a5efbf709ad0a59d784f98"/>
 
 dplyr::filter()
 call the package name first
@@ -281,9 +277,6 @@ every dplyr verb function follows
 
 
 # mutate: add new columns
-
-
-<img src ="https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/bd4ae264-ae51-4d18-bd60-7a058ab42fba_rw_1920.png?h=a3757d1f46f418c59e7e7946d026344e", width=70%/>
 
 # mutate
 [mutate](libs/images/mutate.PNG)
@@ -568,6 +561,35 @@ Write a script that:
 
 Include both part 1 and part 2 in your script and push it to github in the appropriate folders.
 
+```{r}
+penguins %>%
+  drop_na(species, island, sex, body_mass_g) %>% #removes NAs for species, island, and sex
+  group_by(species, island, sex, body_mass_g) %>% #body mass by species, island, and sex
+  summarise(mean_body_mass = mean(body_mass_g, na.rm = TRUE), #remove NAs from body mass
+            variance_body_mass = var(body_mass_g, na.rm = TRUE)) %>% #calculate mean and variance
+  filter(sex != "male") %>% #filter out males
+  mutate(log_mass = log(body_mass_g)) %>% #calculate log body mass
+  select(species, island, sex, log_mass) %>% #selects only the columns for species, island, sex, and log body mass
+```
+
+#Plot
+  
+```{r}
+ggplot(penguins,
+         mapping = aes(x = species,
+                       y = log_mass,
+                       color = island)) + 
+  geom_boxplot()+ 
+  geom_smooth(method = "lm")+
+  labs(x = "Species", 
+       y = "Log Body Mass (g)",
+       color = "Island",
+       title = "Log Body Mass of Female Penguin Species") +
+  scale_colour_ghibli_d("MarnieMedium1") +
+  theme_igray() +
+  theme(axis.title = element_text(size = 20),
+        panel.background = element_rect(fill = "linen"))
+```
 
 
 
@@ -588,11 +610,14 @@ NOTES
 * Pivot data between long and wide formats
 2. Export csv with summary statistics. 
 
+
 #### Review 
 1. What function do you use to subset rows by some criterion?
-* 
+* filter()
 
 2. How do I add a new column to my data frame?
+* mutate()
+
 
 ## Intro to the {tidyr} package (part of the TidyVerse)
 
@@ -639,29 +664,28 @@ View(ChemData_clean)
 ```
 
 Separate function
-We notice a silly column named Tide_time, which has tide (low/high) paired with time of day (day/night).
-
+We notice a silly column named Tide_time, which has tide (low/high) paired with time of day (day/night).  
 Nyssa did NOT follow directions for tidy data from the first week of class... Now we have to fix it.
+Fit is so just a column for time and just a column for tide
 
-
-Notice that I have two bits of information: Low_Day is low tide during the day. It would be way easier to plot and analyze the data if we separate those into separate columns.
+Notice that I have two bits of information: Low_Day is low tide during the day. It would be way easier to plot and analyze the data if we separate those into separate columns.  
 
 hit ?separate to see all the things you can do, but the simplest use is:
 
-separate(
-data = [data frame you are using],
-col = [column that you want to separate],
-into = [name of the new columns],
-sep = [what are you separating by?])
+separate(  
+data = [data frame you are using],  
+col = [column that you want to separate],  
+into = [name of the new columns],  (of different things)
+sep = [what are you separating by?]). 
 
 Let's continue to build off our data frame
 
 ```{r}
 ChemData_clean<-ChemData %>%
-  drop_na() %>% #filters out everything that is not a complete row
+  drop_na() %>% #filters out everything that is not a complete row, no NAs in data
   separate(col = Tide_time, # choose the tide time col
            into = c("Tide","Time"), # separate it into two columns Tide and time
-           sep = "_" ) # separate by _
+           sep = "_" ) # separate by _ (an underscore, can be seperated by whatever is between them in data set e.g ., etc.)
 head(ChemData_clean)
 ```
 
@@ -676,10 +700,12 @@ ChemData_clean<-ChemData %>%
 head(ChemData_clean)
 ```
 
+
 ### Unite
 What if we have the opposite problem and what to unite two columns into one?
 
-Let's say we want a new column that unites site with zone. We use the unite() function which has the same arguments as separate()
+Let's say we want a new column that unites site with zone column. B/c we want to make a plot that separates site and zone as the factor.  
+We use the unite() function which has the same arguments as separate() and brings 2 columns together.  
 
 
 What if we have the opposite problem and what to unite two columns into one?
@@ -699,16 +725,18 @@ ChemData_clean<-ChemData %>%
         remove = FALSE) # keep the original
 head(ChemData_clean)
 ```
+quotes for "Site_Zone" b/c telling it to make a column called that
 
-Pivoting the dataset between wide and long
-Review
+### Pivoting the dataset between wide and long. 
+Review. 
+
 Wide data
-One observation per row and all the different variables are columns
+* One observation per row and all the different variables are columns. 
 
 Long data
-One unique measurement per row and all the info about that measurement in the same row
+* One unique measurement per row and all the info about that measurement in the same row. 
 
-Pivoting between long and wide in R
+#### Pivoting between long and wide in R
 * Wide to long: pivot_longer()
 * Long to wide: pivot_wider()
 
@@ -721,15 +749,17 @@ Why is long format helpful?
 * Easier to summarize using group_by(). You would only need to group by the variable name to get all summary statistics for every variable
 * Easier to facet_wrap() by each variable if all the plots are going to be identical instead of making 10 individual plots
 
+Nyssa's data is wide
+
 
 ### Pivot_longer()
 Start with our ChemData_clean dataframe (note, you can also just pipe what we are about to do to your existing lines of code as well)
 
 ```{r}
 ChemData_long <-ChemData_clean %>%
-  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols
-               names_to = "Variables", # the names of the new cols with all the column names
-               values_to = "Values") # names of the new column with all the values
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. cols = columns you want to pull from This says select the temp to percent SGD cols,just biogeochem data)
+               names_to = "Variables", # the names of the new cols with all the column names, rename it
+               values_to = "Values") # names of the new column with all the values, extract just to values
 View(ChemData_long)
 ```
 
@@ -739,11 +769,11 @@ Let's calculate the mean and variance for all variables at each site
 
 ```{r}
 ChemData_long %>%
-  group_by(Variables, Site) %>% # group by everything we want
-  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean
+  group_by(Variables, Site) %>% # group by everything we want, (variables and site which are the column names)
+  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean of all parameters, exclude NAs
             Param_vars = var(Values, na.rm = TRUE)) # get variance
-## summarise() has grouped output by 'Variables'. You can override using the
-## .groups argument.
+## summarise() has grouped output by 'Variables'. You can override using the .groups argument.
+# made easier to calculate mean/variance for all parameters in just 2 lines of code
 ```
 
 
@@ -757,11 +787,143 @@ ChemData_long %>%
             Param_vars = var(Values, na.rm = TRUE)) # get variance
 ```
 
+```{r}
+ChemData_long %>%
+  group_by(Variables, Site, Zone, Tide) %>% # group by site, zone, and tide 
+  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean 
+            Param_vars = var(Values, na.rm = TRUE), # get variance
+            Param_sd = sd(Values, na.rm = TRUE)) # get standard deviation
+```
+
+
+Example using facet_wrap with long data
+Create boxplots of every parameter by site
+```{r}
+ChemData_long %>%
+  ggplot(aes(x = Site, y = Values))+ # raw values on y with site on x
+  geom_boxplot()+
+  facet_wrap(~Variables) #add in this to do facet as a function of variable
+#makes boxplot for every single variable
+# but all of the plots look the same because the scales don't work for every variable
+```
+
+```{r}
+ChemData_long %>%
+  ggplot(aes(x = Site, y = Values))+ 
+  geom_boxplot()+ 
+  facet_wrap(~Variables, scales = "free") #add in scales for each variable (min and max)
+#free scales the x and the y 
+# if only want to free x-axis --> free_x (keeps y same and changes x)
+```
+
+
+Let's say we got data in long format and need to convert it to wide. 
+We use pivot_wider()
+instead of names_to we use names_from
+```{r}
+ChemData_wide<-ChemData_long %>%
+  pivot_wider(names_from = Variables, # column with the names for the new columns, Variables already exists in dataframe
+              values_from = Values) # column with the values
+View(ChemData_wide)
+```
 
 
 
+Let's calculate some summary statistics and export the csv file
+Start from the beginning and work through our entire flow again, ending with data export.
+
+Remove all NAs.
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na()  #filters out everything that is not a complete row
+View(ChemData_clean) #view with every single line added in console
+```
 
 
+Separate Tide_time into two columns.
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE)
+```
+View(ChemData_clean)
+
+
+Pivot the data longer
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols
+               names_to = "Variables", # the names of the new cols with all the column names
+               values_to = "Values") # names of the new column with all the values
+```
+View(ChemData_clean)
+
+
+Group by Variable, Site, Time and calculate means.
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  
+               names_to = "Variables", # the names of the new cols with all the column names 
+               values_to = "Values") %>% # names of the new column with all the values 
+  group_by(Variables, Site, Time) %>%
+  summarise(mean_vals = mean(Values, na.rm = TRUE))
+```
+View(ChemData_clean)
+
+
+
+Convert back to wide
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  
+               names_to = "Variables", # the names of the new cols with all the column names 
+               values_to = "Values") %>% # names of the new column with all the values 
+  group_by(Variables, Site, Time) %>% # wamt averages for day and night for each of sites for all variables, take pivot longer set and pipe to group by function and pipe to summarise --> columns for each of these variables with their mean 
+  summarise(mean_vals = mean(Values, na.rm = TRUE)) %>%
+  pivot_wider(names_from = Variables, # pivot so all variables are on the top
+              values_from = mean_vals) # notice it is now mean_vals as the col name
+```
+View(ChemData_clean)
+
+
+
+Export the csv file of your summary statistics using write_csv().
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  
+               names_to = "Variables", # the names of the new cols with all the column names 
+               values_to = "Values") %>% # names of the new column with all the values 
+  group_by(Variables, Site, Time) %>% 
+  summarise(mean_vals = mean(Values, na.rm = TRUE)) %>%
+  pivot_wider(names_from = Variables, 
+              values_from = mean_vals) # notice it is now mean_vals as the col name
+  #write_csv(here("Week_04","output","summary.csv"))  # export as a csv to the right folder
+```
+## summarise() has grouped output by 'Variables', 'Site'. You can override using
+## the .groups argument.
 
 
 
@@ -777,21 +939,21 @@ Using the chemistry data:
 - Make any kind of plot (it cannot be a boxplot) and export it into the output folder
 - Make sure you comment your code and your data, outputs, and script are in the appropriate folders
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols  
+               names_to = "Variables", # the names of the new cols with all the column names 
+               values_to = "Values") %>% # names of the new column with all the values 
+  group_by(Variables, Site, Time) %>% 
+  summarise(mean_vals = mean(Values, na.rm = TRUE)) %>%
+  pivot_wider(names_from = Variables, 
+              values_from = mean_vals) # 
+```
 
 
 
