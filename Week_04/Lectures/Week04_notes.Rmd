@@ -14,7 +14,7 @@ Homework
 
 [dplyr cheat sheet.](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf) Download this now to use as a resource.
 
---
+
 # Review
 
 1. Where do I change the font size of my x and y labels?
@@ -24,18 +24,16 @@ Theme
 ggsave
 
 
---
 # Intro to the {dplyr} package (part of the TidyVerse)
 Don't need to load dplyr. Just TidyVerse
 
-<img src = "https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/fc9b748b-db96-4ed4-aa23-f6e0ffc866ee_rw_1920.jpg?h=8fa394b572089354aa87b1d602b0f887", width=70% />
-]
+https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/fc9b748b-db96-4ed4-aa23-f6e0ffc866ee_rw_1920.jpg?h=8fa394b572089354aa87b1d602b0f887
 
 Illustrations from the Openscapes blog [Tidy Data for reproducibility, efficiency](https://www.openscapes.org/blog/2020/10/12/tidy-data/), and collaboration by Julia Lowndes and Allison Horst
 
---
+
 # dplyr: verbs for manipulating data
-![verbs](libs/images/dplyr_verbs.PNG)
+[verbs](libs/images/dplyr_verbs.PNG)
 
 filtering extracts rows
 select() extracts columns
@@ -43,7 +41,7 @@ arrange()
 mutate() adds new columns, same length of rows but longer
 group_by() %>% summarize() makes shorter
 
---
+
 # Penguin data again.
 
 ```{r}
@@ -66,7 +64,7 @@ glimpse(penguins)
 
 ```
 
---
+
 # Filter
 
 <img src ="https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/cb8d9c50-f48e-4c6d-a5b3-1d30ce0be2ad_rw_1920.png?h=1a879eda58a5efbf709ad0a59d784f98"/>
@@ -77,7 +75,7 @@ filter(df, type == "otter" & site == "blah")
 
 == reads as is exactly equal to
 
---
+
 #Filter 
 ### Extract rows that meet some critera
 
@@ -91,7 +89,7 @@ filter(df, type == "otter" & site == "blah")
 * ... = One or more criteria  
 filter() returns each row for which the criteria is TRUE
 
---
+
 # filter only the female penguins
 ### As always, exact spelling and capitalization matters
 
@@ -100,7 +98,7 @@ Before filtering
 head(penguins)
 ```
 
---
+
 # filter only the female penguins
 ### As always, exact spelling and capitalization matters
 
@@ -111,7 +109,6 @@ filter(.data = penguins, sex == "female" )
 is sex exactly equal to female?
 argument = .data
 
---
 # filter
 
 ```{r}
@@ -123,10 +120,10 @@ One = sets an argument in the function
 
 Two == reads as "is exactly equal to." It is a question that returns a TRUE or FALSE.  Here, filter keeps every TRUE
 
---
+
 # A list of logical expressions 
 
-![logicals](libs/images/logical_test.PNG)
+[logicals](libs/images/logical_test.PNG)
 
 Test Meaning
 x < y less than
@@ -141,7 +138,7 @@ is.na(x) is missing
 
 Note: these used universally in all coding languages
 
---
+
 # How would I use filter to...
 
 1. Penguins measured in the year 2008?
@@ -158,13 +155,13 @@ filter(.data = penguins,
 ```
 
 
---
+
 
 # Think, pair, share.  
 
 Spend 2 minutes to *think* about it. Spend 2 minutes *paired* with a neighbor to discuss your answers. *Share* with the class.
 
---
+
 # Common mistakes
 
 ## Using = instead of ==
@@ -189,7 +186,7 @@ filter(.data = penguins,
 ```
  
 
---
+
 
 # Filter with multiple conditions
 
@@ -201,14 +198,14 @@ filter(.data = penguins, sex == "female", body_mass_g >5000)
 ```
 
 
---
-![operators](libs/images/operators.PNG)
+
+[operators](libs/images/operators.PNG)
 Boolean operators
 a & b --> and
 a | b --> or
 !a --> not
 
---
+
 # Default for filter is **&**
 
 These do the same exact thing
@@ -219,7 +216,7 @@ filter(.data = penguins, sex == "female" & body_mass_g >5000)
 
 ```
 
---
+
 
 # Think, pair, share
 
@@ -244,7 +241,7 @@ filter(.data = penguins, species %in% c("Adelie","Gentoo"))
 ```
 
 
---
+
 # Common mistakes
 
 ### Collapsing multiple tests into one 
@@ -277,22 +274,21 @@ filter(.data = penguins,
 ```
 
 
---
-![syntax](libs/images/syntax.PNG)
+
+[syntax](libs/images/syntax.PNG)
 Common syntax
 every dplyr verb function follows 
 
---
+
 # mutate: add new columns
 
 
 <img src ="https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/bd4ae264-ae51-4d18-bd60-7a058ab42fba_rw_1920.png?h=a3757d1f46f418c59e7e7946d026344e", width=70%/>
 
---
 # mutate
-![mutate](libs/images/mutate.PNG)
+[mutate](libs/images/mutate.PNG)
 
---
+
 # mutate
 *Create new columns*
 mutate(.data,...)
@@ -308,7 +304,7 @@ View(data2)
 
 ```
 
---
+
 
 ### Change multiple columns at once
 ```{r}
@@ -323,7 +319,7 @@ data2<-mutate(.data = penguins,
 View(data2)
 
 ```
---
+
 ## Mutating multiple columns at once based on some criteron (i.e. mutate all the numeric columns in one line)?
 
 On your own, look up
@@ -333,8 +329,8 @@ On your own, look up
 
 [Some examples here](https://dplyr.tidyverse.org/reference/mutate_all.html)
 
---
-![ifelse](libs/images/ifelse.PNG)
+
+[ifelse](libs/images/ifelse.PNG)
 ifelse()
 Do conditional tests within mutate()
 
@@ -347,7 +343,7 @@ ifelse(TEST,
 * VALUE_IF_FALSE = what happensif test is false
 
 
---
+
 # mutate with ifelse
 
 ```{r}
@@ -359,7 +355,6 @@ View(data2)
 
 
 
---
 # Think, pair, share
 
 1. Use mutate to create a new column to add flipper length and body mass together
@@ -378,10 +373,10 @@ view(data2)
 ```
 
 
---
+
 # What if you have multiple verbs that you want to do to the same dataframe?
 
---
+
 
 # The pipe  
 # %>%
@@ -393,7 +388,7 @@ Dataframe %>%  # select the dataframe **and then**
 
 >verb2()      # do verb 2
 
---
+
 # %>%
 
 
@@ -404,7 +399,7 @@ me %>%
   get_dressed(pants = TRUE, shirt = TRUE) %>%
   leave_house(car = TRUE)
 
---
+
 # What about this new *native* pipe that I keep seeing on stack exchange?
 
 # %>%   (need to load TidyVerse in order for it to run, more universal than native)
@@ -418,7 +413,6 @@ In this class I stick with %>%, but you are welcome to learn and use |>, with th
 [Please Read Here!](https://r4ds.hadley.nz/data-transform#sec-the-pipe)
 
 
---
 # %>%
 
 Filter only female penguins and add a new column that calculates the log body mass  
@@ -432,7 +426,7 @@ penguins %>% # use penguin dataframe
 
 ```
 
---
+
 # Select
 
 Use select() to select certain columns to remain in the dataframe
@@ -445,7 +439,7 @@ penguins %>% # use penguin dataframe
 
 ```
 
---
+
 # Select
 
 You can also use select() to rename columns.  
@@ -458,7 +452,7 @@ penguins %>% # use penguin dataframe
   select(Species = species, island, sex, log_mass)
 
 ```
---
+
 # Summarize 
  Computer a table of summarized data  
   Calculate the mean flipper length (and exclude any NAs)
@@ -468,7 +462,6 @@ penguins %>% # use penguin dataframe
   summarise(mean_flipper = mean(flipper_length_mm, na.rm=TRUE)) #<<
 ```
 
---
 
 Calculate mean and mean flipper length
  
@@ -478,7 +471,7 @@ Calculate mean and mean flipper length
             min_flipper = min(flipper_length_mm, na.rm=TRUE))   #<<
 ```
 
---
+
 # group_by
 You can summarize values by certain groups.  
 group_by() by itself doesn't do anything, but it is powerful when put before summarize.
@@ -493,7 +486,7 @@ penguins %>%
             max_bill_length = max(bill_length_mm, na.rm=TRUE))
 ```
 
---
+
 # group by
 Groupe by multiple things
 Group by both island **and** sex
@@ -508,7 +501,7 @@ penguins %>%
 ```
 
 
---
+
 # remove NAs
 
 drop_na() 
@@ -520,7 +513,7 @@ penguins %>%
   drop_na(sex) #<<
 
 ```
---
+
 # remove NAs
 
 drop_na() 
@@ -537,7 +530,7 @@ penguins %>%
   summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
 
 ```
---
+
 # Pipe into a ggplot
 You can connect your *data wrangling* to a ggplot with the pipe (you won't need to call the dataframe in ggplot if you pipe to it).
 * pipe straight into ggplot
@@ -553,7 +546,7 @@ penguins %>%
 
 ```
 
---
+
 # Before homeworks... "Totally Awesome R package of the day"
 
 
@@ -564,7 +557,7 @@ library(dadjoke)
 dadjoke()
 
 
---
+
 # Homework
 
 Write a script that:
@@ -580,11 +573,198 @@ Include both part 1 and part 2 in your script and push it to github in the appro
 
 
 
+######################################################################
+
+### Week 4b
+### Data Wrangling: tidyr
+### Created by: Haley Poppinga
+### Created on: 2025_09_16
+###########################################
+
+NOTES
+
+1. Intro to {tidyr}. 
+* Separate and unite columns
+* Pivot data between long and wide formats
+2. Export csv with summary statistics. 
+
+#### Review 
+1. What function do you use to subset rows by some criterion?
+* 
+
+2. How do I add a new column to my data frame?
+
+## Intro to the {tidyr} package (part of the TidyVerse)
+
+New dataset!
+We are going to use a subset of data from Silbiger et al. 2020 Proceedings of the Royal Society: B.
+
+In the data folder for this week in Fall-2025, you will see two .csv files:
+
+chemicaldata_manualua.csv
+chem_data_dictionary.csv
+Move both of them to the data folder of YOUR repo.
+
+Explore the data dictionary to understand what you will be working with.
+
+Basics: I collected biogeochemistry data at sites in Hawai'i with submarine groundwater discharge (fresh groundwater that flows into coastal oceans through cracks in the reef plate). We have data on nutrient and carbonate chemistry from two sites, two seasons, high and low tide, and during the day and night.
+
+
+
+### Created by: Haley Poppinga
+### Created on: 2025_09_16
+###########################################
+
+### Load libraries ########## 
+```{r}
+library(tidyverse)
+library(here)
+library(ggplot2)
+```
+
+### Read in data ###
+```{r}
+ChemData<-read_csv(here("Week_04","data", "chemicaldata_maunalua.csv"))
+View(ChemData)
+glimpse(ChemData)
+```
+
+There are several ways we can remove all the NAs in a data set
+### Data Analysis ###
+```{r}
+#Remove NAs
+ChemData_clean<-ChemData %>%
+  filter(complete.cases(.)) #filters out everything that is not a complete row
+View(ChemData_clean)
+```
+
+Separate function
+We notice a silly column named Tide_time, which has tide (low/high) paired with time of day (day/night).
+
+Nyssa did NOT follow directions for tidy data from the first week of class... Now we have to fix it.
+
+
+Notice that I have two bits of information: Low_Day is low tide during the day. It would be way easier to plot and analyze the data if we separate those into separate columns.
+
+hit ?separate to see all the things you can do, but the simplest use is:
+
+separate(
+data = [data frame you are using],
+col = [column that you want to separate],
+into = [name of the new columns],
+sep = [what are you separating by?])
+
+Let's continue to build off our data frame
+
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_" ) # separate by _
+head(ChemData_clean)
+```
+
+Notice this deletes the original column. If we wanted to keep it we would add remove = FALSE.
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% 
+  separate(col = Tide_time, 
+           into = c("Tide","Time"), 
+           sep = "_", 
+           remove = FALSE) # keep the original tide_time column
+head(ChemData_clean)
+```
+
+### Unite
+What if we have the opposite problem and what to unite two columns into one?
+
+Let's say we want a new column that unites site with zone. We use the unite() function which has the same arguments as separate()
+
+
+What if we have the opposite problem and what to unite two columns into one?
+
+Let's say we want a new column that unites site with zone. We use the unite() function which has the same arguments as separate()
+
+```{r}
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_", # separate by _
+           remove = FALSE) %>% # keep the original tide_time column
+  unite(col = "Site_Zone", # the name of the NEW col
+         c(Site,Zone), # the columns to unite
+        sep = ".", # lets put a . in the middle
+        remove = FALSE) # keep the original
+head(ChemData_clean)
+```
+
+Pivoting the dataset between wide and long
+Review
+Wide data
+One observation per row and all the different variables are columns
+
+Long data
+One unique measurement per row and all the info about that measurement in the same row
+
+Pivoting between long and wide in R
+* Wide to long: pivot_longer()
+* Long to wide: pivot_wider()
+
+Let's pivot our data so that it is in long format.
+* We want one column with all the names of the biogeochemical parameters (i.e., NN, P, Si, etc)
+* Paired with one column with all the values associated with those variables
+* We want all the metadata (lat, long, tide, etc.) to be preserved in the correct order
+
+Why is long format helpful?
+* Easier to summarize using group_by(). You would only need to group by the variable name to get all summary statistics for every variable
+* Easier to facet_wrap() by each variable if all the plots are going to be identical instead of making 10 individual plots
+
+
+### Pivot_longer()
+Start with our ChemData_clean dataframe (note, you can also just pipe what we are about to do to your existing lines of code as well)
+
+```{r}
+ChemData_long <-ChemData_clean %>%
+  pivot_longer(cols = Temp_in:percent_sgd, # the cols you want to pivot. This says select the temp to percent SGD cols
+               names_to = "Variables", # the names of the new cols with all the column names
+               values_to = "Values") # names of the new column with all the values
+View(ChemData_long)
+```
+
+
+What can we do with the long data set?
+Let's calculate the mean and variance for all variables at each site
+
+```{r}
+ChemData_long %>%
+  group_by(Variables, Site) %>% # group by everything we want
+  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean
+            Param_vars = var(Values, na.rm = TRUE)) # get variance
+## summarise() has grouped output by 'Variables'. You can override using the
+## .groups argument.
+```
+
+
+Calculate mean, variance, and standard deviation for all variables by site, zone, and tide
+
+Here is your starter code:
+```{r}
+ChemData_long %>%
+  group_by(Variables, Site) %>% # group by everything we want 
+  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean 
+            Param_vars = var(Values, na.rm = TRUE)) # get variance
+```
 
 
 
 
---
+
+
+
+
+
 # Homework
 
 Using the chemistry data:

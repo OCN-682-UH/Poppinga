@@ -221,13 +221,44 @@ penguins %>%
 
 #then calculates the log body mass
 
+################################################################################
+
+### Week 4b Lecture
+### Today we are going to practice tidy with biogeochemistry data from Hawaii ####
+### Created by: Haley Poppinga #############
+### Updated on: 2025-09-16 ####################
 
 
 
+#### Load Libraries ######
+library(tidyverse)
+library(here)
 
 
 
+### Load data ######
+ChemData<-read_csv(here("Week_04","data", "chemicaldata_maunalua.csv"))
+View(ChemData)
+glimpse(ChemData)
 
+#Remove NAs
+ChemData_clean<-ChemData %>%
+  filter(complete.cases(.)) #filters out everything that is not a complete row
+View(ChemData_clean)
+
+#Separate
+ChemData_clean<-ChemData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time col
+           into = c("Tide","Time"), # separate it into two columns Tide and time
+           sep = "_" ) # separate by _
+head(ChemData_clean)
+
+#
+  
+  
+  
+  
 
 
 
