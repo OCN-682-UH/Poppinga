@@ -53,12 +53,12 @@ penguins %>%
        y = "Log Body Mass (g)",
        color = "Island",
        title = "Log Body Mass of Female Penguin Species") +
-  scale_colour_ghibli_d("MarnieMedium1") +
+  scale_colour_ghibli_d("PonyoMedium") +
   theme_igray() +
   theme(axis.title = element_text(size = 20),
         panel.background = element_rect(fill = "linen"))
 
-#ggsave
+ggsave(here("Week_04","Output","Week04_homework01_plot.jpg")) #saving to correct folder
 
 
 ###############################################
@@ -90,16 +90,18 @@ glimpse(ChemData)
 
 #Remove NAs
 ChemData_clean<-ChemData %>%
+  filter(complete.cases(.)) %>% #filters out everything that is not a complete row
   drop_na() %>% #filters out everything that is not a complete row
   separate(col = Tide_time, # choose the tide time column
            into = c("Tide","Time"), # separate it into two columns tide and time
            sep = "_", # separate by 
            remove = FALSE) %>% # keep the original tide_time column
-  filter() %>%
-  pivot_wider(cols = Temp_in:percent_sgd, # pivot the data wider
+  filter(ChemData_clean,
+         Salinity == 27) %>%
+  pivot_wider(cols = pH:percent_sgd, # pivot the data wider
               names_from = "Variables",
               values_from = "Values") %>%
-  group_by(Variables, Site, Zone, Tide) %>% # group by site, zone, and tide 
+  group_by(Variables, Zone, pH, percent_sgd) %>% # group by zone, pH, and SDG%
   summarise(Param_means = mean(Values, na.rm = TRUE), # get mean 
             Param_vars = var(Values, na.rm = TRUE), # get variance
             Param_sd = sd(Values, na.rm = TRUE)) # get standard deviation
@@ -108,19 +110,20 @@ ChemData_clean<-ChemData %>%
 
 #Plot
 ggplot(ChemData_clean, #fix
-       mapping = aes(x = species,
-                     y = log_mass,
-                     color = island)) + 
-  geom_boxplot()+ 
-  geom_smooth(method = "lm")+
-  labs(x = "Species", 
-       y = "Log Body Mass (g)",
-       color = "Island",
-       title = "Log Body Mass of Female Penguin Species") +
+       mapping = aes(x = Lat,
+                     y = Long,
+                     z = pH,
+                     fill = Zone)) + 
+  geom_contour_filled()+ 
+  stat_contour_filled(aes(fill = pH))+
+  labs(x = "Precent SGD", 
+       y = "pH",
+       color = "Waypoint",
+       fill = "Zone",
+       title = "Percent SGD and pH in Maunalua Bay Zones") +
   scale_colour_ghibli_d("MarnieMedium2") +
   theme_igray() +
-#  theme(axis.title = element_text(size = 20),
- #       panel.background = element_rect(fill = ""))
+  theme(axis.title = element_text(size = 20))
 
 
 

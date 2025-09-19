@@ -257,11 +257,11 @@ filter(.data = penguins,
 ### Using multiple tests instead of %in%
 penguins in dream and biscoe
 
-```{r, eval=FALSE}
+```{r}
 # Wrong
-filter(.data = penguins,
-       island == "Dream", #<<
-       island == "Biscoe") #<<
+#filter(.data = penguins,
+ #      island == "Dream", #<<
+  #     island == "Biscoe") #<<
 
 # Right
 filter(.data = penguins,
