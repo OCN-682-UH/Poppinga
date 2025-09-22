@@ -3,6 +3,18 @@
 ### Created on: 2025_09_16
 ###########################################
 
+#Homework 4a
+# dplyr
+#Write a script that:
+#1) calculates the mean and variance of body mass by species, island, and sex without any NAs
+#2) filters out (i.e. excludes) male penguins, then calculates the log body mass, 
+# then selects only the columns for species, island, sex, and log body mass, 
+# then use these data to make any plot. 
+# Make sure the plot has clean and clear labels and follows best practices. 
+# Save the plot in the correct output folder.
+#view(palmerpenguins)
+
+
 ### Load libraries ########## 
 library(tidyverse)
 library(here)
@@ -16,20 +28,6 @@ library(ggthemes)
 glimpse(penguins) 
 
 ### Data Analysis ###
-
-
-
-#Homework 4a
-# dplyr
-#Write a script that:
-#1) calculates the mean and variance of body mass by species, island, and sex without any NAs
-#2) filters out (i.e. excludes) male penguins, then calculates the log body mass, 
-# then selects only the columns for species, island, sex, and log body mass, 
-# then use these data to make any plot. 
-# Make sure the plot has clean and clear labels and follows best practices. 
-# Save the plot in the correct output folder.
-view(palmerpenguins)
-
 
 #1)
 #calculate the mean and variance body mass by species, island, sex
@@ -83,6 +81,7 @@ library(dplyr)
 library(tidyr)
 library(ghibli) 
 library(ggthemes)
+library(akima)
 
 ### Load data ######
 ChemData<-read_csv(here("Week_04","data", "chemicaldata_maunalua.csv"))
@@ -108,31 +107,58 @@ ChemData_long <- ChemData_clean %>% # pivot the data longer
 # Summarise
 ChemData_HW_summary <- ChemData_long %>%
   group_by(Zone, Variable) %>% # group by zone and variables
-  summarise(Param_means = mean(Value, na.rm = TRUE), # get mean 
-            Param_vars = var(Value, na.rm = TRUE), # get variance
+  summarise(Param_mean = mean(Value, na.rm = TRUE), # get mean 
+            Param_var = var(Value, na.rm = TRUE), # get variance
             Param_sd = sd(Value, na.rm = TRUE)) # get standard deviation
-#write_csv(here("Week_04","Output","Chem_Data_homework_summary.csv")) # export csv file of your summary statistics using write_csv()
+write_csv(ChemData_HW_summary, here("Week_04","Output","Chem_Data_homework_summary.csv")) # export csv file of your summary statistics using write_csv()
 
-#Plot
-ggplot(ChemData_clean, 
+
+# Want to make a cool contour plot and without this initial part, R was plotting it as a scatterplot 
+# Interpolate pH onto a grid
+interp_data <- with(ChemData_clean, akima::interp(x = Lat, y = Long, z = pH, duplicate = "mean"))
+# Convert to data frame for ggplot
+grid_df <- expand.grid(
+  Lat = interp_data$x,
+  Long = interp_data$y)
+grid_df$pH <- as.vector(interp_data$z)
+
+# Plot
+ggplot(grid_df, 
        aes(x = Lat, 
            y = Long, 
            z = pH)) +
-  geom_contour_filled(aes(fill = ..level..)) +  # contour levels from pH
-  geom_point(aes(color = Zone), size = 3) +
+  geom_contour_filled(aes(fill = after_stat(level)), # contour levels from pH
+                      breaks = seq(8.0, 8.1, by = 0.01)) +  # increase contour resolution
   labs(x = "Latitude", 
        y = "Longitude",
        fill = "pH",
-       title = "pH Contours in Maunalua Bay Zones") +
-  scale_fill_viridis_d(option = "plasma") +     # nicer colors
+       title = "Interpolated pH Contours in Maunalua Bay") +
+  scale_fill_ghibli_d("MarnieMedium1") + # nicer colors
   theme_igray() +
   theme(axis.title = element_text(size = 20))
 
-#ggsave(here("Week_04","Output","Week04_homework_plot02.jpg")) #saving to correct folder
-#ggsave("output/pH_contour_plot.png", p, width = 7, height = 5, dpi = 300)
+ggsave(here("Week_04","Output","Week04_homework_plot02.jpg")) #saving to correct folder
 
 
 
+
+
+# Ignore This Below!
+
+#old code before I had to interpolate data
+#ggplot(ChemData_clean, 
+#       aes(x = Lat, 
+#           y = Long, 
+#          z = pH)) +
+#  geom_contour_filled(aes(fill = ..level..)) +  # contour levels from pH
+#  geom_point(aes(color = Zone), size = 3) +
+#  labs(x = "Latitude", 
+#       y = "Longitude",
+#       fill = "pH",
+#       title = "pH Contours in Maunalua Bay Zones") +
+#  scale_fill_viridis_d(option = "plasma") +     # nicer colors
+#  theme_igray() +
+#  theme(axis.title = element_text(size = 20))
 
 
 #ignore this incorrect code
@@ -146,7 +172,7 @@ ggplot(ChemData_clean,
 #                     fill = Zone)) + 
 #  geom_contour_filled()+ 
 #  stat_contour_filled(aes(fill = pH))+
-#  labs(x = "Precent SGD", 
+#  labs(x = "Percent SGD", 
 #       y = "pH",
 #       color = "Waypoint",
 #       fill = "Zone",

@@ -1,0 +1,6 @@
+---
+title: "Week05 Notes"
+author: "Haley Poppinga"
+date: "2025-09-22"
+output: github_document
+---
