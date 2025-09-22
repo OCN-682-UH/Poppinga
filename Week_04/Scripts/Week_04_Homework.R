@@ -56,7 +56,7 @@ penguins %>%
   theme(axis.title = element_text(size = 20),
         panel.background = element_rect(fill = "linen"))
 
-ggsave(here("Week_04","Output","Week04_homework_plot01.jpg")) #saving to correct folder
+ggsave(here("Week_04","Output","logbodymass_HW4a.png")) #saving to correct folder
 
 
 ###############################################
@@ -137,7 +137,7 @@ ggplot(grid_df,
   theme_igray() +
   theme(axis.title = element_text(size = 20))
 
-ggsave(here("Week_04","Output","Week04_homework_plot02.jpg")) #saving to correct folder
+ggsave(here("Week_04","Output","chemdata_HW4b.png")) #saving to correct folder
 
 
 
