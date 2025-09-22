@@ -58,7 +58,7 @@ penguins %>%
   theme(axis.title = element_text(size = 20),
         panel.background = element_rect(fill = "linen"))
 
-ggsave(here("Week_04","Output","Week04_homework01_plot.jpg")) #saving to correct folder
+ggsave(here("Week_04","Output","Week04_homework_plot01.jpg")) #saving to correct folder
 
 
 ###############################################
@@ -79,6 +79,8 @@ ggsave(here("Week_04","Output","Week04_homework01_plot.jpg")) #saving to correct
 library(tidyverse)
 library(here)
 library(ggplot2)
+library(dplyr)
+library(tidyr)
 library(ghibli) 
 library(ggthemes)
 
@@ -88,49 +90,70 @@ View(ChemData)
 glimpse(ChemData)
 #groundwater, high and low tide during day and night
 
-#Remove NAs
+# Clean Data and Remove NAs
 ChemData_clean<-ChemData %>%
-  filter(complete.cases(.)) %>% #filters out everything that is not a complete row
   drop_na() %>% #filters out everything that is not a complete row
   separate(col = Tide_time, # choose the tide time column
            into = c("Tide","Time"), # separate it into two columns tide and time
            sep = "_", # separate by 
            remove = FALSE) %>% # keep the original tide_time column
-  filter(ChemData_clean,
-         Salinity == 27) %>%
-  pivot_wider(cols = pH:percent_sgd, # pivot the data wider
-              names_from = "Variables",
-              values_from = "Values") %>%
-  group_by(Variables, Zone, pH, percent_sgd) %>% # group by zone, pH, and SDG%
-  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean 
-            Param_vars = var(Values, na.rm = TRUE), # get variance
-            Param_sd = sd(Values, na.rm = TRUE)) # get standard deviation
+  filter(Salinity > 27) # subset choice (salinity greater than 27)
 
-#write_csv(here("Week_04","Output","HWsummary.csv")) # export csv file of your summary statistics using write_csv()
+# Pivot Longer
+ChemData_long <- ChemData_clean %>% # pivot the data longer
+  pivot_longer(cols = c(pH, percent_sgd), 
+               names_to = "Variable",    #pH or percent_sgd column
+               values_to = "Value")  # measurement and all metadata
+
+# Summarise
+ChemData_HW_summary <- ChemData_long %>%
+  group_by(Zone, Variable) %>% # group by zone and variables
+  summarise(Param_means = mean(Value, na.rm = TRUE), # get mean 
+            Param_vars = var(Value, na.rm = TRUE), # get variance
+            Param_sd = sd(Value, na.rm = TRUE)) # get standard deviation
+#write_csv(here("Week_04","Output","Chem_Data_homework_summary.csv")) # export csv file of your summary statistics using write_csv()
 
 #Plot
-ggplot(ChemData_clean, #fix
-       mapping = aes(x = Lat,
-                     y = Long,
-                     z = pH,
-                     fill = Zone)) + 
-  geom_contour_filled()+ 
-  stat_contour_filled(aes(fill = pH))+
-  labs(x = "Precent SGD", 
-       y = "pH",
-       color = "Waypoint",
-       fill = "Zone",
-       title = "Percent SGD and pH in Maunalua Bay Zones") +
-  scale_colour_ghibli_d("MarnieMedium2") +
+ggplot(ChemData_clean, 
+       aes(x = Lat, 
+           y = Long, 
+           z = pH)) +
+  geom_contour_filled(aes(fill = ..level..)) +  # contour levels from pH
+  geom_point(aes(color = Zone), size = 3) +
+  labs(x = "Latitude", 
+       y = "Longitude",
+       fill = "pH",
+       title = "pH Contours in Maunalua Bay Zones") +
+  scale_fill_viridis_d(option = "plasma") +     # nicer colors
   theme_igray() +
   theme(axis.title = element_text(size = 20))
 
+#ggsave(here("Week_04","Output","Week04_homework_plot02.jpg")) #saving to correct folder
+#ggsave("output/pH_contour_plot.png", p, width = 7, height = 5, dpi = 300)
 
 
 
 
 
-
+#ignore this incorrect code
+#group_by(Variables, Zone, pH, percent_sgd) %>% # group by zone, pH, and SDG%
+  
+  
+#ggplot(ChemData_clean, #fix
+#       mapping = aes(x = Lat,
+#                     y = Long,
+#                     z = pH,
+#                     fill = Zone)) + 
+#  geom_contour_filled()+ 
+#  stat_contour_filled(aes(fill = pH))+
+#  labs(x = "Precent SGD", 
+#       y = "pH",
+#       color = "Waypoint",
+#       fill = "Zone",
+#       title = "Percent SGD and pH in Maunalua Bay Zones") +
+#  scale_colour_ghibli_d("MarnieMedium2") +
+#  theme_igray() +
+#  theme(axis.title = element_text(size = 20))
 
 
 
