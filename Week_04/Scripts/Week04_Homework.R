@@ -137,7 +137,7 @@ ggplot(grid_df,
   theme_igray() +
   theme(axis.title = element_text(size = 20))
 
-ggsave(here("Week_04","Output","chemdata_HW4b.png")) #saving to correct folder
+ggsave(here("Week_04","Output","chemdata_HW4b.png"),width=9, height=5)) #saving to correct folder
 
 
 
