@@ -20,17 +20,22 @@ library(ghibli)
 # Environmental data from each site
 EnviroData<-read_csv(here("Week_05","data", "site.characteristics.data.csv"))
 
+
 #Thermal performance data
 TPCData<-read_csv(here("Week_05","data","Topt_data.csv"))
 glimpse(EnviroData)
 glimpse(TPCData)
 # also use View()
 
+#other ways to view
+names(TPCData[,c(3:7)])
+unique(EnviroData$parameter.measured)
+
 #Pivot the data
 EnviroData_wide <- EnviroData %>% 
   pivot_wider(names_from = parameter.measured,
               values_from = values)
-View(EnviroData_wide)
+View(EnviroData_wide) #site.letter is not in order
 
 #Sort the data
 EnviroData_wide <- EnviroData %>% 
@@ -41,9 +46,15 @@ View(EnviroData_wide)
 
 
 #left_join(x, y)
+#takes everything thats in the x and put it in the y
 FullData_left<- left_join(TPCData, EnviroData_wide)
-## Joining with by = join_by(site.letter)
 head(FullData_left)
+
+## Joining with by = join_by(site.letter)
+# join_by this column is written the exact same way in both data frames
+# = join_by is an argument
+# can be helpful when you don't have the same names for data columns 
+
 
 
 #relocate
@@ -52,14 +63,53 @@ FullData_left<- left_join(TPCData, EnviroData_wide) %>%
 ## Joining with by = join_by(site.letter)
 head(FullData_left)
 
+
+# usually you want your data to be wide but sometimes you have to pivot long
+View(FullData_left)
+names(FullData_left)
+# Think Pair Share
 #  calculate the mean and variance of all collected (TPC and environmental) data by site. 
 # (Hint: you can either use one of the summarise_at() functions or pivot the data longer to do this in less code)
+FullData_left_long <- FullData_left %>% #rename it to an object
+  drop_na() %>% # remove all NAs
+  pivot_longer(c(E:substrate.cover),
+               names_to = "Variables",
+               values_to = "Values") %>%
+  group_by(site.letter) %>% # group by site
+  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean 
+            Param_vars = var(Values, na.rm = TRUE)) # get variance
+View(FullData_left_long)
+#idk if correct
+
+FullData_left_long <- FullData_left %>% #rename it to an object
+  drop_na() %>% # remove all NAs
+  pivot_longer(cols = E:substrate.cover,
+               names_to = "Variables",
+               values_to = "Values") %>%
+  group_by(site.letter, Variables) %>% # group by site
+  summarise(Param_means = mean(Values, na.rm = TRUE), # get mean 
+            Param_vars = var(Values, na.rm = TRUE)) # get variance
+View(FullData_left_long)
+
+#another way
+FullData_left_long <- FullData_left %>%
+  group_by(site.letter, name) %>%
+  summarise(across(E:substrate.cover,
+                   list(mean = mean,
+                        var = var)),
+            .groups = "drop")
+
 
 #Creating your own tibble
 # Make 1 tibble
 T1 <- tibble(Site.ID = c("A", "B", "C", "D"), 
              Temperature = c(14.1, 16.7, 15.3, 12.8))
 T1
+
+#Tibble and data frame are b asically the same thing but tibble is a little simpler
+# data frame doesnt show the variables
+# T1_df <- data.frame(Site.ID = c("A", "B", "C", "D"),
+                    #Temperature = c(14.1, 16.7, 15.3, 12.8))
 
 # make another tibble
 T2 <-tibble(Site.ID = c("A", "B", "D", "E"), 
@@ -70,31 +120,46 @@ T2
 #left_join(T1, T2) - joins to T1
 #right_join(T1, T2) - joins to T2
 
-left_join(T1, T2)
-right_join(T1, T2)
+left_join(T1, T2) #this one has ABCD
+right_join(T1, T2) # this one has ABDE (get E because T2 is the data frame)
 ## Joining with by = join_by(Site.ID)
+
+# what is the difference?
+# the order of the columns
+# and the order of the Site.ID
+
+# showing how they can be the same
+left_join(T1, T2) == 
+  right_join(T2, T1) %>% arrange(Site.ID) %>% relocate(pH, .after = Temperature)
 
 
 #inner_join vs full_join
-# Inner join only keeps the data that is complete in both data sets.
-# Full join keeps everything.
-inner_join(T1, T2)
-full_join(T1, T2)
+inner_join(T1, T2) # Inner join only keeps the data that is complete in both data sets.
+full_join(T1, T2) # Full join keeps everything.
 ## Joining with by = join_by(Site.ID
+
+#what is the difference?
+#order of the Site.ID and the order of the columns, but the data will be the same
 
 
 #semi_join vs anti_join
-# How would I find the extra data in y, in this example?
-
 
 #semi_join keeps all rows from the first data set where there are matching values in the second data set, 
 #keeping just columns from the first data set.
 semi_join(T1, T2)
 ## Joining with by = join_by(Site.ID
+# no C and E because T2 has no data for E
 
 #anti_join Saves all rows in the first data set that do not match anything in the second data set. 
 #This can help you find possible missing data across datasets.
 anti_join(T1, T2)
+
+# How would I find the extra data in y, in this example?
+# anti_join(T2, T1)
+# figure out where you are missing your data
+# they do reverse things
+
+library(cowsay)
 
 
 ################################################################################
