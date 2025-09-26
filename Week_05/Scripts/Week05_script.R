@@ -175,34 +175,113 @@ library(tidyverse)
 library(here)
 library(ggplot2)
 library(ghibli) 
+library(lubridate)
 
 
 ### Load data ######
+# lubridate
+
+# now() function
+# You can also ask the time in other time zones:
+now(tzone = "EST") # what time is it on the east coast
+now(tzone = "GMT") # what time in GMT
 
 
+# If you only want the date and not the time:
+today(tzone = "GMT")
+
+#You can also ask if it is morning or night right now and if it is a leap year:
+# am(now()) 
 
 
+leap_year(now()) # is it a leap year?
 
+# Date specifications for lubridate:
+# your dates must be a character
 
+# y = year
+# m = month (1st m)
+# d = day
+# h = hour
+# m = minute (2nd m)
+# s = second
 
+# These will all produce the same results as ISO dates
+ymd("2021-02-24")
+mdy("02/24/2021")
+mdy("February 24 2021")
+dmy("24/02/2021")
 
+# Date and Time
+ymd_hms("2021-02-24 10:22:20 PM")
+# ymd_hm("2021-02-24 10:22:20 PM") gives you error because of seconds
+mdy_hms("02/24/2021 22:22:20")
+mdy_hm("February 24 2021 10:22 PM")
 
+# Extracting specific date or time elements from datetimes:
 
+# make a character string
+datetimes<-c("02/24/2021 22:22:20", 
+             "02/25/2021 11:21:10", 
+             "02/26/2021 8:01:52") 
+# convert to datetimes
+datetimes <- mdy_hms(datetimes) # month, day, year, hours, minutes, seconds ISO format
+month(datetimes) # which month were each of these rows from
+## [1] 2 2 2
+month(datetimes, label = TRUE) # names of the month instead of 2
+## [1] Feb Feb Feb
+## 12 Levels: Jan < Feb < Mar < Apr < May < Jun < Jul < Aug < Sep < ... < Dec
+# now a factor, helps you plot where it doesnt put it alphabetical order but the right order of months
+month(datetimes, label = TRUE, abbr = FALSE) #Spell it out, not abbreviated
+## [1] February February February
+day(datetimes) # extract day, get average by day
+## [1] 24 25 26
+wday(datetimes, label = TRUE) # extract day of week
+## [1] Wed Thu Fri
+## Levels: Sun < Mon < Tue < Wed < Thu < Fri < Sat
 
+# convert to datetimes
+# datetimes <- mdy_hms(datetimes) 
+# month(datetimes, label = TRUE, abbr = FALSE) #Spell it out 
+# day(datetimes) # extract day 
+# wday(datetimes, label = TRUE) # extract day of week
+hour(datetimes) # extract the hours, take an average by hours
+minute(datetimes) # extract the minutes
+second(datetimes) #extract the seconds
 
+# add 4 hours to all the datetimes:
+datetimes + hours(4) # this adds 4 hours
+## [1] "2021-02-25 02:22:20 UTC" "2021-02-25 15:21:10 UTC"
+## [3] "2021-02-26 12:01:52 UTC"
 
+# hour() extracts the hour component from a time and hours() is used to add hours to a datetime
+# day() extracts the hour component from a time and days() is used to add hours to a datetime
 
+# add 2 days to all the datetimes:
+datetimes + days(2) # this adds 2 days
+## [1] "2021-02-26 22:22:20 UTC" "2021-02-27 11:21:10 UTC"
+## [3] "2021-02-28 08:01:52 UTC"
 
+# Rounding dates
+round_date(datetimes, "minute") # round to nearest minute
+## [1] "2021-02-24 22:22:00 UTC" "2021-02-25 11:21:00 UTC"
+## [3] "2021-02-26 08:02:00 UTC"
+# both sensors started differently, so you can bring them together by rounding to nearest minute
 
+round_date(datetimes, "5 mins") # round to nearest 5 minute
+## [1] "2021-02-24 22:20:00 UTC" "2021-02-25 11:20:00 UTC"
+## [3] "2021-02-26 08:00:00 UTC"
+# maybe doing some smothing function where you want to round to nearest 5 minutes
 
+# Challenge
+CondData<-read_csv(here("Week_05","data","CondData.csv"))
+glimpse(CondData) # there are seconds
 
-
-
-
-
-
-
-
+CondData_clean<-CondData %>%
+  drop_na() %>% #filters out everything that is not a complete row
+  mutate(datetimes = date <- mdy_hms(date)) %>% # convert date column to year, month, day, hour, minute, second
+  month(datetimes, label = TRUE, abbr = FALSE) # month column with full month labels
+glimpse(CondData_clean)
 
 
 
