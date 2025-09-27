@@ -279,8 +279,8 @@ glimpse(CondData) # there are seconds
 
 CondData_clean<-CondData %>%
   drop_na() %>% #filters out everything that is not a complete row
-  mutate(datetimes = date <- mdy_hms(date)) %>% # convert date column to year, month, day, hour, minute, second
-  month(datetimes, label = TRUE, abbr = FALSE) # month column with full month labels
+  mutate(datetimes = mdy_hms(date)) %>% # convert date column to year, month, day, hour, minute, second
+  mutate(month = month(datetimes, label = TRUE, abbr = FALSE)) # month column with full month labels
 glimpse(CondData_clean)
 
 
