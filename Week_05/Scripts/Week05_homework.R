@@ -76,7 +76,10 @@ View(CondDepthData_avg)
 
 # Plot
 CondDepthData_avg %>%
-  pivot_longer(cols = c(depth_avg, temp_avg, sal_avg),
+  rename(Depth = depth_avg,
+         Temperature = temp_avg,
+         Salinity = sal_avg) %>% #rename column titles which will rename it on plot too
+  pivot_longer(cols = c(Depth, Temperature, Salinity),
                names_to = "Variable",
                values_to = "Value") %>%
   ggplot(aes(x = minute,
@@ -89,15 +92,12 @@ CondDepthData_avg %>%
     subtitle = "Data from January 15, 2021",
     x = "Time",
     y = "Mean Value",
-    caption="Data from Danielle Barnas and Nyssa Silbiger collected in Hawai'i",
-    depth_avg = "Depth",
-    sal_avg = "Salinity",
-    temp_avg = "Temperature") +
-  scale_fill_ghibli_d("MarnieMedium2") + # nicer colors
+    caption="Research from Barnas et al. 2024 in O‘ahu Hawai‘i") +
+  scale_fill_ghibli_d("MarnieMedium1") + # nicer colors
   theme_igray() +
   theme(axis.title = element_text(size = 20),
         legend.position = "none")
-#ggsave(here("Week_05","Output","CondDepthData_plot_HW5.png", width = 8, height = 5))
+ggsave(here("Week_05","Output","CondDepthData_plot_HW5.png"))
 
 
 
