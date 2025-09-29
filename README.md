@@ -15,39 +15,44 @@ There are folders of each week, R Project, and a README.md file.
 
 #### [Week 01](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01): _Data, Collecting Data, Metadata_  
 * 2025_08_26  
-* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01/Lectures): Rmd lectures and notes
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01/Lectures): 1/2 Rmd lectures and notes
 
 
 #### [Week 02](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02): _Reproducible Research and Workflow/Importing Data_  
 * 2025_09_02  
 * [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Data): sample data  
 * [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Scripts): first script with loaded libraries, read in data, and analysis 
-* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Lectures): Rmd lectures and notes
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Lectures): 3/4 HTML lectures & Rmd notes
 
 
 #### [Week 03](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03): _Visuals and ggplots_  
 * 2025_09_09  
 * [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Scripts): ggplot script with nicer looking plots
 * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Output): penguin data plots, in class example, homework plot
-* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Lectures): Rmd lectures and notes
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Lectures): 5/6 HTML lectures & Rmd notes
 
 
 #### [Week 04](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04): _Data Wrangling_  
 * 2025_09_16  
-* [Data](): 
-* [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Scripts)
-* [Output](): 
+* [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Data): Nyssa's chem data from Maunalua
+* [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Scripts): in-class script and homework scripts
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Output): ChemData .csv summaries and homework plots (x2)
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Lectures): 7/8 HTML lectures & Rmd notes
 
 
-#### [Week 05]: _Relational Data and Dates/Times_  
+#### [Week 05]: _Relational Data and Dates/Times (Lubridate)_  
 * 2025_09_23   
-* [Data]
-* [Script]
-* [Output]  
+* [Data](
+* [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Scripts): in-class script and homework scripts
+* [Output](
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Lectures): 9/10 HTML lectures & Rmd notes
 
 #### [Week 06]: _Quarto_
 * 2025_09_30  
-* Contains folders for [Data], [Script], and [Output]
+* [Data]
+* [Script]
+* [Output]
+* [Lectures]
 
 [Week 07]  
 2025_10_07  
