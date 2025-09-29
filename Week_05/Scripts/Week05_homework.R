@@ -79,11 +79,11 @@ CondDepthData_avg %>%
   rename(Depth = depth_avg,
          Temperature = temp_avg,
          Salinity = sal_avg) %>% #rename column titles which will rename it on plot too
-  pivot_longer(cols = c(Depth, Temperature, Salinity),
+  pivot_longer(cols = c(Depth, Temperature, Salinity), #make data longer
                names_to = "Variable",
                values_to = "Value") %>%
-  ggplot(aes(x = minute,
-             y = Value,
+  ggplot(aes(x = minute, # plot 3 line graphs in one plot
+             y = Value, 
              color = Variable)) +
   geom_line(size = 1) +
   facet_wrap(~ Variable, scales = "free_y", ncol = 1) +
