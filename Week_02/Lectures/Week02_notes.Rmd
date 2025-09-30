@@ -11,179 +11,335 @@ Week 2a In-Class Lecture: Reproducible Research
 
 What is reproducible science?
 -	NSF Definition: reproducibility refers to the ability of a researcher to duplicate the results of a prior study using the same materials as were used by the original investigator.'”
+
   * Lots of scientists said there’s a reproducibility crisis
 
 Types of reproducibility
 -	“Computational reproducibility: 
+
     *	when detailed information is provided about code, software, hardware and implementation details.”
 
 -	“Empirical reproducibility: 
-o	when detailed information is provided about non-computational empirical scientific experiments and observations. 
-o	In practice this is enabled by making data freely available, as well as details of how the data was collected.”
+
+*	when detailed information is provided about non-computational empirical scientific experiments and observations. 
+
+*	In practice this is enabled by making data freely available, as well as details of how the data was collected.”
+
 
 -	“Statistical reproducibility: 
-o	when detailed information is provided about why you chose statistical tests, model parameters, threshold values, etc. 
-o	This mostly relates to pre-registration of study design to prevent p-value hacking and other manipulations.”
+
+*	when detailed information is provided about why you chose statistical tests, model parameters, threshold values, etc. 
+
+*	This mostly relates to pre-registration of study design to prevent p-value hacking and other manipulations.”
+
+
 Areas for improvement
 
 -	No clear or organized history of what’s been done to the data from raw data through final figures/results
-o	Don’t know steps that researcher took
+
+*	Don’t know steps that researcher took
+
 
 -	Lack of comments/annotation describing the steps
-o	Helps reader understand why you did what you did
+
+*	Helps reader understand why you did what you did
 
 -	Tedious & time consuming for a collaborator to recreate the analyses
--	Backed up w/version control? Probably not…
--	How do we transfer this into a final report or presentation? 
-Is that reproducible?
--	Why it matters
-o	Have information without order- bad
-o	Put the things in clear/logical order, with notes, why you did what you did
-o	Should look like an alibi
 
--	Raw data organized/annotated wrangling—clear/open analyses (write it like you expect the world tosee it  create a fully reproducible graphs, tables, reports
-o	Back up everything (version control)
-o	Make it easy to understand, update, reproduce (scripts/markdown)
+-	Backed up w/version control? Probably not…
+
+-	How do we transfer this into a final report or presentation? 
+
+
+Is that reproducible?
+
+-	Why it matters
+
+*	Have information without order- bad
+
+*	Put the things in clear/logical order, with notes, why you did what you did
+
+
+*	Should look like an alibi
+
+
+
+-	Raw data
+
+   organized/annotated wrangling—clear/open analyses (write it like you expect the world tosee it 
+  * create a fully reproducible graphs, tables, reports
+  
+*	Back up everything (version control)
+
+*	Make it easy to understand, update, reproduce (scripts/markdown)
+
 
 
 
 Workflow
+
+
 -	We will do everything in well-annotated, organized scripts that contain streamlined and easy-to-follow records of our entire analyses from raw data through final reports, with unbreakable file paths and with a complete history of changes made.
 
-o	Thorough documentation + comments
-o	.R scripts/R markdown (.Rmd)
-o	Keep raw data RAW!
-o	*down family (markdown, bookdown, blogdown)
-o	R projects, here!
-o	Version control w/ Git!
+
+*	Thorough documentation + comments
+
+*	.R scripts/R markdown (.Rmd)
+
+*	Keep raw data RAW!
+
+*	down family (markdown, bookdown, blogdown)
+
+*	R projects, here!
+
+*	Version control w/ Git!
+
 
 Open science: Should data and protocols be public?
+
 -	More data = more power but science must be reproducible
+
 -	Who paid for this data collection?
-    o	If on federal or state grant, then the tax payers paid for your dollars and it should be available to them
-    o	Can go online to see when and how it needs to be available
+
+    *	If on federal or state grant, then the tax payers paid for your dollars and it should be available to them
+    
+    *	Can go online to see when and how it needs to be available
+    
       	Each institution has its own repository
-•	BCO-DMO (for NSF), Genbank, EDI, Pangea, publications
-•	Depends on where your data is funded from and where you are publishing
+      
+*	BCO-DMO (for NSF), Genbank, EDI, Pangea, publications
+
+*	Depends on where your data is funded from and where you are publishing
+
+
 -	Examples
-o	Putnam Lab
-	Lab notebooks for each person in the lab with data and codes accessible
-o	Silbiger Lab
-	Protocols for how everything was collected
+
+*	Putnam Lab
+
+*	Lab notebooks for each person in the lab with data and codes accessible
+
+*	Silbiger Lab
+
+*	Protocols for how everything was collected
+
+
+
 -	What if someone steals my data
-o	Oh they are doing something similar, lets collaborate instead of thinking they are stealing ideas and data
-o	If you take someone else’s protocol for example: “Modified from Putnam Protocol…”
-o	Having your data uploaded as soon as it is taken is like a time stamp for exactly when it was done
+
+*	Oh they are doing something similar, lets collaborate instead of thinking they are stealing ideas and data
+
+*	If you take someone else’s protocol for example: “Modified from Putnam Protocol…”
+
+*	Having your data uploaded as soon as it is taken is like a time stamp for exactly when it was done
+
+
 -	FAIR principles
-o	Findable 
-o	Accessible 
-o	Interoperable
-o	Reusable
+
+  o	Findable 
+  
+  o	Accessible 
+  
+  o	Interoperable
+  
+  o	Reusable
+  
+  
 -	CARE principles
-o	Collective benefit
-o	Authority to control
-o	Responsibility
-o	Ethics
--	In Hawaii  CARE principles important
-o	Collective beneft
-	For inclusive development and innovation
-	For equitable outcomes
-	For improved governance and citizen engagement
-o	Authority to Control
-o	Responsibility 
-	For expanding capability and capacity
-	For positive relationships
-	For Indigenous languages and worldviews
-•	Using Hawaiian names instead of common names
-o	Ethics
+
+  o	Collective benefit
+  
+  o	Authority to control
+  
+  o	Responsibility
+  
+  o	Ethics
+  
+  
+-	In Hawaii 
+   CARE principles important
+  
+  o	Collective beneft
+  
+    *	For inclusive development and innovation
+    *	For equitable outcomes
+    *	For improved governance and citizen engagement
+    
+  o	Authority to Control
+  
+
+  o	Responsibility 
+  
+    *	For expanding capability and capacity
+    *	For positive relationships
+    *	For Indigenous languages and worldviews
+    
+	Using Hawaiian names instead of common names
+	
+  o	Ethics
+
 
 
 Tools for reproducible science:
+
 -	Rstudio (R + RStudio)
+
 -	Github (git +GitHub)
+
 o	Why use it?
-o	Git
-	Distributed version control system
-	Imagine if Dropbox and “track changes” from MS word had a baby
-	Optimized for the things that data scientists spend a lot of time working on (e.g. code)
-	Worth the learning code
-o	GitHub
-	Different from git
-	Online hosting platform that provides an array of services that are built on the Git system
-	Like how we don’t need RStudio to run R code, we don’t need GitHub to use Git
+
+  o	Git
+  
+    	Distributed version control system
+    	Imagine if Dropbox and “track changes” from MS word had a baby
+    	Optimized for the things that data scientists spend a lot of time working on (e.g. code)
+    	Worth the learning code
+    
+  o	GitHub
+  
+    	Different from git
+    	Online hosting platform that provides an array of services that are built on the Git system
+    	Like how we don’t need RStudio to run R code, we don’t need GitHub to use Git
+    
 -	Git and GitHub operationalize the ideals of open science and reproducibility
-o	Journals have increasingly strict requirements regarding reproducibility and data access
-	GitHub makes this easy (DOI integration, off-the-shelf licenses, etc.)
-o	Host all my code, data for my research papers, and research protocols on GH
-o	GH helps us to collaborate with others and your future self
+
+  o	Journals have increasingly strict requirements regarding reproducibility and data access
+  
+    	GitHub makes this easy (DOI integration, off-the-shelf licenses, etc.)
+    
+  o	Host all my code, data for my research papers, and research protocols on GH
+  
+  o	GH helps us to collaborate with others and your future self
+  
 -	Together
-o	Start with Rprojects to keep organized
-o	Basic R project set up
-	Your project name
-	.Rproj (R Project File)
-	Data
-	Script
-•	Functions
-•	Analysis A (R)
-•	Analysis B (R)
+
+  o	Start with Rprojects to keep organized
+  
+  o	Basic R project set up
+  
+    	Your project name
+    	.Rproj (R Project File)
+    	Data
+    	Script
+    
+*	Functions
+
+*	Analysis A (R)
+
+*	Analysis B (R)
+
 	Output
-•	Plots
-•	Data
+
+* Plots
+
+*	Data
+
 
 Create Repository
+
 -	Name
+
 -	Description
+
 -	Public
+
 -	 Readme ON
+
 -	Your own repo or someone elses click Code then copy HTTPS
--	
+
+
+
 
 Important thing to know to version-control your repository:
+
 -	Pull
+
 -	Add 
+
 -	Commit
+
 -	Push
+
+
 -	Remember it by Please Always Carry Pizza
-o	Pull - [git pull] this “downloads” any changes to your repository on github, by your collaborators, or your past self on a different machine. (always do this first! You may have forgotten that you made a change.)
-o	Add - [git add] this stages files. It tells git, "I want to add these to the repository"
-o	Commit - [git commit] this “saves” your changes with git (as opposed to ctrl+S which saves them to your local machine – although you should still do that too)
+
+o	*Pull* - [git pull] this “downloads” any changes to your repository on github, by your collaborators, or your past self on a different machine. (always do this first! You may have forgotten that you made a change.)
+
+
+o	*Add* - [git add] this stages files. It tells git, "I want to add these to the repository"
+
+
+o	*Commit* - [git commit] this “saves” your changes with git (as opposed to ctrl+S which saves them to your local machine – although you should still do that too)
+
+
 	git commit always requires a message so that you know what changes you made.
+
 •	ex: git commit -a -m "I created a test repo"
+
 	"-a" means commit all (every change) "-m" means (I am adding a message). What you have in quotes is your message.
-o	Push - [git push] this “uploads” your changes to github.
+
+o	*Push* - [git push] this “uploads” your changes to github.
+
 
 Work with git in the terminal
+
 •	First, let's create and save a simple script (save it as "testscript.R")
+
 •	Now, let's save it to git
+
 •	click on the terminal tab (next to console). This allows you to interact directly with your terminal
+
 •	type "git pull" (it should say already up to date because you have not done anything yet)
+
 •	type git add testscript.R (this stages the new script)
+
 •	type git commit -a -m "I am adding testscript"
+
 •	type git push
+
 •	you may get prompted for your username and password
+
 •	make a new script (testscript2.R)
+
 •	Find the git tab on the right-hand site
+
 •	check the box next to testscript2.R (this adds it -- once you add a script, you never have to add it again. Only commit new changes)
+
 •	click commit and add a message
+
 •	press commit and when it is done hit close and exit out
+
 •	next hit "push"
+
 •	when it is done close it. You should no longer see "testscript2.R" in the upper right-hand side.
+
 •	check github! (Don't forget to refresh the webpage)
+
 •	Let's make some changes to testscript.R
+
 •	add any code you want to it, commit it (with a message), and push it
+
 •	click history (the clock on the top) to see what changes were made and by who
+
 •	You notice that your cat walked across the screen totally screwed up your code. Oh no!
+
 •	It's ok... you can revert it
+
 •	Click the blue wheel and then revert
+
+
 •	Note: commit often (it will only revert back to the last commit you made. This is like pressing the save button. Do it with every major change to your script.)
+
+
 •	click settings and scroll all the way to the bottom ('Danger Zone') and delete repository and follow directions
 
 
 
 *everytime you are using Git you are in the terminal
+
 *everytime you are using GitHub you are in the Console
 
 When working in git repository and want to make changes:
+
 1)	Git pull
 2)	Git add
 3)	Git commit
@@ -420,7 +576,10 @@ Basic markdown for Readme files
 -	And can preview
 -	Can also edit directly on GitHub or on markdown files
 
------------------------------------------------------------------
+
+## I UNDERSTAND EVERYTHING BELOW AND AM TOO LAZY TO EDIT MY NOTES 
+#### I originally took these notes on a non-R document and just copy pasted here
+__________
 
 ### Markdown Tutorial
 -	Italics and Bold
