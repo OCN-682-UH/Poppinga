@@ -70,8 +70,8 @@ CondDepthData_avg<-CondDepthData %>%
             depth_avg = mean(Depth, na.rm = TRUE), #get average of depth, temp, salinity
             temp_avg = mean(Temperature, na.rm = TRUE),
             sal_avg = mean(Salinity, na.rm = TRUE)) %>% 
-  write_csv(here("Week_05","Output","CondDepthData_summary_HW5.csv"))
-View(CondDepthData_avg)
+#   write_csv(here("Week_05","Output","CondDepthData_summary_HW5.csv"))
+# View(CondDepthData_avg)
 
 
 # Plot
@@ -97,7 +97,12 @@ CondDepthData_avg %>%
   theme_igray() +
   theme(axis.title = element_text(size = 20),
         legend.position = "none")
-ggsave(here("Week_05","Output","CondDepthData_plot_HW5.png"))
+# ggsave(here("Week_05","Output","CondDepthData_plot_HW5.png"))
 
+# Empty your environment before you start working
+# Restart R
+# .rs.restartR()
+# remove whole list in enviroment
+# rm(list = ls())
 
 

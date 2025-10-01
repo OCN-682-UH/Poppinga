@@ -54,7 +54,7 @@ ChemData_HW_summary <- ChemData_long %>%
   group_by(Zone, Variable) %>% # group by zone and variables
   summarise(Param_mean = mean(Value, na.rm = TRUE), # get mean 
             Param_var = var(Value, na.rm = TRUE), # get variance
-            Param_sd = sd(Value, na.rm = TRUE)) # get standard deviation
+            Param_sd = sd(Value, na.rm = TRUE)) %>% # get standard deviation
 write_csv(ChemData_HW_summary, here("Week_04","Output","Chem_Data_homework_summary.csv")) # export csv file of your summary statistics using write_csv()
 
 
@@ -82,7 +82,24 @@ ggplot(grid_df,
   theme_igray() +
   theme(axis.title = element_text(size = 20))
 
-ggsave(here("Week_04","Output","chemdata_HW4b.png"),width=9, height=5)) #saving to correct folder
+# ggsave(here("Week_04","Output","chemdata_HW4b.png"),width=9, height=5)) #saving to correct folder
+
+#Callie's suggestion
+ggplot(grid_df, 
+       aes(x = Lat, 
+           y = Long, 
+           z = pH)) +
+  geom_contour_filled(aes(fill = after_stat(level)), # contour levels from pH
+                      breaks = seq(8.0, 8.1, by = 0.01)) +  # increase contour resolution
+  labs(x = "Latitude", 
+       y = "Longitude",
+       fill = "pH",
+       title = "Interpolated pH Contours in Maunalua Bay") +
+  scale_fill_brewer(palette = "Blues")+ # nicer colors
+  theme_igray() +
+  theme(axis.title = element_text(size = 20))
+
+
 
 
 

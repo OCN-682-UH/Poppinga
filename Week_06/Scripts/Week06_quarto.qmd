@@ -1,0 +1,118 @@
+---
+title: "My first Quarto document"
+author: "Haley Poppinga"
+date: today
+format: 
+  html:
+    toc: true
+    theme: sandstone
+---
+
+## Introduction
+
+This is my first *Quarto* document and I am going to plot some penguin data.  
+
+Load Libraries
+```{r}
+#| message: false
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(palmerpenguins)
+library(ghibli) 
+library(beepr)
+```
+* without the message to YAML, it's ugly
+
+
+Notes:  
+* one plot per code chunk. 
+* treat each chunk like a new paragraph. 
+* render it often so you can se errors as you go. 
+* there is an order to YAML in beginning and indentation matters. 
+* if you run Quarto with an error, it will not create anything. 
+  * under background jobs, you can stop it so it doesnt run forever. 
+* render after you change the YAML. 
+
+
+
+## Look at the data
+
+```{r}
+glimpse(penguins)
+```
+
+
+## Make a plot
+
+This is looking at the relationship between **bill length** and **bill depth**. 
+
+```{r}
+#| warning: false
+penguins %>% # penguin dataset
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point()
+# beep(5)
+```
+* a warning shows up so we add a message to YAML
+* visual will appear right after 
+
+Link to Quarto Website references:  
+[Quarto Formats](https://quarto.org/docs/reference/formats/html.html)  
+
+Link to HTML themes:  
+[HTML Themes](https://quarto.org/docs/output-formats/html-themes.html)
+
+Image:  
+![](...    )
+
+Send HTML to collaborators by converting it to rawgithack.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_________________________________________________________________________________
+When you first create a document, all of this example stuff will show up:
+
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this 
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+
+
+
+
+
+

@@ -6,9 +6,9 @@ output: github_document
 ---
 
 ### Week 6 Lecture  
-Quarto
- 
-2025-09-30
+#### Quarto  
+##### 2025-09-30
+
 
 #### Outline
 Quiz 5
@@ -22,53 +22,58 @@ Next Time
 - Advanced Outputs
 
 
-Review
-If I want to convert Feb 28 2021 10:05:50 to a date, what function do I use?
-
+###### Review
+If I want to convert Feb 28 2021 10:05:50 to a date, what function do I use?  
+mdy_hms(dates)
 
 
 #### What is Quarto?
-Analyze. Share. Reproduce. You have a story to tell with data—tell it with Quarto.
+Analyze. Share. Reproduce. You have a story to tell with data—tell it with Quarto.  
+* can use multiple languages in the exact same script
+* feed in code to Quarto document and it will convert to HTML, etc.
 
 
 
-Quarto provides a unified authoring framework for data science, combining your code, its results, and your prose. Quarto documents are fully reproducible and support dozens of output formats, like PDFs, Word files, presentations, and more.
+**Quarto provides a unified authoring framework for data science, combining your code, its results, and your prose. Quarto documents are fully reproducible and support dozens of output formats, like PDFs, Word files, presentations, and more.**
 
+1) For communicating to decision-makers, who want to focus on the conclusions, not the code behind the analysis.  
+  * make a document with all the code, and then hide the code
 
-1) For communicating to decision-makers, who want to focus on the conclusions, not the code behind the analysis.
+2) For collaborating with other data scientists (including future you!), who are interested in both your conclusions, and how you reached them (i.e. the code). 
+  * all code and output in the same place
 
-2) For collaborating with other data scientists (including future you!), who are interested in both your conclusions, and how you reached them (i.e. the code).
-
-3) As an environment in which to do data science, as a modern-day lab notebook where you can capture not only what you did, but also what you were thinking.
+3) As an environment in which to do data science, as a modern-day lab notebook where you can capture not only what you did, but also what you were thinking.  
+  * Jupiter notebook
 
 
 ##### Change your mental mode
-Source to Output 
-Take notes in same place as your code
-
+Source to Output --> Take notes in same place as your code. 
+* everything goes into Quarto: hypotheses, figures, plots, etc.  
 
 #### Quarto is broken into 4 major parts:
-
-* Metadata
-* Text
+* Metadata (top)
+* Text (what we want to write about our code)
 * Code
 * Output
+
 
 #### Metadata: YAML
 **YAML - yet another markup language**
 
-3x of these "-"
-key: value
-3x "-"
+3x of these "-"  
+key: value  
+3x "-"  
+  * see the top of this document
+  * This goes at the top of your RMarkdown document, includes the metadata, style, and type of output for your document.  
 
-This goes at the top of your RMarkdown document, includes the metadata, style, and type of output for your document.
 
 You only need two pieces for it to work, but there is lots more to add to make it beautiful.
+* title is the title of your markdown document
+* format is the format that it will be saved as 
+  * HTML or github document
+  
 
-title is the title of your markdown document
-format is the format that it will be saved as
-
-Example YAML
+Example YAML  
 --
 title: "Penguins Distilled"
 description: | 
@@ -80,24 +85,28 @@ format:
   html:
     toc: true
     toc-depth: 4
+warning: false
 --
+* toc = table of contents
 
-You create an html document by hitting render
+You create an html document by hitting render. 
 
-Text
+
+#### Text  
 The text is written in the markdown language. You have already done a lab on markdown and this is the exact language that you use for your readme files. This is a short review.
 
 
-**Bold**
+**Bold**  
 I **love** markdown
 
-*Italics*
+
+*Italics*  
 I *love* markdown
 
 Lists
-# - item 1
-# - item 2
-# - item 3
+ - item 1
+ - item 2
+ - item 3
 
 Images
 ![ ](image link)
@@ -110,10 +119,26 @@ no space in between tho
 
 #### Code Chunks
 You can add a code chunk by pressing
-- the keyboard shortcut Ctrl + Alt + I (OS X: Cmd + Option + I) 
-- Click Code at the top of RStudio then +C in green.
+- the keyboard shortcut Ctrl + Alt + I (OS X: Cmd + Option + I)  
+- Click Code at the top of RStudio then +C in green.   
+- Can code in this chunk in whatever language you want.  
+  - write python in the {} if you want to use this language
 
-You can control what you want printed in the html within the code chunks by giving a key and a value within the chunks after a #|
+```{r}
+# a code chunk
+```
+
+
+You can control what you want printed in the html within the code chunks by giving a key and a value within the chunks after a #|  
+
+* in Quarto, we go into the code chunk and use #| to tell it we are using YAML. 
+* put #| warning: false  
+  * supress warnings (won't show up in render but will in the console). 
+  * can put it in the beginning (default) and it will do it for the whole document. 
+* use echo or eval to hide code or show it but not run it. 
+* loading libraries you can set message: false so that it doesn't show all messages  
+* fig- to control information about figures inside code chunks. 
+
 
 [code chunk options](https://quarto.org/docs/reference/cells/cells-knitr.html)
 
@@ -127,9 +152,11 @@ install.packages("beepr")
 library(beepr)
 beep(5)
 beep(9)
+* can use to tell when code is done running
 
-Let’s Quarto together!
 
+Let’s Quarto together! 
+* see Quarto document
 
 
 ```{r}

@@ -4,46 +4,47 @@ author: "Haley Poppinga"
 date: "2025-09-22"
 output: github_document
 ---
-Week 5b Lecture
-Data wrangling: joins
-2025-09-23
+### Week 5b Lecture  
+#### Data wrangling: joins  
+##### 2025-09-23
 
-Outline of class
-Quiz!
 
-Review of tidyr
-Independent Project update (It is on GitHub, Nyssa will go over next week)
-Learning joins (part of the {dplyr} package)
+Outline of class. 
+Quiz!  
+Review of tidyr. 
+Independent Project update (It is on GitHub, Nyssa will go over next week). 
+Learning joins (part of the {dplyr} package). 
 
 left_join() -- with real data
 Learn to make a tibble
 
 Back to joins (with made up data as examples)
 
-right_join()
-inner_join()
-full_join()
-semi_join()
-anti_join()
+* right_join() 
+* inner_join()
+* full_join()
+* semi_join()
+* anti_join()
 
 Homework
 Practice with joins and dates in online assignment
 
 
 Review
-1. What function do you use to split up one column into multiple columns?
+1. What function do you use to split up one column into multiple columns?  
 separate()
 
-2. What function do you use to transition a wide data frame into a long data frame?
-pivot_longer()
+2. What function do you use to transition a wide data frame into a long data frame?  
+pivot_longer() 
 pivot_wider()
 
 
-Intro to different types of join
+Intro to different types of join. 
 Let's say you have multiple hierarchies of data and you want to join them into one big data set. Join functions are the way you would do it.
 
 
 Data1
+
 Site_number	Treatment	Nitrate	Temp
 **1	High	1.2	7.2**
 2	High	3.0	7.8
@@ -53,6 +54,7 @@ Site_number	Treatment	Nitrate	Temp
 
 
 Data2
+
 Site_Number	Sample_number	Biomass
 1	1	12.2
 1	2	14.0
@@ -195,14 +197,14 @@ So many joins
 There are lots of different ways to join data together. To demonstrate, we will make up some datasets so that it is easier to highlight what is happening.
 
 We will also learn:
-right_join()
-inner_join()
-full_join()
-semi_join()
-anti_join()
+* right_join()
+* inner_join()
+* full_join()
+* semi_join()
+* anti_join()
 
 
-Creating your own tibble
+Creating your own tibble. 
 What is a tibble? It is a data frame, but simpler. It is what the tidyverse uses as a data frame.
 
 To create a tibble we use tibble()
@@ -220,7 +222,7 @@ T2 <-tibble(Site.ID = c("A", "B", "D", "E"),
 T2
 ```
 
-left_join vs right_join
+#### left_join vs right_join  
 The only difference is which dataframe is being used as the base.
 
 left_join(T1, T2) - joins to T1
@@ -237,7 +239,7 @@ right_join(T1, T2)
 ```
 Notice where the missing value is for each data set
 
-what is the difference?
+what is the difference?  
 * the order of the columns
 * and the order of the Site.ID
 
@@ -252,14 +254,14 @@ left_join(T1, T2) ==
 
 
 
-inner_join vs full_join
+#### inner_join vs full_join
 Inner join only keeps the data that is complete in both data sets.
 
-what is the difference?
+what is the difference?  
 order of the Site.ID and the order of the columns, but the data will be the same
 
-inner_join vs full_join
-Full join keeps everything.
+inner_join vs full_join. 
+Full join keeps everything.  
 ```{r}
 inner_join(T1, T2)
 ## Joining with by = join_by(Site.ID)
@@ -270,10 +272,15 @@ full_join(T1, T2)
 ## Joining with by = join_by(Site.ID)
 ```
 
+Quiz:  
+I have two dataframes (T1 and T2 - imaged below) with information on mouse lengths and mouse weights: If I run the following code, what should the new output look like? full_join(T1,T2)
+full_join keeps everything
+ABCD + ABDE --> ABCDE
 
 
-semi_join vs anti_join
-semi_join keeps all rows from the first data set where there are matching values in the second data set, keeping just columns from the first data set.
+
+#### semi_join vs anti_join  
+semi_join keeps all rows from the first data set where there are matching values in the second data set, keeping just columns from the first data set.  
 
 Saves all rows in the first data set that do not match anything in the second data set. This can help you find possible missing data across datasets.
 
@@ -307,17 +314,17 @@ Reminder: We are starting Quarto next week. If you have not yet completed the ma
 ________________________________________________________________________
 
 
-Week 5b Lecture
-Data wrangling: lubridate dates and times
-2025-09-23
+### Week 5b Lecture
+#### Data wrangling: lubridate dates and times
+##### 2025-09-23
 
 
-Learning about dates and times from the {lubridate} package
+Learning about dates and times from the {lubridate} package. 
 * used for calculating dates and times and formatting them
 * Converting and manipulating dates and times using {lubridate} package
 
 
-Homework
+Homework. 
 * Practice with dates and times
 
 You know what to do..... (Copy CondData.csv and DepthData.csv to your data folder)
@@ -330,11 +337,11 @@ library(lubridate)
 
 install.packages("lubridate") # package to deal with dates and times
 
-What time is it now?
+What time is it now?  
 * Even though this may seem silly if you have a clock, it is very helpful if you want to time stamp something in your code.
 
-now() function
-what time is it now?
+##### now() function
+what time is it now?  
 * used to stamp your code with something
 
 [1] "2025-09-16 14:31:26 HST"
@@ -377,7 +384,7 @@ leap_year(now()) # is it a leap year?
 [1] FALSE
 
 
-Date specifications for lubridate:
+##### Date specifications for lubridate:
 * lubridate does a good job of guessing the format of your date if you give just a little hint.
 
 First, your dates **must be a character**.
@@ -464,6 +471,12 @@ mdy_hms("02/24/2021 22:22:20")
 mdy_hm("February 24 2021 10:22 PM")
 ```
 [1] "2021-02-24 22:22:00 UTC"
+
+
+Quiz:  
+I want to convert the following vector into dates. What function do I used? dates<-c("20-08-2021 10:50", " 21-08-2021 11:10", "22-08-2021 1:11")
+dmy_hm(dates)
+
 
 
 
@@ -566,6 +579,14 @@ hour(datetimes) # extract the hours, take an average by hours
 minute(datetimes) # extract the minutes
 second(datetimes) #extract the seconds
 ```
+
+Quiz:  
+If I use the "dates" vector from above and extract the day from each date, what function do I use?
+day(dates)
+
+
+
+
 
 
 Adding dates and times

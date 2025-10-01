@@ -33,14 +33,17 @@ glimpse(penguins)
 #calculate the mean and variance body mass by species, island, sex
 penguins %>%
   drop_na(species, island, sex, body_mass_g) %>% #removes NAs for species, island, and sex
-  group_by(species, island, sex, body_mass_g) %>% #body mass by species, island, and sex
+  group_by(species, island, sex) #body mass by species, island, and sex
+mean_var_body_mass <- penguins %>%
   summarise(mean_body_mass = mean(body_mass_g, na.rm = TRUE), #remove NAs from body mass
-            variance_body_mass = var(body_mass_g, na.rm = TRUE)) %>% #calculate mean and variance
+            variance_body_mass = var(body_mass_g, na.rm = TRUE)) #calculate mean and variance
   #2)
+male_log_body_mass <- penguins %>%
   filter(sex != "male") %>% #filter out males
   mutate(log_mass = log(body_mass_g)) %>% #calculate log body mass
   select(species, island, sex, log_mass) %>% #selects only the columns for species, island, sex, and log body mass
-  #Plot
+
+#Plot
   ggplot(penguins,
          mapping = aes(x = species,
                        y = log_mass,
@@ -56,7 +59,5 @@ penguins %>%
   theme(axis.title = element_text(size = 20),
         panel.background = element_rect(fill = "linen"))
 
-ggsave(here("Week_04","Output","logbodymass_HW4a.png")) #saving to correct folder
-
-
+# ggsave(here("Week_04","Output","logbodymass_HW4a.png")) #saving to correct folder
 

@@ -3,36 +3,49 @@ Week05 Notes
 Haley Poppinga
 2025-09-22
 
-Week 5b Lecture Data wrangling: joins 2025-09-23
+### Week 5b Lecture
 
-Outline of class Quiz!
+#### Data wrangling: joins
 
-Review of tidyr Independent Project update (It is on GitHub, Nyssa will
-go over next week) Learning joins (part of the {dplyr} package)
+##### 2025-09-23
+
+Outline of class. Quiz!  
+Review of tidyr. Independent Project update (It is on GitHub, Nyssa will
+go over next week). Learning joins (part of the {dplyr} package).
 
 left_join() – with real data Learn to make a tibble
 
 Back to joins (with made up data as examples)
 
-right_join() inner_join() full_join() semi_join() anti_join()
+- right_join()
+- inner_join()
+- full_join()
+- semi_join()
+- anti_join()
 
 Homework Practice with joins and dates in online assignment
 
 Review 1. What function do you use to split up one column into multiple
-columns? separate()
+columns?  
+separate()
 
 2.  What function do you use to transition a wide data frame into a long
-    data frame? pivot_longer() pivot_wider()
+    data frame?  
+    pivot_longer() pivot_wider()
 
-Intro to different types of join Let’s say you have multiple hierarchies
-of data and you want to join them into one big data set. Join functions
-are the way you would do it.
+Intro to different types of join. Let’s say you have multiple
+hierarchies of data and you want to join them into one big data set.
+Join functions are the way you would do it.
 
-Data1 Site_number Treatment Nitrate Temp **1 High 1.2 7.2** 2 High 3.0
-7.8 3 Low 2.4 8.0 4 Low 5.1 8.0 5 Low 1.1 7.9
+Data1
 
-Data2 Site_Number Sample_number Biomass 1 1 12.2 1 2 14.0 1 3 11.9 1 4
-10.0 Site number 1 has 4 samples so…
+Site_number Treatment Nitrate Temp **1 High 1.2 7.2** 2 High 3.0 7.8 3
+Low 2.4 8.0 4 Low 5.1 8.0 5 Low 1.1 7.9
+
+Data2
+
+Site_Number Sample_number Biomass 1 1 12.2 1 2 14.0 1 3 11.9 1 4 10.0
+Site number 1 has 4 samples so…
 
 What we want Site_Number Sample_number Biomass Treatment Nitrate Temp 1
 1 12.2 High 1.2 7.2 1 2 14.0 High 1.2 7.2 1 3 11.9 High 1.2 7.2 1 4 10.0
@@ -302,10 +315,10 @@ So many joins There are lots of different ways to join data together. To
 demonstrate, we will make up some datasets so that it is easier to
 highlight what is happening.
 
-We will also learn: right_join() inner_join() full_join() semi_join()
-anti_join()
+We will also learn: \* right_join() \* inner_join() \* full_join() \*
+semi_join() \* anti_join()
 
-Creating your own tibble What is a tibble? It is a data frame, but
+Creating your own tibble. What is a tibble? It is a data frame, but
 simpler. It is what the tidyverse uses as a data frame.
 
 To create a tibble we use tibble()
@@ -340,8 +353,9 @@ T2
     ## 3 D         8.1
     ## 4 E         7.9
 
-left_join vs right_join The only difference is which dataframe is being
-used as the base.
+#### left_join vs right_join
+
+The only difference is which dataframe is being used as the base.
 
 left_join(T1, T2) - joins to T1 right_join(T1, T2) - joins to T2
 
@@ -383,8 +397,8 @@ right_join(T1, T2)
 
 Notice where the missing value is for each data set
 
-what is the difference? \* the order of the columns \* and the order of
-the Site.ID
+what is the difference?  
+\* the order of the columns \* and the order of the Site.ID
 
 ``` r
 left_join(T1, T2) #this one has ABCD
@@ -417,13 +431,15 @@ right_join(T1, T2) # this one has ABDE (get E because T2 is the data frame)
 showing how they can be the same: left_join(T1, T2) == right_join(T2,
 T1) %\>% arrange(Site.ID) %\>% relocate(pH, .after = Temperature)
 
-inner_join vs full_join Inner join only keeps the data that is complete
-in both data sets.
+#### inner_join vs full_join
 
-what is the difference? order of the Site.ID and the order of the
-columns, but the data will be the same
+Inner join only keeps the data that is complete in both data sets.
 
-inner_join vs full_join Full join keeps everything.
+what is the difference?  
+order of the Site.ID and the order of the columns, but the data will be
+the same
+
+inner_join vs full_join. Full join keeps everything.
 
 ``` r
 inner_join(T1, T2)
@@ -461,9 +477,11 @@ full_join(T1, T2)
 ## Joining with by = join_by(Site.ID)
 ```
 
-semi_join vs anti_join semi_join keeps all rows from the first data set
-where there are matching values in the second data set, keeping just
-columns from the first data set.
+#### semi_join vs anti_join
+
+semi_join keeps all rows from the first data set where there are
+matching values in the second data set, keeping just columns from the
+first data set.
 
 Saves all rows in the first data set that do not match anything in the
 second data set. This can help you find possible missing data across
@@ -519,13 +537,17 @@ you know the basics from that lab assignment before class on Tuesday.
 
 ------------------------------------------------------------------------
 
-Week 5b Lecture Data wrangling: lubridate dates and times 2025-09-23
+### Week 5b Lecture
 
-Learning about dates and times from the {lubridate} package \* used for
+#### Data wrangling: lubridate dates and times
+
+##### 2025-09-23
+
+Learning about dates and times from the {lubridate} package. \* used for
 calculating dates and times and formatting them \* Converting and
 manipulating dates and times using {lubridate} package
 
-Homework \* Practice with dates and times
+Homework. \* Practice with dates and times
 
 You know what to do….. (Copy CondData.csv and DepthData.csv to your data
 folder)
@@ -538,12 +560,14 @@ library(lubridate)
 
 install.packages(“lubridate”) \# package to deal with dates and times
 
-What time is it now? \* Even though this may seem silly if you have a
-clock, it is very helpful if you want to time stamp something in your
-code.
+What time is it now?  
+\* Even though this may seem silly if you have a clock, it is very
+helpful if you want to time stamp something in your code.
 
-now() function what time is it now? \* used to stamp your code with
-something
+##### now() function
+
+what time is it now?  
+\* used to stamp your code with something
 
 \[1\] “2025-09-16 14:31:26 HST”
 
@@ -553,7 +577,7 @@ You can also ask the time in other time zones:
 now(tzone = "EST") # what time is it on the east coast
 ```
 
-    ## [1] "2025-09-30 12:57:11 EST"
+    ## [1] "2025-09-30 17:54:49 EST"
 
 \[1\] “2025-09-16 19:31:26 EST”
 
@@ -561,7 +585,7 @@ now(tzone = "EST") # what time is it on the east coast
 now(tzone = "GMT") # what time in GMT
 ```
 
-    ## [1] "2025-09-30 17:57:11 GMT"
+    ## [1] "2025-09-30 22:54:49 GMT"
 
 \[1\] “2025-09-17 00:31:26 GMT” \* helpful if working in a lot of
 different time zones
@@ -590,8 +614,10 @@ leap_year(now()) # is it a leap year?
 
 \[1\] FALSE
 
-Date specifications for lubridate: \* lubridate does a good job of
-guessing the format of your date if you give just a little hint.
+##### Date specifications for lubridate:
+
+- lubridate does a good job of guessing the format of your date if you
+  give just a little hint.
 
 First, your dates **must be a character**. \* cannot be a number or
 factor \* common mistake when you try to convert a date that’s a factor

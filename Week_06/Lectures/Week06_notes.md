@@ -5,9 +5,9 @@ Haley Poppinga
 
 ### Week 6 Lecture
 
-Quarto
+#### Quarto
 
-2025-09-30
+##### 2025-09-30
 
 #### Outline
 
@@ -15,38 +15,50 @@ Quiz 5 What is Quarto? Metadata and outputs Basic Markdown Text Using
 code chunks Next Time - Working with figures and tables - Themes -
 Advanced Outputs
 
-Review If I want to convert Feb 28 2021 10:05:50 to a date, what
-function do I use?
+###### Review
+
+If I want to convert Feb 28 2021 10:05:50 to a date, what function do I
+use?  
+mdy_hms(dates)
 
 #### What is Quarto?
 
 Analyze. Share. Reproduce. You have a story to tell with data—tell it
-with Quarto.
+with Quarto.  
+\* can use multiple languages in the exact same script \* feed in code
+to Quarto document and it will convert to HTML, etc.
 
-Quarto provides a unified authoring framework for data science,
+**Quarto provides a unified authoring framework for data science,
 combining your code, its results, and your prose. Quarto documents are
 fully reproducible and support dozens of output formats, like PDFs, Word
-files, presentations, and more.
+files, presentations, and more.**
 
 1)  For communicating to decision-makers, who want to focus on the
-    conclusions, not the code behind the analysis.
+    conclusions, not the code behind the analysis.  
+
+- make a document with all the code, and then hide the code
 
 2)  For collaborating with other data scientists (including future
     you!), who are interested in both your conclusions, and how you
     reached them (i.e. the code).
 
+- all code and output in the same place
+
 3)  As an environment in which to do data science, as a modern-day lab
     notebook where you can capture not only what you did, but also what
-    you were thinking.
+    you were thinking.  
+
+- Jupiter notebook
 
 ##### Change your mental mode
 
-Source to Output Take notes in same place as your code
+Source to Output –\> Take notes in same place as your code. \*
+everything goes into Quarto: hypotheses, figures, plots, etc.
 
 #### Quarto is broken into 4 major parts:
 
-- Metadata
-- Text
+- Metadata (top)
+- Text (what we want to write about our code)
 - Code
 - Output
 
@@ -54,34 +66,38 @@ Source to Output Take notes in same place as your code
 
 **YAML - yet another markup language**
 
-3x of these “-” key: value 3x “-”
-
-This goes at the top of your RMarkdown document, includes the metadata,
-style, and type of output for your document.
+3x of these “-”  
+key: value  
+3x “-”  
+\* see the top of this document \* This goes at the top of your
+RMarkdown document, includes the metadata, style, and type of output for
+your document.
 
 You only need two pieces for it to work, but there is lots more to add
-to make it beautiful.
-
-title is the title of your markdown document format is the format that
-it will be saved as
+to make it beautiful. \* title is the title of your markdown document \*
+format is the format that it will be saved as \* HTML or github document
 
 ## Example YAML
 
 title: “Penguins Distilled” description: \| A great new article on
 Penguins author: Tom Mock affiliation: RStudio date: “‘r Sys.Date()’”
-format: html: toc: true toc-depth: 4 –
+format: html: toc: true toc-depth: 4 – \* toc = table of contents
 
-You create an html document by hitting render
+You create an html document by hitting render.
 
-Text The text is written in the markdown language. You have already done
-a lab on markdown and this is the exact language that you use for your
+#### Text
+
+The text is written in the markdown language. You have already done a
+lab on markdown and this is the exact language that you use for your
 readme files. This is a short review.
 
-**Bold** I **love** markdown
+**Bold**  
+I **love** markdown
 
-*Italics* I *love* markdown
+*Italics*  
+I *love* markdown
 
-Lists \# - item 1 \# - item 2 \# - item 3
+Lists - item 1 - item 2 - item 3
 
 Images ![](image%20link)
 
