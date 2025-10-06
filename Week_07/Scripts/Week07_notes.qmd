@@ -1,0 +1,99 @@
+---
+title: "Week 07 Notes"
+author: "Haley Poppinga"
+date: "October 7, 2025"
+format: 
+  html:
+    toc: true
+    theme: sandstone
+---
+
+## Week 7a Lecture  
+
+
+### Introduction 
+
+
+
+
+
+
+
+### Load Libraries  
+```{r}
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(ghibli) 
+library(beepr)
+library(kableExtra)
+```
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+________________________________________________________________________________
+
+
+## Week 7b Lecture  
+
+Outline: 
+
+
+
+### Load Libraries 
+
+```{r}
+
+```
+
+
+
+
+
+### Read Data 
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+
+
+

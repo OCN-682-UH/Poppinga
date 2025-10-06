@@ -131,7 +131,7 @@ ChemData_clean %>%
   kable_styling(full_width = FALSE) # make it less wide
 ```
 
-@tbl-chemdata has information on the mean values for pH and %SGD by different seasons.
+@tbl-chemdata has information on the mean values for pH and salinity by different seasons.
 
 
 _Beep when the code is done running..._
