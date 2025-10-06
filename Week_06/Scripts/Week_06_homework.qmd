@@ -6,10 +6,10 @@ format:
   html:
     toc: true
     theme: sandstone
----
 knitr: 
   opts_chunk:
     fig.path: "../Output/"
+---
     
 ## Week 06 Homework
 
