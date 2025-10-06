@@ -1,18 +1,25 @@
 ---
 title: "My first Quarto document"
 author: "Haley Poppinga"
-date: today
+date: "September 30, 2025"
 format: 
   html:
     toc: true
     theme: sandstone
+knitr: 
+  opts_chunk:
+    fig.path: "../Output/"
 ---
 
-## Introduction
+## Week 6a Lecture  
+See Week 06 Lecture Folder for complete notes but in  RMarkdown.   
+
+### Introduction 
+
 
 This is my first *Quarto* document and I am going to plot some penguin data.  
 
-Load Libraries
+**Load Libraries**
 ```{r}
 #| message: false
 library(tidyverse)
@@ -21,66 +28,268 @@ library(ggplot2)
 library(palmerpenguins)
 library(ghibli) 
 library(beepr)
+library(kableExtra)
+library(memer)
 ```
 * without the message to YAML, it's ugly
 
 
-Notes:  
-* one plot per code chunk. 
-* treat each chunk like a new paragraph. 
-* render it often so you can se errors as you go. 
-* there is an order to YAML in beginning and indentation matters. 
-* if you run Quarto with an error, it will not create anything. 
-  * under background jobs, you can stop it so it doesnt run forever. 
-* render after you change the YAML. 
+Notes: 
+
+* one plot per code chunk.  
+* treat each chunk like a new paragraph.   
+* render it often so you can se errors as you go.  
+* there is an order to YAML in beginning and indentation matters.  
+* if you run Quarto with an error, it will not create anything.  
+* under background jobs, you can stop it so it doesnt run forever.  
+* render after you change the YAML.  
 
 
 
-## Look at the data
-
+**Read Data**
 ```{r}
 glimpse(penguins)
 ```
 
 
-## Make a plot
+**Make a plot (example)**
 
 This is looking at the relationship between **bill length** and **bill depth**. 
 
+Example code:   
 ```{r}
-#| warning: false
-penguins %>% # penguin dataset
-  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
-  geom_point()
-# beep(5)
+#| eval: true  
+#| output: false  
+#| warning: false  
+ penguins %>% # penguin dataset  
+   ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +  
+  geom_point()  
 ```
+
 * a warning shows up so we add a message to YAML
 * visual will appear right after 
 
 Link to Quarto Website references:  
 [Quarto Formats](https://quarto.org/docs/reference/formats/html.html)  
 
+
 Link to HTML themes:  
 [HTML Themes](https://quarto.org/docs/output-formats/html-themes.html)
 
-Image:  
+
+Image:  (example)
 ![](...    )
 
 Send HTML to collaborators by converting it to rawgithack.  
 
 
 
+## Week 6b Lecture  
+
+Outline: 
+
+* Working with Figures.  
+* Working with tables.  
+* Themes.  
+* Advanced outputs.  
+* Homework: Practice Quarto.  
+
+
+**Working with figures**:   
+We can change lots of aspects of the figure right in our markdown document.  
+
+* change size.  
+* change resolution.  
+* change “device” (i.e. is it a .png, .pdf, etc.).  
+* save it to a specific folder.  
+
+
+## Make A Plot
+
+This is looking at the relationship between penguin **species**, **sex**, and **bill length**. 
+
+```{r}
+#| warning: false
+#| out-width: "70%"
+#| fig-align: "center"
+#| label: fig-penguins
+#| fig-cap: "This is a figure showing bill length by bill depth."
+
+penguins %>% #penguin data
+  drop_na() %>%
+  ggplot(aes(x = species, y = bill_length_mm, color = sex)) +
+  labs(title = "Penguin Bill Length (mm) by Species and Sex",
+    x = "Species",
+    y = "Bill Length (mm)",
+    color = "Sex") +
+  geom_boxplot()
+
+```
+When you look @fig-penguins we can see the differences between bill length and species and between sexes.
+
+
+This will make a beep sound when code is done running (just for fun).  
+```{r}
+beep(10)
+```
+  
+
+
+
+##### Label A Figure  
+
+We can add labels to figures and captions and subcaptions.  
+
+Some options:  
+
+* label: some-fig-lab (allows you to call the figure in your quarto file and it automatically give it a number). 
+* fig-cap: “my caption” (gives your figure a caption). 
+
+**Automatically save all your figures in your output folder**. 
+
+This will automatically save every figure in your output folder with the fig size based on your YAML and named with the label you gave it.
+
+
+**NOTE**: Quarto automatically saves everything to the file location NOT the project location
+
+Example how to save figures:  
+knitr:  
+  opts_chunk:  
+    fig.path: "../output/"  
+    
+* added the ../ because your qmd folder is in your scripts folder so we need to go up one directory and then into your output folder
+
+
+Type out a table by hand:  
+
+| Time  | Session | Topic    |
+|:------|:-------:|---------:|
+| _left_ | _center_| _right_ |
+| 01:00  | 1       | Anatomy |
+| 01:50  |         | *Break* |
+| 02:00  | 2       | Tables  |
+| 02:45  |         | *Break* |
+
+Notes:  
+
+* colon : tells us left, right, or center justified.  
+* up and down lines separate columns.  
+* column with dashes decides how wide your column is.  
+
+Tables with kable:  
+```{r}
+#| warning: false
+#| message: false
+#| label: tbl-penguins
+#| tbl-cap: "My Awesome Penguin Table"
+
+penguins %>%
+  group_by(species) %>%
+  summarise(billmean = mean(bill_length_mm, na.rm = TRUE)) %>%
+  kbl() # make it a kable table
+```
+
+@tbl-penguins has information on the mean bill length by species.  
+
+
+**Note**: You can add a label to this code chunk too just like your figure and reference your table in the text by using tbl-name in your label.  
+
+**Add some style**
+
+```{r}
+penguins %>%
+  group_by(species) %>%
+  summarise(billmean = mean(bill_length_mm, na.rm = TRUE)) %>%
+  kbl()  %>% # make it a kable table
+  kable_classic() %>% # add a theme
+  row_spec(2, bold = TRUE, color = "white", background = "green") %>% # highlight row 2
+  kable_styling(full_width = FALSE) # make it less wide
+```
+
+Link to make beautiful tables:  
+[More Tables](https://rfortherestofus.com/2019/11/how-to-make-beautiful-tables-in-r/)  
+
+
+Link to HTML themes:  
+[HTML Themes](https://quarto.org/docs/output-formats/html-themes.html)
+
+
+**Outputs**  
+Many different formats.  
+
+[Link](https://quarto.org/docs/output-formats/all-formats.html) to list of different documents.  
+
+GitHub documents can view in GitHub!  
+PDF is also very useful.  
+
+Here is an example to make a “github flavored markdown” file. Remember to use YAML that is specific to the format you are using. 
+
+Link to GitHub Format (gfm):  
+[GitHub Format](https://quarto.org/docs/reference/formats/markdown/gfm.html#format-options)  
+
+Link to more plotting options:  
+[ggplot extensions](https://exts.ggplot2.tidyverse.org/gallery/).  
+
+
+Note you cannot use html interactive files in a gfm document. You will need to install the webshot2 package which automatically turns them into screenshots if you have an html table, for example, in your file.  
+
+Extra thing to do for gfm:  
+
+```{r}
+#| eval: false 
+#| output: false
+#| warning: false
+
+title: "Intro to Quarto part 2" 
+author: "Nyssa Silbiger"
+format: gfm
+prefer-html: true
+```
+
+**Note**: If you want something more interactive. Use HTML.  
+
+
+Today’s totally awesome R package. 
+Make a meme in R!  
+
+
+```{r}
+#| eval: false  
+#| output: false  
+#| warning: false  
+meme_get("DistractedBf") %>% 
+  meme_text_distbf("Silly R package", "OCN 682 students", "actual coding")
+```
+
+
+
+
+
+To-Do before running code:  
+.rs.restartR()  
+rm(list = ls())  
 
 
 
 
 
 
+_Ignore_:  
 
+Code that I wish worked better as a plot
 
-
-
-
+ChemData_clean %>%
+  ggplot(aes(x = Salinity, y = Temp_in)) + 
+  facet_wrap(~ Season, nrow = 1) +
+  stat_summary_2d(aes(z = percent_sgd, fill = after_stat(value))) + # average %SGD in grid across space
+  scale_colour_ghibli_d("PonyoMedium", direction = -1) + # nicer colors
+  labs(x = "Salinity (PSU)",
+    y = "Temperature (°C)",
+    title = "Temperature and Average Submarine Groundwater Discharge (SGD) Between Fall and Spring") + # labels/theme for a pub visualization
+  coord_cartesian(expand = FALSE) + # cartesian coordinates, needed to look up how to do this
+  theme_minimal(base_size = 11) +
+  theme(panel.grid = element_blank(),
+        plot.title = element_text(face = "bold"))
 
 
 
@@ -89,11 +298,11 @@ ________________________________________________________________________________
 When you first create a document, all of this example stuff will show up:
 
 
-## Quarto
+**Quarto**
 
 Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
-## Running Code
+**Running Code**
 
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
