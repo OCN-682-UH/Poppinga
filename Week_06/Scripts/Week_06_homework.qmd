@@ -53,7 +53,7 @@ glimpse(ChemData)
 ### Make a Plot
 
 This is looking at the relationship between penguin **pH**, **%SGD**, and **Season**.  
-I wanted to try a density plot from ggplot to make the data visualization awesome. I'm still trying to understand this data in the right context, but it was good practice to struggle with the making of this plot. 
+I wanted to try a density plot from ggplot to make the data visualization awesome. I'm still trying to understand this data in the right context, but it was good practice to struggle with the making of this plot. I will work on a plot that makes more sense in the future.
 
 ```{r}
 #| warning: false
@@ -77,7 +77,9 @@ ChemData_clean<-ChemData %>% #Nyssa's groundwater data
            sep = "_", # separate by 
            remove = FALSE) %>% # keep the original tide_time column
   mutate(Season = factor(Season, levels = c("SPRING","FALL")),
-         Tide = factor(Tide, levels = c("Low","High"))) 
+         Tide = factor(Tide, levels = c("Low","High")),
+         Season = recode(Season, "SPRING" = "Spring", "FALL" = "Fall"))
+  
 
 # Stuff dealing with density plots
 n_levels <- 6 # Number of filled contour bands
@@ -86,6 +88,7 @@ breaks <- c(0.25, 0.40, 0.55, 0.70, 0.85, 0.95, 0.995)  # above near-zero densit
 xlims <- quantile(ChemData_clean$pH, c(0.02, 0.98), na.rm = TRUE)
 ytop  <- quantile(ChemData_clean$percent_sgd, 0.90, na.rm = TRUE)  
 
+season_name<-list(c(SPRING = "Spring"), c(FALL = "Fall")) #get rid of all caps
 
 ChemData_clean %>%
  ggplot(aes(x = pH, y = percent_sgd)) + #density plot
@@ -116,10 +119,9 @@ When you look @fig-chemdata we can see the density differences between pH and %S
 
 ChemData_clean %>%
   drop_na() %>%
-  pivot_longer(cols = c(pH, percent_sgd), #make data longer
+  pivot_longer(cols = c(pH, Salinity), #make data longer
                names_to = "Variable",
                values_to = "Value") %>%
-  mutate(Variable = dplyr::recode(Variable, percent_sgd = "%SGD")) %>%  # rename variable
   group_by(Season, Variable) %>%
   summarise(Variable_mean = mean(Value, na.rm = TRUE)) %>% # get mean 
   kbl(col.names = c("Season","Variable","Mean")) %>% # make it a kable table and rename headers

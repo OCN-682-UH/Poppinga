@@ -6,9 +6,6 @@ format:
   html:
     toc: true
     theme: sandstone
-knitr: 
-  opts_chunk:
-    fig.path: "../Output/"
 ---
 
 ## Week 6a Lecture  
@@ -260,6 +257,58 @@ Make a meme in R!
 meme_get("DistractedBf") %>% 
   meme_text_distbf("Silly R package", "OCN 682 students", "actual coding")
 ```
+
+
+An extra plot that doesn't really make sense:  
+```{r}
+#| warning: false
+#| out-width: "70%"
+#| fig-align: "center"
+#| label: fig-chemdata
+#| fig-cap: "This is a figure showing water chemistry data in Maunalua Bay by season."
+#| echo: false
+#| message: false
+#| include: true
+#| eval: false
+#| dev: "png"
+#| fig-format: png
+#| fig-width: 7
+#| fig-height: 3.5
+
+ChemData_clean<-ChemData %>% #Nyssa's groundwater data
+  drop_na() %>% #filters out everything that is not a complete row
+  separate(col = Tide_time, # choose the tide time column
+           into = c("Tide","Time"), # separate it into two columns tide and time
+           sep = "_", # separate by 
+           remove = FALSE) %>% # keep the original tide_time column
+  mutate(Season = factor(Season, levels = c("SPRING","FALL")),
+         Tide = factor(Tide, levels = c("Low","High"))) 
+
+# Stuff dealing with density plots
+n_levels <- 6 # Number of filled contour bands
+breaks <- c(0.25, 0.40, 0.55, 0.70, 0.85, 0.95, 0.995)  # above near-zero density
+# original plot showed too much white space so added this to get a tighter view, set limits on axes
+xlims <- quantile(ChemData_clean$pH, c(0.02, 0.98), na.rm = TRUE)
+ytop  <- quantile(ChemData_clean$percent_sgd, 0.90, na.rm = TRUE)  
+
+
+ChemData_clean %>%
+ ggplot(aes(x = pH, y = percent_sgd)) + #density plot
+  geom_density_2d_filled(contour_var = "ndensity", breaks = breaks) + 
+  geom_density_2d(color = "white", linewidth = 0.3, breaks = breaks) +   # thin white contour lines on top (had to look up breaks stuff)
+  facet_wrap(~ Season, nrow = 1) +
+  labs(x = "pH",
+       y = "%SGD",
+       title = "pH and Submarine Groundwater Discharge (SGD) Density Regions by Season",
+       fill = "Density Level") + # legend label
+  coord_cartesian(xlim = xlims, ylim = c(0, 2.5)) + # zoom in and less white space
+  scale_fill_brewer(palette = "Blues") + # colors to show pH better
+  theme_minimal(base_size = 11) + # labels/theme for a pub visualization
+  theme(panel.grid = element_blank(),
+        plot.title = element_text(face = "bold",
+                                  size = 12))
+```
+
 
 
 
