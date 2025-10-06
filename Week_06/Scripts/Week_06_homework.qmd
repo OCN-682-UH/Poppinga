@@ -4,7 +4,6 @@ author: "Haley Poppinga"
 date: today
 format: 
   html:
-    fig-format: png
     toc: true
     theme: sandstone
 ---
@@ -88,7 +87,7 @@ xlims <- quantile(ChemData_clean$pH, c(0.02, 0.98), na.rm = TRUE)
 ytop  <- quantile(ChemData_clean$percent_sgd, 0.90, na.rm = TRUE)  
 
 
-ChemData_fig<-ChemData_clean %>%
+ChemData_clean %>%
  ggplot(aes(x = pH, y = percent_sgd)) + #density plot
   geom_density_2d_filled(contour_var = "ndensity", breaks = breaks) + 
   geom_density_2d(color = "white", linewidth = 0.3, breaks = breaks) +   # thin white contour lines on top (had to look up breaks stuff)
@@ -101,8 +100,8 @@ ChemData_fig<-ChemData_clean %>%
   scale_fill_brewer(palette = "Blues") + # colors to show pH better
   theme_minimal(base_size = 11) + # labels/theme for a pub visualization
   theme(panel.grid = element_blank(),
-        plot.title = element_text(face = "bold"))
-print(ChemData_fig)
+        plot.title = element_text(face = "bold",
+                                  size = 12))
 ```
 When you look @fig-chemdata we can see the density differences between pH and %SGD between Fall and Spring.
 

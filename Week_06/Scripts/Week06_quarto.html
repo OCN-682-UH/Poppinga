@@ -425,6 +425,9 @@ PDF is also very useful.</p>
 <p>To-Do before running code:<br>
 .rs.restartR()<br>
 rm(list = ls())</p>
+<p><em>Ignore</em>:</p>
+<p>Code that I wish worked better as a plot</p>
+<p>ChemData_clean %&gt;% ggplot(aes(x = Salinity, y = Temp_in)) + facet_wrap(~ Season, nrow = 1) + stat_summary_2d(aes(z = percent_sgd, fill = after_stat(value))) + # average %SGD in grid across space scale_colour_ghibli_d(“PonyoMedium”, direction = -1) + # nicer colors labs(x = “Salinity (PSU)”, y = “Temperature (°C)”, title = “Temperature and Average Submarine Groundwater Discharge (SGD) Between Fall and Spring”) + # labels/theme for a pub visualization coord_cartesian(expand = FALSE) + # cartesian coordinates, needed to look up how to do this theme_minimal(base_size = 11) + theme(panel.grid = element_blank(), plot.title = element_text(face = “bold”))</p>
 <hr>
 <p>When you first create a document, all of this example stuff will show up:</p>
 <p><strong>Quarto</strong></p>
