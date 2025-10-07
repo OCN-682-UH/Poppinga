@@ -11,10 +11,13 @@ format:
 ## Week 6a Lecture  
 See Week 06 Lecture Folder for complete notes but in  RMarkdown  
 
+
 [Required Reading](https://quarto.org/docs/get-started/hello/rstudio.html)  
+[Required Reading r4ds](https://r4ds.hadley.nz/quarto.html)  
+[Lecture Slides](https://raw.githack.com/OCN-682-UH/Fall_2025/main/Week_06/11_qurato_intro.html#/title-slide)  
 
-### Introduction 
 
+### Introduction  
 
 This is my first *Quarto* document and I am going to plot some penguin data.  
 
@@ -43,6 +46,12 @@ Notes:
 * under background jobs, you can stop it so it doesnt run forever.  
 * render after you change the YAML.  
 
+Quiz Notes:  
+* metadata is in YAML format  
+* Regarding code chunks in Quarto, which statement is correct? -> You can supply options inside the chunk header (after the pipe | and #) to control output behavior.  
+* Which option is used to adjust how wide a figure appears relative to the page? -> out-width  
+* Suppose you are writing a Quarto document in GitHub flavored markdown format (gfm). Which limitation was noted in the lecture? -> You cannot include HTML interactive tables directly; you might need webshot2 to convert them to screenshots.  
+* In Quarto, what does the echo: false option inside a code chunk do? -> Hides the code but still shows its results  
 
 
 **Read Data**
@@ -81,11 +90,14 @@ Image:  (example)
 
 Send HTML to collaborators by converting it to rawgithack.  
 
+_________________________________________________________________________________
 
 
 ## Week 6b Lecture  
 
-Outline: 
+[Lecture Slides](https://raw.githack.com/OCN-682-UH/Fall_2025/main/Week_06/12_quarto2.html#/title-slide)  
+
+Outline:  
 
 * Working with Figures.  
 * Working with tables.  

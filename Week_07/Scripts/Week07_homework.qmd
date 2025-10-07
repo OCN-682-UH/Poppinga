@@ -1,0 +1,53 @@
+---
+title: "Week 07 Homework"
+author: "Haley Poppinga"
+date: "October 7, 2025"
+format: 
+  html:
+    toc: true
+    theme: sandstone
+---
+
+## Week 07 Homework
+
+**Homework**  
+You need to make a map using Quarto with one of the following datasets from past Tidy Tuesdays. Make sure, as usual, that you scripts and output are saved appropriately.  
+
+
+
+### Load Libraries
+```{r}
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(ghibli) 
+library(beepr)
+library(maps)
+library(mapdata)
+library(mapproj)
+library(ggspatial)
+library(ggmap)
+```
+
+
+
+### Read Data
+```{r}
+
+```
+This data comes from 
+
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+

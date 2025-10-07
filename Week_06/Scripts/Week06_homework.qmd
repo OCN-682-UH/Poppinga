@@ -14,7 +14,7 @@ knitr:
 ## Week 06 Homework
 
 **Homework**  
-
+ 
 * Take any of the data sheets you have already worked with in class and create at least one table and one figure in an Quarto file.  
 * Create the most beautiful Quarto output you can in either an html, github doc, or pdf format. RENDER THE FILE
 * Make sure you have headings with clear explanations of what you are doing.

@@ -1,0 +1,52 @@
+---
+title: "Week 08 Lectures"
+author: "Haley Poppinga"
+format: 
+  html:
+    toc: true
+    theme: sandstone
+---
+
+## Week 8a Lecture  
+
+[Lecture Slides](https://raw.githack.com/OCN-682-UH/Fall_2025/main/Week_07/13_Maps1.html)  
+[Required Reading r4ds](https://r4ds.hadley.nz/strings.html)  
+
+
+### Introduction  
+
+
+
+
+
+
+
+
+### Load Libraries  
+
+
+
+
+
+
+### Read Data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

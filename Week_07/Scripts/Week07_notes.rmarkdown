@@ -69,7 +69,6 @@ stars<-read_csv(here("Week_07","data","stars.csv"))
 
 ##### {maps} package  
 The {maps} package is a combination of functions that pair well with ggplot and base layers for maps (i.e. polygons of regions of interest).  
-Background of map.  
 
 map_data("location") is the function used to pull out whatever base layer that you want.  
 
@@ -84,14 +83,11 @@ You can extract polygons for different _countries_.
 # get data for the USA
 usa<-map_data("usa")
 head(usa)
-```
 
-```{r}
 # get data for italy
 italy<-map_data("italy")
 head(italy)
 ```
-
 
 You can also extract data and different resolutions. For example for data that also has polygons for each state in the US use:  
 
@@ -99,17 +95,13 @@ You can also extract data and different resolutions. For example for data that a
 # get data for states
 states<-map_data("state")
 head(states)
-```
 
-```{r}
 # get data for counties
 counties<-map_data("county")
 head(counties)
 ```
 
-
-
-**Structure of the data**  
+**Structure of the data** 
 
 * **long** is longitude. Things to the west of the prime meridian are negative.  
 * **lat** is latitude.  
@@ -417,6 +409,7 @@ ggplot() +
              x=1:5, y=1:5, 
              size=10)
 ```
+
 
 
 
