@@ -10,11 +10,36 @@ format:
 
 ## Week 7a Lecture  
 
+[Lecture Slides](https://raw.githack.com/OCN-682-UH/Fall_2025/main/Week_07/13_Maps1.html) 
+
+Outline of class:  
+Working with Maps  
+
+1. Quiz!  
+2. Highlight some various spatial packages.  
+3. Simple mapping using the {maps} package with ggplot.  
+
+Homework: Make a map. 
+
 
 ### Introduction 
 
+**Map Packages**  
+There are a ton of different map packages.  
 
+Other very helpful packages:  
 
+* **sf** (This is for the serious GIS people. If you want to do actual spatial analyses this is the package to use)  
+* **ggmap** (Uses the google maps API to make maps. Really easy to use, but requires a credit card for the API...)  
+* **tmap** (static and interactive maps). 
+* **leaflet** (interactive html maps-- Awesome to use with rmakrdown files)   
+
+Helpful references:  
+
+* The required reading for today  
+* [Advanced maps](https://r.geocompx.org/adv-map.html)  
+* [Bathymetry example](https://ben-williams.github.io/updated_ggplot_figures.html#maps)  
+* [Earth Lab](https://earthlab.colorado.edu/)  
 
 
 
@@ -27,26 +52,219 @@ library(ggplot2)
 library(ghibli) 
 library(beepr)
 library(kableExtra)
+library(maps)
+library(mapdata)
+library(mapproj)
 ```
 
 
+### Read Data
+```{r}
+# Read in data on population in California by county
+popdata<-read_csv(here("Week_07","data","CApopdata.csv"))
+#read in data on number of seastars at different field sites
+stars<-read_csv(here("Week_07","data","stars.csv"))
+```
 
+##### {maps} package  
+The {maps} package is a combination of functions that pair well with ggplot and base layers for maps (i.e. polygons of regions of interest).  
+
+map_data("location") is the function used to pull out whatever base layer that you want.  
+
+```{r}
+# get data for the entire world
+world<-map_data("world")
+head(world)
+```
+
+You can extract polygons for different _countries_.  
+```{r}
+# get data for the USA
+usa<-map_data("usa")
+head(usa)
+
+# get data for italy
+italy<-map_data("italy")
+head(italy)
+```
+
+You can also extract data and different resolutions. For example for data that also has polygons for each state in the US use:  
+
+```{r}
+# get data for states
+states<-map_data("state")
+head(states)
+
+# get data for counties
+counties<-map_data("county")
+head(counties)
+```
+
+**Structure of the data** 
+
+* **long** is longitude. Things to the west of the prime meridian are negative.  
+* **lat** is latitude.  
+* **order**. This just shows in which order ggplot should “connect the dots”.  
+* **region** and subregion tell what region or subregion a set of points surrounds. 
+* **group**. This is very important! ggplot2’s functions can take a group argument which controls (amongst other things) whether adjacent points should be connected by lines. If they are in the same group, then they get connected, but if they are in different groups then they don’t. Essentially, having to points in different groups means that ggplot “lifts the pen” when going between them.  
+
+
+**Make a map of the world**  
+
+```{r}
+ggplot()+
+  geom_polygon(data = world, aes(x = long, y = lat, group = group))
+```
+
+What happens if I forget group = group?  
+```{r}
+ggplot()+
+  geom_polygon(data = world, aes(x = long, y = lat))
+```
+
+Add color to the lines and fill.  
+```{r}
+ggplot()+
+  geom_polygon(data = world, 
+               aes(x = long, y = lat, group = group),
+               color = "black") # add color to the lines
+```
+
+**Change the visuals** 
+
+Change the theme.  
+```{r}
+ggplot()+
+  geom_polygon(data = world, 
+               aes(x = long, 
+                   y = lat,
+                   group = group,
+                   fill = region),
+               color = "black")+
+  guides(fill = FALSE)+
+  theme_minimal() +
+  guides(fill = FALSE)+
+  theme(panel.background = element_rect(fill = "lightblue")) + # make the ocean blue
+  coord_map(projection = "mercator",
+            xlim = c(-180,180)) + # Use a mercator projection
+  coord_map(projection = "sinusoidal",
+            xlim = c(-180,180)) # use sinusoidal projection
+
+```
+
+**Change the map projection**  
+The earth is NOT flat, but we are attempting to visualize this map in 2D. There are a lot of different projections that you can use. See here for the different projections included in the {mapproj} package. 
+
+
+Extra:  
+rnaturalearth package for some more advanced plotting with the sf package. Check it out [here](https://github.com/ropensci/rnaturalearth). 
+
+
+**Let's make a map of just California**. 
+```{r}
+# Use the states dataset
+head(states)
+CA_data<-states %>%
+  filter(region == "california") # Filter out just the California data.
+```
+
+**Think, pair, share**. 
+Make a simple map of just California using what you just learned. Do not cheat!!  
 ```{r}
 
 ```
 
 
-
+**Map of California**
 ```{r}
-
+ggplot()+
+geom_polygon(data = CA_data, 
+             aes(x = long, 
+                 y = lat, 
+                 group = group), 
+             color = "black")+
+  coord_map()+
+  theme_void()
 ```
 
 
+**Adding multiple layers of data**   
+Plot the population of every county in California.  
+
+First, we need to get the county level data and join it with our dataset on population (How do I do it?)  
+
+```{r}
+# Look at the county data
+head(counties)[1:3,] # only showing the first 3 rows for space
+head(popdata)
+```
+
+Wrangle the data. Make the column names the same to join the two datasets.  
+```{r}
+CApop_county<-popdata %>%
+  select("subregion" = County, Population)  %>% # rename the county col
+  inner_join(counties) %>%
+  filter(region == "california") # some counties have same names in other states
+```
+Joining with by = join_by(subregion)   
 
 
+```{r}
+head(CApop_county)
+```
 
 
+**Map of CA population by county**  
+```{r}
+ggplot()+
+geom_polygon(data = CApop_county, 
+             aes(x = long, 
+                 y = lat, 
+                 group = group,
+                 fill = Population),
+             color = "black")+
+  coord_map()+
+  theme_void() +
+   scale_fill_gradient(trans = "log10") # Make it log scale for easier interpretation. 
+```
 
+
+**Add a layer of points**.   
+Look at the stars dataset. This has the number of seastars per/m2 at different sites in California.  
+```{r}
+head(stars)
+```
+
+
+**Map of CA population by county with seastars**.  
+Add a geom_point layer.  
+
+```{r}
+ggplot()+
+geom_polygon(data = CApop_county, 
+             aes(x = long, 
+                 y = lat, 
+                 group = group,
+                 fill = Population),  
+             color = "black")+
+  geom_point(data = stars, # add a point at all my sites
+             aes(x = long,
+                 y = lat,
+                 size = star_no))+ # Make points proportional to number of stars.
+  coord_map()+
+  theme_void() +
+  scale_fill_gradient(trans = "log10") +
+   labs(size = "# stars/m2") # Make a better legend label.
+
+# ggsave(here("Week_07","output","CApop.pdf")) # save it
+```
+
+**Total Awesome R package**.  
+```{r}
+library(ggdogs)
+ggplot(mtcars) +
+  geom_dog(aes(mpg, wt), dog = "pug", size = 5)
+```
 
 
 
@@ -55,42 +273,141 @@ ________________________________________________________________________________
 
 ## Week 7b Lecture  
 
-Outline: 
+### Introduction  
+
+Outline:  
+Working with Maps part 2. 
+{ggmaps}
+
+
+* ggmap article  
+* [Making plots with ggmap](https://www.littlemissdata.com/blog/maps).  
+* [Setting up ggmap](https://builtin.com/data-science/ggmap). 
+
+**Review**  
+If my plot looks like a bunch of crazy lines, what did I likely forget to put in the ggplot code?  
+
+
+
 
 
 
 ### Load Libraries 
 
 ```{r}
-
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(ggspatial)
+library(ggmap)
 ```
+Install ggmaps and ggsn  
+* ggspatial: adds scale bars and compass arrows  
 
-
+```{r}
+register_google(key = "YOUR KEY HERE", write = TRUE) ### use your own API
+#IMPORTANT don't put your key to github!! I usually save mine in a text file and import it each time
+# Setting write = TRUE will write the API key to your R environment so that you do not have to re register it each time
+#Also use the stadia maps API Key
+register_stadiamaps("Your API KEY HERE", write = TRUE)
+```
 
 
 
 ### Read Data 
 
 ```{r}
+ChemData<-read_csv(here("Week_07","data","chemicaldata_maunalua.csv"))
+glimpse(ChemData)
+```
+We will use a snapshot of the Maunalua Chemistry data in this weeks data folder  
 
+
+**Get base maps from ggmap**  
+get_map() is the function to get a basemap from Google Maps. At it's simplest form, you only need to put in a location.  
+
+Location as a string:  
+```{r}
+Oahu<-get_map("Oahu")
 ```
 
+Use ggmap to plot the base layer  
+```{r}
+ggmap(Oahu)
+```
 
+You can also put in lat and lon coordinates to get a basemap.  
 
-
-
-
-
+Get coordinates for Wailupe on Oahu.  
 
 ```{r}
+#Make a data frame of lon and lat coordinates
+WP<-data.frame(lon = -157.7621, lat = 21.27427) # coordinates for Wailupe
+# Get base layer
+Map1<-get_map(WP)
+# plot it
+ggmap(Map1)
+```
 
+_Zoom in on a location_  
+The zoom argument, an integer from 3 to 20 specifying how large the spatial extent should be around the center, with 3 being the continent level and 20 being roughly the single building level.  
+```{r}
+Map1<-get_map(WP,zoom = 17)
+ggmap(Map1)
 ```
 
 
+_Change the map type_  
+```{r}
+Map1<-get_map(WP,zoom = 17, maptype = "satellite")
+ggmap(Map1)
+```
+
+
+There are lots of different ones. look at ?get_map  
+```{r}
+Map1<-get_map(WP,zoom = 17, maptype = "stamen_watercolor", source = "stadia")
+ggmap(Map1)
+```
+
+**You can use the ggmap base layer in any ggplot**  
+```{r}
+Map1<-get_map(WP,zoom = 17, maptype = "satellite") 
+ggmap(Map1)+
+  geom_point(data = ChemData,
+             aes(x = Long, y = Lat, color = Salinity),
+             size = 4) +
+  scale_color_viridis_c()
+```
+
+
+**Don't know the exact lat and long?**  
+Use geocode() to get exact locations that you can then use in the maps.  
+```{r}
+geocode("the white house")
+```
 
 ```{r}
-
+geocode("University of Hawaii at Manoa")
 ```
+
+
+**Totally awesome R Package**  
+emojifont!
+
+```{r}
+library(emojifont)
+search_emoji('smile')
+```
+
+```{r}
+ggplot() + 
+  geom_emoji('smile_cat', 
+             x=1:5, y=1:5, 
+             size=10)
+```
+
+
 
 
 

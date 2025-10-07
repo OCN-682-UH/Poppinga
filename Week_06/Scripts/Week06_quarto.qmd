@@ -9,7 +9,9 @@ format:
 ---
 
 ## Week 6a Lecture  
-See Week 06 Lecture Folder for complete notes but in  RMarkdown.   
+See Week 06 Lecture Folder for complete notes but in  RMarkdown  
+
+[Required Reading](https://quarto.org/docs/get-started/hello/rstudio.html)  
 
 ### Introduction 
 
