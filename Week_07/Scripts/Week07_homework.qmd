@@ -17,11 +17,16 @@ You need to make a map using Quarto with one of the following datasets from past
 
 ### Load Libraries
 ```{r}
+#| message: false
+#| warning: false
+
 library(tidyverse)
 library(here)
 library(ggplot2)
 library(ghibli) 
 library(beepr)
+library(lubridate)
+library(dplyr)
 library(maps)
 library(mapdata)
 library(mapproj)
@@ -33,22 +38,104 @@ library(ggmap)
 
 ### Read Data
 ```{r}
+#| message: false
+#| warning: false
 
+meteorites<-read_csv(here("Week_07","Data","meteorites.csv")) # meteorites data
+glimpse(meteorites)
 ```
-This data comes from 
 
-Here is the link to the [Meteroites](https://github.com/rfordatascience/tidytuesday/tree/main/data/2019/2019-06-11) dataset!  
-
-
+_Data for the entire World_  
 ```{r}
+#| message: false
+#| warning: false
+
+# get data for the entire world
+world<-map_data("world")  # map of the world
+head(world) # not necessary but just to see
 
 ```
 
+This meteorite data comes from Meteoritical Society by way of NASA. It includes where and when meteroties fell.  
+
+Here is the link to the [Meteroites](https://github.com/rfordatascience/tidytuesday/tree/main/data/2019/2019-06-11) dataset! Tidy Tuesdays.   
+
+
+### Make a Map  
+
+**Clean the Data**  
+```{r}
+#| message: false
+#| warning: false
+meteorites_clean<- meteorites %>%
+  drop_na() %>%
+  mutate(fall = factor(fall, levels = c("Found","Fell")),
+         long = if_else(long > 180, long - 360, long))
+```
+
+**Style and Fix the Map**  
+```{r}
+#| message: false
+#| warning: false
+bbox <- c(left = -179.99, bottom = -80, right = 179.99, top = 80)   # cap north at ~80°
+worldmap <- get_map(location = bbox, maptype = "satellite", crop = FALSE)
+# Get base layer
+```
+
+_Plot the Map reference_  
+```{r}
+#| message: false
+#| warning: false
+#| out-width: "70%"
+#| fig-align: "center"
+#| fig-height: 4
+#| fig-width: 4
+
+# plot it
+ggmap(worldmap)
+```
+
+**Meteorite Map**  
+```{r}
+#| warning: false
+#| out-width: "70%"
+#| fig-align: "center"
+#| label: fig-meteorites
+#| fig-cap: "This is a figure showing where meteorites fell or were found around the world."
+#| echo: false
+#| message: false
+#| include: true
+#| eval: true
+#| dev: "png"
+#| fig-format: png
+
+ggmap(worldmap) +
+  geom_point(data = meteorites_clean,
+             aes(x = long, y = lat, color = fall), # map by where meteorites fell and where found
+                 size = 0.25) + # size of points
+  scale_color_ghibli_d("MarnieMedium2", direction = -1) + # nice colors
+  annotation_scale(bar_cols = c("orange","grey"),
+                   location = "br",
+                   pad_x = unit(0.25, "cm")) + # put the bar on the bottom left and make the colors yellow and grey
+  annotation_north_arrow(location = "tl", 
+                         style = north_arrow_fancy_orienteering,
+                         height = unit(1, "cm"), width = unit(1, "cm"),
+                         pad_y = unit(0.25, "cm")) + # add style and make north arrow smaller
+  coord_sf(crs = 4326) +  # scale bar to work, needs to be in this typical coordinate reference system for a GPS (WGS84)
+  labs(x = "Longitude",
+       y = "Latitude",
+       title = "Meteorites Fell or Found Around the World",
+       subtitle = "Data from the Meteoritical Society by way of NASA",
+       color = "Fell or Found") + # legend label
+  theme_minimal(base_size = 11) + # labels/theme for a pub visualization
+  theme(panel.grid = element_blank(),
+        plot.title = element_text(face = "bold", size = 12))
+
+# ggsave(here("Week_07","Output","meteoritesplot_HW7.png"))
+```
+@fig-meteorites shows the locations of where meteorites fell (green) and where they were found found (yellow).
 
 
 
-
-
-
-
-
+Note:  
+Spent too much time trying to figure out how to include the Pacific. Gave up. 

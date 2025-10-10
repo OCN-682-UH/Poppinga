@@ -56,9 +56,22 @@ Check: is it bad practice to do bad plot and good plot on same file?
 library(tidyverse)
 library(here)
 library(ggplot2)
+library(tidytuesdayR)
+library(ghibli) 
+library(beepr)
+library(lubridate)
+library(dplyr)
 ```
 
 ### Read Data  
+```{r}
+#| message: false
+#| warning: false
+
+scoobydoo <- tt_load("2021-07-13") # loads Tidy Tuesday Scooby Doo data
+head(scoobydoo)
+```
+
 ```{r}
 
 ```

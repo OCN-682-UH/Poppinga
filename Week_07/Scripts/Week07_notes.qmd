@@ -359,13 +359,13 @@ Working with Maps part 2.
 {ggmaps}
 
 
-* ggmap article  
+* [ggmap article](http://stat405.had.co.nz/ggmap.pdf)  
 * [Making plots with ggmap](https://www.littlemissdata.com/blog/maps).  
-* [Setting up ggmap](https://builtin.com/data-science/ggmap). 
+* [Setting up ggmap](https://builtin.com/data-science/ggmap).  
 
 **Review**  
 If my plot looks like a bunch of crazy lines, what did I likely forget to put in the ggplot code?  
-
+group = group
 
 
 ### Load Libraries 
@@ -381,17 +381,19 @@ Install ggmaps and ggsn
 * ggspatial: adds scale bars and compass arrows  
 
 Google Static Map:  
-Code for installing google maps  
-register_google(key = "YOUR KEY HERE", write = TRUE) ### use your own API  
-#IMPORTANT don't put your key to github!! I usually save mine in a text file and import it each time  
-# Setting write = TRUE will write the API key to your R environment so that you do not have to re register it each time  
+Code for installing google maps:   
+register_google(key = "your key here", write = TRUE) ### use your own api  
+
+* IMPORTANT don't put your key to github!! I usually save mine in a text file and import it each time (need to reload it if update R or new computer)  
+* Setting write = TRUE will write the API key to your R environment so that you do not have to re register it each time  
+* Google is proprietary that is why we need a cc
 
 
 Stadia Maps:  
 [Link](https://client.stadiamaps.com/dashboard/#/overview) to Stadia Maps Website  
 Code for installing stadia maps with API:  
-#Also use the stadia maps API Key  
-register_stadiamaps("Your API KEY HERE", write = TRUE)  
+Also use the stadia maps API Key  
+register_stadiamaps("Your key here", write = TRUE)  
 
 
 
@@ -406,6 +408,7 @@ We will use a snapshot of the Maunalua Chemistry data in this weeks data folder
 
 **Get base maps from ggmap**  
 get_map() is the function to get a basemap from Google Maps. At it's simplest form, you only need to put in a location.  
+For example, get a map from Oahu. Just gets coordinate information from ggmap doesn't plot it.
 
 Location as a string:  
 ```{r}
@@ -413,57 +416,90 @@ Oahu<-get_map("Oahu")
 ```
 
 Use ggmap to plot the base layer  
+Put get_map into ggmap.  
 ```{r}
 ggmap(Oahu)
 ```
 
-You can also put in lat and lon coordinates to get a basemap.  
+You can also put in latitude and longitude coordinates to get a basemap.  
 
 Get coordinates for Wailupe on Oahu.  
-
 ```{r}
 #Make a data frame of lon and lat coordinates
 WP<-data.frame(lon = -157.7621, lat = 21.27427) # coordinates for Wailupe
+
 # Get base layer
-Map1<-get_map(WP)
+Map1<-get_map(WP) # Wailupe in Maunalua now the center of map
+
 # plot it
 ggmap(Map1)
 ```
 
 _Zoom in on a location_  
 The zoom argument, an integer from 3 to 20 specifying how large the spatial extent should be around the center, with 3 being the continent level and 20 being roughly the single building level.  
+
+* 3 is really **zoomed out** like Pacific Ocean  
+* 20 is really **zoomed IN** would be like a single building  
 ```{r}
-Map1<-get_map(WP,zoom = 17)
+Map1<-get_map(WP,zoom = 17) # zoomed in around study site
 ggmap(Map1)
 ```
 
 
 _Change the map type_  
+There are lots of different ones. look at ?get_map  
+* some through Google and some through Stadia
 ```{r}
-Map1<-get_map(WP,zoom = 17, maptype = "satellite")
+Map1<-get_map(WP,zoom = 17, maptype = "satellite") # converts map type into anything
 ggmap(Map1)
 ```
 
 
-There are lots of different ones. look at ?get_map  
+Through Stadia:  
+
+* more artisitc  
+* different map types  
 ```{r}
 Map1<-get_map(WP,zoom = 17, maptype = "stamen_watercolor", source = "stadia")
 ggmap(Map1)
 ```
 
 **You can use the ggmap base layer in any ggplot**  
+Plot salinity values of each sampling point along site:  
 ```{r}
 Map1<-get_map(WP,zoom = 17, maptype = "satellite") 
 ggmap(Map1)+
+  geom_point(data = ChemData, # pull in chem data
+             aes(x = Long, y = Lat, color = Salinity), # column of long and lat
+             size = 4) +
+  scale_color_viridis_c() 
+```
+Site has a lot of groundwater. More saline water away from shore.  
+Uses a regular ggplot. Can change everything (points, colors, x and y labels) just like regular ggplot. Can make good figures on top of a layer that zooms in on study site.  
+
+
+**Add a Scale Bar**  
+
+* use ?annotation_scale and ?annotation_north_arrow to see what other things you can change about the plot  
+* coord_sf important for using scale bar. Have to tell R what coordinate system you are using and that it is a map.  
+* crs is for coordinate system and #### is for GIS classic coordinate system that most GPS is in. Depends on GPS you use. Scale bar will be wrong is you forget this.  
+```{r}
+ggmap(Map1) + 
   geom_point(data = ChemData,
              aes(x = Long, y = Lat, color = Salinity),
              size = 4) +
-  scale_color_viridis_c()
+  scale_color_viridis_c() +
+  annotation_scale(bar_cols = c("yellow", "blue"),
+                   location = "bl") + # put the bar on the bottom left and make the colors yellow and white
+  annotation_north_arrow(location = "tl") + # add a north arrow, decide whether its grid north or true north
+  coord_sf(crs = 4326) # for the scale bar to work it needs to be in this coordinate system - this is a typical coordinate reference system for a GPS (WGS84)
 ```
+
 
 
 **Don't know the exact lat and long?**  
 Use geocode() to get exact locations that you can then use in the maps.  
+Get lat and long from Google. If don't know locaiton of something for getmap it can be very helpful.  
 ```{r}
 geocode("the white house")
 ```
@@ -481,6 +517,7 @@ library(emojifont)
 search_emoji('smile')
 ```
 
+Use an emoji instead of a point.  
 ```{r}
 ggplot() + 
   geom_emoji('smile_cat', 
