@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Haley Poppinga">
+<meta name="dcterms.date" content="2025-10-14">
+
+<title>Goodplot/Badplot</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Goodplot_Badplot_homework_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Goodplot_Badplot_homework_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Goodplot_Badplot_homework_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Goodplot_Badplot_homework_files/libs/quarto-html/popper.min.js"></script>
+<script src="Goodplot_Badplot_homework_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Goodplot_Badplot_homework_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Goodplot_Badplot_homework_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Goodplot_Badplot_homework_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Goodplot_Badplot_homework_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Goodplot_Badplot_homework_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Goodplot_Badplot_homework_files/libs/bootstrap/bootstrap-268d3779a6da6cf7e66354be2ae425a0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries">Load Libraries</a></li>
+  <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read Data</a></li>
+  </ul></li>
+  <li><a href="#good-plot" id="toc-good-plot" class="nav-link" data-scroll-target="#good-plot">Good Plot</a>
+  <ul class="collapse">
+  <li><a href="#clean-the-data-first-plot" id="toc-clean-the-data-first-plot" class="nav-link" data-scroll-target="#clean-the-data-first-plot">Clean the Data: First Plot</a></li>
+  <li><a href="#make-the-first-plot" id="toc-make-the-first-plot" class="nav-link" data-scroll-target="#make-the-first-plot">Make the First Plot</a></li>
+  <li><a href="#clean-the-data-second-plot" id="toc-clean-the-data-second-plot" class="nav-link" data-scroll-target="#clean-the-data-second-plot">Clean the Data: Second Plot</a></li>
+  <li><a href="#make-the-second-plot" id="toc-make-the-second-plot" class="nav-link" data-scroll-target="#make-the-second-plot">Make the Second Plot</a></li>
+  <li><a href="#final-goodplot" id="toc-final-goodplot" class="nav-link" data-scroll-target="#final-goodplot">Final Goodplot</a></li>
+  <li><a href="#good-plot-discussion" id="toc-good-plot-discussion" class="nav-link" data-scroll-target="#good-plot-discussion">Good Plot Discussion</a></li>
+  </ul></li>
+  <li><a href="#bad-plot" id="toc-bad-plot" class="nav-link" data-scroll-target="#bad-plot">Bad Plot</a>
+  <ul class="collapse">
+  <li><a href="#clean-the-data" id="toc-clean-the-data" class="nav-link" data-scroll-target="#clean-the-data">Clean the Data</a></li>
+  <li><a href="#clean-the-data-base-pie-chart" id="toc-clean-the-data-base-pie-chart" class="nav-link" data-scroll-target="#clean-the-data-base-pie-chart">Clean the Data: Base Pie Chart</a></li>
+  <li><a href="#making-the-plots-base-pie-small-insets" id="toc-making-the-plots-base-pie-small-insets" class="nav-link" data-scroll-target="#making-the-plots-base-pie-small-insets">Making the Plots: Base Pie &amp; Small Insets</a></li>
+  <li><a href="#put-the-plots-together" id="toc-put-the-plots-together" class="nav-link" data-scroll-target="#put-the-plots-together">Put the Plots Together</a></li>
+  <li><a href="#bad-plot-discussion" id="toc-bad-plot-discussion" class="nav-link" data-scroll-target="#bad-plot-discussion">Bad Plot Discussion</a></li>
+  </ul></li>
+  <li><a href="#extra" id="toc-extra" class="nav-link" data-scroll-target="#extra">Extra</a>
+  <ul class="collapse">
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Goodplot/Badplot</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Haley Poppinga </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 14, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Goodplot Badplot Competition (the winner gets a prize)!</p>
+<p>I want to start with my Goodplot first so that you can see the funny and enjoyable observations that the TidyTuesday Scooby Doo data encompasses. And to surprise you with a horribly terribly awfully Badplot…</p>
+<section id="load-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="load-libraries">Load Libraries</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytuesdayR) <span class="co"># data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ghibli) <span class="co"># color palette I often use</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grid)  <span class="co"># for ggplot graphical object (Grob) insets</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpp) <span class="co"># ggplot2 extension</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtable) <span class="co"># arranges grobs</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr) <span class="co"># character strings</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtable) <span class="co"># arranges grobs</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) <span class="co"># map data to aesthetics</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats) <span class="co"># lumping, reorder things, modify factor levels</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel) <span class="co"># for repelling labels</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick) <span class="co"># adding images</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot) <span class="co"># also putting plot together</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) <span class="co"># putting plots together</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="read-data" class="level3">
+<h3 class="anchored" data-anchor-id="read-data">Read Data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tt<span class="ot">&lt;-</span> <span class="fu">tt_load</span>(<span class="st">"2021-07-13"</span>) <span class="co"># loads Tidy Tuesday Scooby Doo data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>scoobydoo <span class="ot">&lt;-</span> tt<span class="sc">$</span>scoobydoo <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="co"># get scooby doo data frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Scooby Doo Data</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(scoobydoo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 75
+  index series_name    network season title imdb  engagement date_aired run_time
+  &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;date&gt;        &lt;dbl&gt;
+1     1 Scooby Doo, W… CBS     1      What… 8.1   556        1969-09-13       21
+2     2 Scooby Doo, W… CBS     1      A Cl… 8.1   479        1969-09-20       22
+3     3 Scooby Doo, W… CBS     1      Hass… 8     455        1969-09-27       21
+4     4 Scooby Doo, W… CBS     1      Mine… 7.8   426        1969-10-04       21
+5     5 Scooby Doo, W… CBS     1      Deco… 7.5   391        1969-10-11       21
+6     6 Scooby Doo, W… CBS     1      What… 8.4   384        1969-10-18       21
+# ℹ 66 more variables: format &lt;chr&gt;, monster_name &lt;chr&gt;, monster_gender &lt;chr&gt;,
+#   monster_type &lt;chr&gt;, monster_subtype &lt;chr&gt;, monster_species &lt;chr&gt;,
+#   monster_real &lt;chr&gt;, monster_amount &lt;dbl&gt;, caught_fred &lt;chr&gt;,
+#   caught_daphnie &lt;chr&gt;, caught_velma &lt;chr&gt;, caught_shaggy &lt;chr&gt;,
+#   caught_scooby &lt;chr&gt;, captured_fred &lt;chr&gt;, captured_daphnie &lt;chr&gt;,
+#   captured_velma &lt;chr&gt;, captured_shaggy &lt;chr&gt;, captured_scooby &lt;chr&gt;,
+#   unmask_fred &lt;chr&gt;, unmask_daphnie &lt;chr&gt;, unmask_velma &lt;chr&gt;, …</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="good-plot" class="level2">
+<h2 class="anchored" data-anchor-id="good-plot">Good Plot</h2>
+<section id="clean-the-data-first-plot" class="level3">
+<h3 class="anchored" data-anchor-id="clean-the-data-first-plot">Clean the Data: First Plot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CLEAN THE DATA</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up mixed TRUE/Yes/1 strings as TRUE</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean monster types</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>scoobydoogood_clean <span class="ot">&lt;-</span> scoobydoo <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(monster_type, <span class="at">sep =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span>  <span class="co"># split "TypeA,TypeB" into rows</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">monster_type =</span> <span class="fu">str_trim</span>(monster_type), <span class="co"># removes whitespace from start and end of string</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">monster_type =</span> <span class="fu">na_if</span>(monster_type, <span class="st">"NULL"</span>), <span class="co"># convert NULLs to NA</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">monster_type =</span> <span class="fu">fct_lump_n</span>(monster_type, <span class="at">n =</span> <span class="dv">8</span>, <span class="at">other_level =</span> <span class="st">"Other"</span>)) <span class="sc">%&gt;%</span> <span class="co"># order factors to top 8 types + "Other"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">captured_scooby =</span> <span class="fu">str_to_lower</span>(<span class="fu">as.character</span>(captured_scooby)) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"true"</span>,<span class="st">"yes"</span>,<span class="st">"1"</span>), <span class="co"># clean up trues in column</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">captured_shaggy =</span> <span class="fu">str_to_lower</span>(<span class="fu">as.character</span>(captured_shaggy)) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"true"</span>,<span class="st">"yes"</span>,<span class="st">"1"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(monster_type), monster_type <span class="sc">!=</span> <span class="st">"Other"</span>) <span class="co"># filter monster type</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate % captured by monster type for Scooby and Shaggy</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>captured_data <span class="ot">&lt;-</span> scoobydoogood_clean <span class="sc">%&gt;%</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">scooby =</span> <span class="fu">mean</span>(captured_scooby, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># get mean</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">shaggy =</span> <span class="fu">mean</span>(captured_shaggy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> monster_type) <span class="sc">%&gt;%</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(scooby, shaggy), <span class="co"># pivot longer for plotting two bars per type</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"character"</span>, <span class="at">values_to =</span> <span class="st">"pct"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">character =</span> <span class="fu">recode</span>(character, <span class="co"># rename the characters</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                            <span class="at">scooby =</span> <span class="st">"Scooby"</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>                            <span class="at">shaggy =</span> <span class="st">"Shaggy"</span>),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">monster_type =</span> <span class="fu">fct_reorder</span>(monster_type, pct, <span class="at">.fun =</span> max))  <span class="co"># reorder by higher rate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="make-the-first-plot" class="level3">
+<h3 class="anchored" data-anchor-id="make-the-first-plot">Make the First Plot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># FIRST PLOT: percent captured by monster type (Scooby vs Shaggy)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>captured_plot<span class="ot">&lt;-</span><span class="fu">ggplot</span>(captured_data, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> pct, <span class="at">y =</span> monster_type, <span class="at">fill =</span> character)) <span class="sc">+</span> <span class="co"># plot by percentage and monster type between Shaggy and Scooby</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>), <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> <span class="co"># geom_col to make heights of bars represent % values</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="fu">label_percent</span>(<span class="at">accuracy =</span> <span class="dv">1</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">05</span>))) <span class="sc">+</span> <span class="co"># use scales to map percents to aesthetics</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_ghibli_d</span>(<span class="st">"MarnieMedium2"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> <span class="co"># nice colors from the ghibli package</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Percent Capture by Monster Type"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Share of Episodes Shaggy and Scooby are Captured by Each Monster Type"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Percent Captured"</span>, <span class="at">y =</span> <span class="st">"Monster Type"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Character"</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">15</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#bccbc0"</span>, <span class="at">linetype =</span> <span class="dv">3</span>),</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">10</span>, <span class="st">"pt"</span>),     <span class="co"># space between facet rows</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">20</span>))  <span class="co"># space around plot</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>captured_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="clean-the-data-second-plot" class="level3">
+<h3 class="anchored" data-anchor-id="clean-the-data-second-plot">Clean the Data: Second Plot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CLEAN THE DATA</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute action counts just for Scooby &amp; Shaggy</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>action_data <span class="ot">&lt;-</span> scoobydoo <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(format <span class="sc">==</span> <span class="st">"TV Series"</span>) <span class="sc">%&gt;%</span> <span class="co"># filter only TV series rows</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(index, <span class="fu">matches</span>(<span class="st">"^(caught|captured|unmask|snack)_(scooby|shaggy)$"</span>)) <span class="sc">%&gt;%</span> <span class="co"># keep index and only the four actions for the two characters, must match the regex ah!!!</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>index, <span class="at">names_to =</span> <span class="st">"name"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span>  <span class="co"># long format with one row per index and character action</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"type"</span>, <span class="st">"char"</span>), <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">TRUE</span>, <span class="at">extra =</span> <span class="st">"merge"</span>) <span class="sc">%&gt;%</span> <span class="co"># i.e remove the "_" from "captured_scooby"</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_to_lower</span>(<span class="fu">as.character</span>(value)) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"true"</span>,<span class="st">"yes"</span>,<span class="st">"1"</span>)) <span class="sc">%&gt;%</span>  <span class="co"># stringr to keep only rows with the action, clean up the TRUE/Yes/1 ast TRUE </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">char =</span> <span class="fu">str_to_title</span>(char),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">type =</span> <span class="fu">str_to_title</span>(type)) <span class="sc">%&gt;%</span> <span class="co"># use stringr to mutate the character names into title capitals</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type, char, <span class="at">name =</span> <span class="st">"n"</span>) <span class="co"># count rows of type and character (n = frequency)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Palette with Scooby Doo colors</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>scooby_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">Captured =</span> <span class="st">"#26A69A"</span>,  </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">Caught   =</span> <span class="st">"#79af30"</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">Snack    =</span> <span class="st">"#8e6345"</span>, </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Unmask   =</span> <span class="st">"#4b0055"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="make-the-second-plot" class="level3">
+<h3 class="anchored" data-anchor-id="make-the-second-plot">Make the Second Plot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SECOND PLOT: Total number of actions done by Shaggy and Scooby</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>action_plot <span class="ot">&lt;-</span> action_data <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> n, <span class="at">fill =</span> type)) <span class="sc">+</span> <span class="co"># action, counts, and characters</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.9</span>, <span class="at">alpha =</span> <span class="fl">0.95</span>) <span class="sc">+</span> <span class="co"># geom_col to make heights of bars represent % values</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> char, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span><span class="co"># one panel per character in two columns</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> scooby_palette, <span class="at">name =</span> <span class="st">"Type"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">captured =</span> <span class="st">"Captured"</span>, <span class="at">caught =</span> <span class="st">"Caught"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">snack =</span> <span class="st">"Snack"</span>, <span class="at">unmask =</span> <span class="st">"Unmask"</span>)) <span class="sc">+</span> <span class="co"># Scooby Doo colors!!!</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">expand =</span> <span class="fu">c</span>(.<span class="dv">3</span>, .<span class="dv">3</span>), <span class="co"># clean up the x-axis and relabel</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"captured"</span><span class="ot">=</span><span class="st">"Captured"</span>,<span class="st">"caught"</span><span class="ot">=</span><span class="st">"Caught"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"snack"</span><span class="ot">=</span><span class="st">"Snack"</span>,<span class="st">"unmask"</span><span class="ot">=</span><span class="st">"Unmask"</span>)) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Number of Shaggy and Scooby Actions"</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Actions: Captured, Caught, Snack Eaten, and Unmasked"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Type"</span>) <span class="sc">+</span> <span class="co"># removed x-axis title</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title.position =</span> <span class="st">"plot"</span>, <span class="co"># same theme as first plot</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">15</span>),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#bccbc0"</span>, <span class="at">linetype =</span> <span class="dv">3</span>))</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>action_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="final-goodplot" class="level3">
+<h3 class="anchored" data-anchor-id="final-goodplot">Final Goodplot</h3>
+<p><strong>Stack the Plots</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack each plot into one</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>scoobydoo_goodplot<span class="ot">&lt;-</span>(captured_plot <span class="sc">+</span> <span class="fu">plot_spacer</span>() <span class="sc">+</span> action_plot) <span class="sc">+</span> <span class="co"># this uses patchwork package and had to add spacer </span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.06</span>, <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># adds a gap between plots</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Scooby Doo (TV Series)"</span>, <span class="co"># adds one big title to both</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tag_levels =</span> <span class="st">'A'</span>, <span class="co"># labels the plots A and B</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.tag.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">8</span>)))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>scoobydoo_goodplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-goodplot" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-goodplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Goodplot_Badplot_homework_files/figure-html/fig-goodplot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-goodplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: This is my Goodplot figure.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-goodplot" class="quarto-xref">Figure&nbsp;1</a> shows the percentage of how many times Shaggy and Scooby were captured by each monster type (A) and the total number of times they were captured, were caught, ate a Scooby snack, and unmasked someone throughout the whole TV series (B).</p>
+</section>
+<section id="good-plot-discussion" class="level3">
+<h3 class="anchored" data-anchor-id="good-plot-discussion">Good Plot Discussion</h3>
+<p><strong>Why is this a Good Plot?</strong>:</p>
+<ul>
+<li>This plot’s <strong>theme</strong> is simple and visually easy to follow.<br>
+</li>
+<li>This plot answers a <em>clear and straightforward</em> question (Healy). It focuses just on Shaggy and Scooby and how many times they did a specific action throughout the whole TV series.<br>
+</li>
+<li>I used geom_col to <em>represent the bars</em> as magnitude so that people read it more as position/length rather than angle/area (Wilke).<br>
+</li>
+<li><strong>Faceting</strong> the bottom plot by character makes it easier to compare between Shaggy and Scooby with consistent scales (Healy).<br>
+</li>
+<li>The titles and labels makes the <strong>data speak well</strong> and they are all title case (Healy).</li>
+</ul>
+</section>
+</section>
+<section id="bad-plot" class="level2">
+<h2 class="anchored" data-anchor-id="bad-plot">Bad Plot</h2>
+<section id="clean-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="clean-the-data">Clean the Data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CLEAN THE DATA</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of gang members captured in each row (episode/monster)</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>captured_columns<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"captured_scooby"</span>, <span class="st">"captured_shaggy"</span>, <span class="st">"captured_fred"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>               <span class="st">"captured_daphnie"</span>, <span class="st">"captured_velma"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>scoobydoobad_clean <span class="ot">&lt;-</span> scoobydoo <span class="sc">%&gt;%</span> <span class="co"># Make a clean, one species per row</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species_one =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(monster_species), <span class="st">"Unknown"</span>, monster_species), <span class="co"># replace NA</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">species_one =</span> <span class="fu">sub</span>(<span class="st">",.*$"</span>, <span class="st">""</span>, species_one),   <span class="co"># take text up to first comma using regex</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">species_one =</span> <span class="fu">str_trim</span>(species_one),  <span class="co"># trim spaces in data </span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">captured_count =</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(captured_columns), </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                                         <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(.) </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                                                      <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TRUE"</span>,<span class="st">"True"</span>,<span class="st">"true"</span>,<span class="st">"Yes"</span>,<span class="st">"yes"</span>,<span class="st">"1"</span>))), </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">na.rm =</span> <span class="cn">TRUE</span>))  <span class="co"># count all the captures in the columns    </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="clean-the-data-base-pie-chart" class="level3">
+<h3 class="anchored" data-anchor-id="clean-the-data-base-pie-chart">Clean the Data: Base Pie Chart</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stuff to do for a PIE CHART</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build pie counts with a small number of wedges (lump, count, drop unused levels)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>pie_data <span class="ot">&lt;-</span> scoobydoobad_clean <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species_one =</span> <span class="fu">fct_lump_n</span>(species_one, <span class="at">n =</span> <span class="dv">6</span>, <span class="at">other_level =</span> <span class="st">"Other"</span>)) <span class="sc">%&gt;%</span> <span class="co"># lump</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species_one, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">%&gt;%</span> <span class="co"># count after lumping</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> <span class="co"># turn it into a percent</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species_one =</span> <span class="fu">fct_drop</span>(species_one)) <span class="co"># drop unused levels</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 wedges for the inset plots: the 3 most common species</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>species_top3<span class="ot">&lt;-</span><span class="fu">head</span>(pie_data<span class="sc">$</span>species_one, <span class="dv">3</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># compute where each wedge sits so we can drop insets inside it</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>pie_position <span class="ot">&lt;-</span> pie_data <span class="sc">%&gt;%</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">end =</span> <span class="fu">cumsum</span>(pct), <span class="co">#geometry of slices</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">lag</span>(end, <span class="at">default =</span> <span class="dv">0</span>),</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">mid =</span> (start <span class="sc">+</span> end) <span class="sc">/</span> <span class="dv">2</span>, <span class="co"># middle of the slice in [0,1]</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">theta =</span> <span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>(<span class="fl">0.25</span> <span class="sc">-</span> mid))  <span class="co"># 0 at top clockwise</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># have to make this function to normalized parent coords (npc) for a given species and radius r of piechart</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>npc_for <span class="ot">&lt;-</span> <span class="cf">function</span>(species, <span class="at">r =</span> <span class="fl">0.70</span>) </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  {row <span class="ot">&lt;-</span> pie_position[<span class="fu">match</span>(species, pie_position<span class="sc">$</span>species_one), ]</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fl">0.5</span> <span class="sc">+</span> r <span class="sc">*</span> <span class="fu">cos</span>(row<span class="sc">$</span>theta),</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fl">0.5</span> <span class="sc">+</span> r <span class="sc">*</span> <span class="fu">sin</span>(row<span class="sc">$</span>theta))}</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only the present levels for legend/breaks</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>levels_keep <span class="ot">&lt;-</span> <span class="fu">levels</span>(pie_data<span class="sc">$</span>species_one) <span class="co"># now just k (+ "Other")</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="co"># loud non-color blind friendly palette</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># palette for exactly pie_data levels</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>pie_palette <span class="ot">&lt;-</span> grDevices<span class="sc">::</span><span class="fu">rainbow</span>(<span class="fu">length</span>(levels_keep), <span class="at">s =</span> <span class="dv">1</span>, <span class="at">v =</span> <span class="dv">1</span>) </span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>pie_palette <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">setNames</span>(pie_palette, levels_keep)  <span class="co"># name colors so mapping is explicit</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co"># where to put each small plot on the piechart</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>plot_A <span class="ot">&lt;-</span> <span class="fu">npc_for</span>(species_top3[<span class="dv">1</span>], <span class="at">r =</span> <span class="fl">0.60</span>) <span class="co"># smaller closer to center</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>plot_B <span class="ot">&lt;-</span> <span class="fu">npc_for</span>(species_top3[<span class="dv">2</span>], <span class="at">r =</span> <span class="fl">0.70</span>) <span class="co"># mid radius</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>plot_C <span class="ot">&lt;-</span> <span class="fu">npc_for</span>(species_top3[<span class="dv">3</span>], <span class="at">r =</span> <span class="fl">0.62</span>)  <span class="co"># closer to center</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="making-the-plots-base-pie-small-insets" class="level3">
+<h3 class="anchored" data-anchor-id="making-the-plots-base-pie-small-insets">Making the Plots: Base Pie &amp; Small Insets</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Three SMALL PLOTS (one per chosen wedge)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># edited the data and piped straight to their respective plots, made sense to me that way</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Theme for most of the small plots:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>mini_theme <span class="ot">&lt;-</span> <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="fl">0.6</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"yellow"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">7</span>),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot A: Boxplot- Number captured by monster_type (top 5 types for readability)</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>monster_box <span class="ot">&lt;-</span> scoobydoobad_clean <span class="sc">%&gt;%</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species_one <span class="sc">==</span> species_top3[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">monster_type =</span> <span class="fu">fct_lump_n</span>(monster_type, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">other_level =</span> <span class="st">"Other"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(monster_type, captured_count, <span class="at">fill =</span> monster_type)) <span class="sc">+</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">outlier.size =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Captures by monster type"</span>) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  mini_theme</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot B: Bar Plot- Captured Shaggy</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>shaggy_bar <span class="ot">&lt;-</span> scoobydoobad_clean <span class="sc">%&gt;%</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species_one <span class="sc">==</span> species_top3[<span class="dv">2</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shaggy_captured_label =</span> <span class="fu">case_when</span>(</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.character</span>(captured_shaggy) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TRUE"</span>,<span class="st">"True"</span>,<span class="st">"true"</span>,<span class="st">"Yes"</span>,<span class="st">"yes"</span>,<span class="st">"1"</span>)  <span class="sc">~</span> <span class="st">"Yes"</span>, <span class="co"># fixes the label, had to look this up b/c did it before lecture 8</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.character</span>(captured_shaggy) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"FALSE"</span>,<span class="st">"False"</span>,<span class="st">"false"</span>,<span class="st">"No"</span>,<span class="st">"no"</span>,<span class="st">"0"</span>) <span class="sc">~</span> <span class="st">"No"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Unknown"</span>),</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">shaggy_captured_label =</span> <span class="fu">factor</span>(shaggy_captured_label, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Yes"</span>,<span class="st">"No"</span>,<span class="st">"Unknown"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(shaggy_captured_label, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(shaggy_captured_label, n, <span class="at">fill =</span> shaggy_captured_label)) <span class="sc">+</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.85</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Shaggy captured?"</span>) <span class="sc">+</span> </span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"left"</span>, <span class="co"># just the worst theme colors I could think of that included Shaggys signature colors lol</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"brown"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="fl">0.6</span>),</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"green"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"yellow"</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">7</span>),</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot C: Bar Plot- Captured Scooby</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>scooby_bar <span class="ot">&lt;-</span> scoobydoobad_clean <span class="sc">%&gt;%</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species_one <span class="sc">==</span> species_top3[<span class="dv">3</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">captured_label =</span> <span class="fu">case_when</span>(</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.character</span>(captured_scooby) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TRUE"</span>,<span class="st">"True"</span>,<span class="st">"true"</span>,<span class="st">"Yes"</span>,<span class="st">"yes"</span>,<span class="st">"1"</span>)  <span class="sc">~</span> <span class="st">"Yes"</span>,  <span class="co"># fixes the label</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.character</span>(captured_scooby) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"FALSE"</span>,<span class="st">"False"</span>,<span class="st">"false"</span>,<span class="st">"No"</span>,<span class="st">"no"</span>,<span class="st">"0"</span>) <span class="sc">~</span> <span class="st">"No"</span>,</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Unknown"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(captured_label, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">%&gt;%</span> <span class="co"># count the number of captures</span></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">captured_label =</span> <span class="fu">fct_relevel</span>(captured_label, <span class="st">"Yes"</span>,<span class="st">"No"</span>,<span class="st">"Unknown"</span>)) <span class="sc">%&gt;%</span> <span class="co"># reorder captured label</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(captured_label, n, <span class="at">fill =</span> captured_label)) <span class="sc">+</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.85</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span> <span class="co"># geom_col makes heights of bars represent % values</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scooby captured???"</span>) <span class="sc">+</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>  mini_theme</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Legends: make legend versions of small plots</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="co"># they were being funky with less code so I had to do this </span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>monster_box_legend <span class="ot">&lt;-</span> monster_box <span class="sc">+</span> </span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>) <span class="sc">+</span> <span class="co"># move the position of the legends</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"type"</span>, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>scooby_bar_legend<span class="ot">&lt;-</span>scooby_bar <span class="sc">+</span> </span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>, <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"white"</span>),</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"yellow"</span>, <span class="at">face =</span> <span class="st">"bold"</span>)) <span class="sc">+</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"captured"</span>, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>legend_type <span class="ot">&lt;-</span> <span class="fu">gtable_filter</span>(<span class="fu">ggplotGrob</span>(monster_box_legend), <span class="st">"guide-box"</span>) <span class="co"># uses gtable and grobs</span></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>legend_captured <span class="ot">&lt;-</span> <span class="fu">gtable_filter</span>(<span class="fu">ggplotGrob</span>(scooby_bar_legend), <span class="st">"guide-box"</span>)</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="co"># PIE CHART </span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Base Plot: Piechart- Monster Species</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>monster_pie <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pie_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> pct, <span class="at">fill =</span> species_one)) <span class="sc">+</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta =</span> <span class="st">"y"</span>, <span class="at">start =</span> pi<span class="sc">/</span><span class="dv">18</span>, <span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span>   <span class="co"># &lt;-- small rotation # clip=off allows inset overlap</span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pie_palette, <span class="at">breaks =</span> levels_keep,  <span class="co"># only specific levels stay in legend, legend restricted to these</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_wrap</span>(<span class="dv">16</span>),</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>                    <span class="at">name   =</span> <span class="st">"Monster species!"</span>) <span class="sc">+</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">ncol =</span> <span class="dv">3</span>)) <span class="sc">+</span> <span class="co"># fewer rows, easier to read</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scooby-Doo: Monster species piechart with inset plots!!!!!"</span>,</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Inset plots: monster type mix, run time distribution, Scooby captured???"</span>) <span class="sc">+</span></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>        <span class="at">aspect.ratio =</span> <span class="dv">1</span>, <span class="co"># square panel → larger circle</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">24</span>, <span class="dv">8</span>),   <span class="co"># tighter margins</span></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> grid<span class="sc">::</span><span class="fu">unit</span>(<span class="dv">6</span>, <span class="st">"pt"</span>),</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"white"</span>),</span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"yellow"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.background   =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> scales<span class="sc">::</span><span class="fu">alpha</span>(<span class="st">"#121418"</span>, <span class="fl">0.9</span>), <span class="at">colour =</span> <span class="cn">NA</span>),</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"green"</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#121418"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#121418"</span>, <span class="at">color =</span> <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="put-the-plots-together" class="level3">
+<h3 class="anchored" data-anchor-id="put-the-plots-together">Put the Plots Together</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LAYERING THE PLOTS</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># put each small plot inside each wedge of the base pie</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>monster_pie_layers<span class="ot">&lt;-</span>monster_pie <span class="sc">+</span> <span class="co"># in-wedge mini plots (smaller)</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_plot_npc</span>(<span class="fu">aes</span>(<span class="at">npcx =</span> plot_A<span class="sc">$</span>x, <span class="at">npcy =</span> plot_A<span class="sc">$</span>y,  <span class="co"># x and y position in normalized parent coords</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">label =</span> <span class="fu">list</span>(monster_box)),  <span class="co"># the ggplot object to draw as an inset </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">vp.width =</span> <span class="fl">0.32</span>, <span class="at">vp.height =</span> <span class="fl">0.22</span>) <span class="sc">+</span> <span class="co"># inset width and height</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_plot_npc</span>(<span class="fu">aes</span>(<span class="at">npcx =</span> plot_B<span class="sc">$</span>x, <span class="at">npcy =</span> plot_B<span class="sc">$</span>y, <span class="co"># do this for each small plot </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">label =</span> <span class="fu">list</span>(shaggy_bar)),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">vp.width =</span> <span class="fl">0.30</span>, <span class="at">vp.height =</span> <span class="fl">0.20</span>) <span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_plot_npc</span>(<span class="fu">aes</span>(<span class="at">npcx =</span> plot_C<span class="sc">$</span>x, <span class="at">npcy =</span> plot_C<span class="sc">$</span>y, </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">label =</span> <span class="fu">list</span>(scooby_bar)),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">vp.width =</span> <span class="fl">0.32</span>, <span class="at">vp.height =</span> <span class="fl">0.22</span>) <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># side legends more off to the sides</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_grob_npc</span>(<span class="fu">aes</span>(<span class="at">npcx =</span> <span class="fl">0.1</span>, <span class="at">npcy =</span> <span class="fl">0.55</span>, <span class="at">label =</span> <span class="fu">list</span>(legend_type))) <span class="sc">+</span>     <span class="co"># left and below scooby plot</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_grob_npc</span>(<span class="fu">aes</span>(<span class="at">npcx =</span> <span class="fl">0.97</span>, <span class="at">npcy =</span> <span class="fl">0.86</span>, <span class="at">label =</span> <span class="fu">list</span>(legend_captured)))   <span class="co"># right and above monster plot</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># adding the image (couldn't use magick :/)</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>url<span class="ot">&lt;-</span><span class="st">"https://upload.wikimedia.org/wikipedia/en/b/be/Scooby-Doo_2_-_Monsters_Unleashed_poster.png"</span> <span class="co"># the image was weird so I had to look up this way</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".png"</span>); <span class="fu">download.file</span>(url, tmp, <span class="at">mode =</span> <span class="st">"wb"</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>black_background<span class="ot">&lt;-</span><span class="fu">rectGrob</span>(<span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> <span class="st">"black"</span>, <span class="at">col =</span> <span class="cn">NA</span>)) <span class="co"># had to define the background because it wasn't showing up everywhere</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>scoobydoo_badplot<span class="ot">&lt;-</span> <span class="fu">ggdraw</span>() <span class="sc">+</span> <span class="co"># final touches to adding the image and all black background</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">draw_grob</span>(black_background, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="dv">2</span>, <span class="at">height =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="co"># full black background</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">draw_image</span>(tmp, <span class="at">x =</span> <span class="fl">0.3</span>, <span class="at">y =</span> <span class="fl">0.5</span>, <span class="at">scale =</span> <span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="co"># on the right side</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">draw_plot</span>(monster_pie_layers, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.72</span>, <span class="at">height =</span> <span class="fl">0.96</span>) <span class="co"># pie, insets, side legends on the left</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>scoobydoo_badplot </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-badplot" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-badplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Goodplot_Badplot_homework_files/figure-html/fig-badplot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-badplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: This is my Badplot figure.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-badplot" class="quarto-xref">Figure&nbsp;2</a> shows the relative counts of monster species throughout the show (Pie Chart). Two bar plots each show the amount of times Shaggy and Scooby were captured. There is also a box plot of monster types layered on top of the pie chart as well.</p>
+</section>
+<section id="bad-plot-discussion" class="level3">
+<h3 class="anchored" data-anchor-id="bad-plot-discussion">Bad Plot Discussion</h3>
+<p><strong>Why is this a Bad Plot?</strong>:</p>
+<ul>
+<li>This plot is bad because it is just downright ugly!<br>
+</li>
+<li><strong>black background</strong>: in any publication, a background like this would cost the journal a lot of money and is just not visually easy to view since the text is so contrasting (non-data ink, Healy).<br>
+</li>
+<li><strong>color scheme</strong>: I specifically chose color palettes that are absolutely <em>NOT</em> color-blind friendly with high hues and non-simple palettes (Wilke).<br>
+</li>
+<li>I created a <strong>pie chart</strong> which uses angles/area which is hard to quantitatively compare (Wilke).<br>
+</li>
+<li>Way too many <strong>unnecessary aesthetics</strong> are used with multiple plots and legends all overlapping and a photo that competes for attention (Wilke).</li>
+</ul>
+</section>
+</section>
+<section id="extra" class="level2">
+<h2 class="anchored" data-anchor-id="extra">Extra</h2>
+<p><strong>Scooby Doo 2: Monster’s Unleashed is my favorite movie of all time!</strong><br>
+<img src="https://upload.wikimedia.org/wikipedia/en/b/be/Scooby-Doo_2_-_Monsters_Unleashed_poster.png" class="img-fluid" alt="Scooby dooby doo!"></p>
+<section id="assignment" class="level3">
+<h3 class="anchored" data-anchor-id="assignment">Assignment</h3>
+<p><strong>Instructions</strong><br>
+Due October 21, 2025</p>
+<p>Homework:<br>
+Your homework is to create two versions of similar plots, using any dataset you choose. You must create the plots using ggplot2, post-processing with Adobe Illustrator or similar is not allowed. This homework is a contest, and the winner will win a prize to be disclosed.</p>
+<p>Please submit your homework by posting a Quarto document containing the plots, the code you used to create them, and your discussion of the plot within the Quarto doc to your GitHub folder. Create an independent folder for your goodplot-badplot. Follow all best practices for file structure that we already learned in class. Your document MUST be rendered.</p>
+<p>The first plot should be as bad as possible. Based on your reading from <a href="https://clauswilke.com/dataviz/">Claus Wilke’s</a> and <a href="https://socviz.co/index.html#preface">Healy’s textbook</a> describe the many ways that a plot can become misleading, difficult to interpret, or just plain ugly, and you should use all of the tools that you can. Please try to make me cry, a person who cares a great deal about high-quality data visualization.</p>
+<p>You should explain in text all of the ways in which the bad plot is bad. Bullet points are fine but clearly articulate each principle of data visualization that you have broken.</p>
+<p>The second plot should be based on the same or similar data to the first plot, but it should be good. Write briefly about why this is a successful plot.</p>
+<p><em>Badplot rules</em>:</p>
+<ul>
+<li>All plots must be made in ggplot2, with code visible in the Quarto document.<br>
+</li>
+<li>The data must be visible.<br>
+</li>
+<li>The good plot and the bad plot should be based on the same, or similar, data.<br>
+</li>
+<li>I will post the results on Social Media. Please notify me if you would prefer not to have your plots posted publicly. That is fine, but I need to know. The community waits for this every year and they love it.</li>
+</ul>
+<p><a href="https://github.com/rfordatascience/tidytuesday">Inspiration for a great place to get data for this assignment</a></p>
+<p><em>This assignment is 20 points</em>:<br>
+5 points - follow best practices for code/file organization<br>
+5 points - creativity for good plot<br>
+5 points - creativity for bad plot<br>
+5 points - explanation of why plots either do (good plot) or don’t (bad plot) follow best practices for data visualization</p>
+<p>Extra To-Do:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Empty your environment before you start working</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Restart R</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># .rs.restartR()</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remove whole list in enviroment</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># rm(list = ls())</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

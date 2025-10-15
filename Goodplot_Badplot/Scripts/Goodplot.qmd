@@ -1,0 +1,226 @@
+---
+title: "Goodplot"
+author: "Haley Poppinga"
+format: html
+---
+
+### Load Libraries
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(here)
+library(ggplot2)
+library(tidytuesdayR) # data
+library(ghibli) # color palette I often use
+library(beepr)
+library(lubridate)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(grid)  # for ggplot graphical object (Grob) insets
+library(ggpp) # ggplot2 extension
+library(gtable) # arranges grobs
+library(scales) # map data to aesthetics
+library(forcats) # lumping, reorder things, modify factor levels
+library(png) # adding images
+library(magick) 
+library(cowplot)
+library(patchwork) # putting plots together
+```
+
+### Read Data  
+```{r}
+#| message: false
+#| warning: false
+
+scoobydoo <- tt_load("2021-07-13") # loads Tidy Tuesday Scooby Doo data
+tt <- tidytuesdayR::tt_load("2021-07-13")
+scoobydoo_good <- tt$scoobydoo %>% as_tibble() # get scooby doo data frame
+# write.csv(scoobydoo_data, here("Goodplot-Badplot", "Data", "scoobydoo.csv"), row.names = FALSE) # save the data sheet
+```
+
+
+
+## Good Plot
+
+**Clean the Data for First Plot**  
+```{r}
+
+# CLEAN THE DATA
+
+# Clean up mixed TRUE/Yes/1 strings as TRUE
+true<-function(x) as.character(x) %in% c("TRUE","True","true","Yes","yes","1")
+
+# Clean monster types and make capture flags
+scoobydoogood_clean <- scoobydoo_good %>%
+  separate_rows(monster_type, sep = ",") %>%  # split "TypeA,TypeB" into rows
+  mutate(monster_type = str_trim(monster_type), # removes white space from start and end of string
+         monster_type = na_if(monster_type, "NULL"), # convert NULLs to NA
+         monster_type = fct_lump_n(monster_type, n = 8, other_level = "Other"),  # order factors to top 8 types + "Other"
+         captured_scooby = true(captured_scooby), # clean up trues in column
+         captured_shaggy = true(captured_shaggy)) %>%  # clean up trues in column
+  filter(!is.na(monster_type), monster_type != "Other") # filter monster type
+
+# Calculate % captured by monster type for Scooby and Shaggy
+captured_data <- scoobydoogood_clean %>%
+  summarise(n = n(),
+            scooby = mean(captured_scooby, na.rm = TRUE), # get mean
+            shaggy = mean(captured_shaggy, na.rm = TRUE), .by = monster_type) %>%
+  pivot_longer(cols = c(scooby, shaggy), # pivot longer for plotting two bars per type
+               names_to = "character", values_to = "pct") %>%
+  mutate(character = recode(character, # rename the characters
+                            scooby = "Scooby",
+                            shaggy = "Shaggy"),
+         monster_type = fct_reorder(monster_type, pct, .fun = max))  # reorder by higher rate
+```
+
+**Make the First Plot**  
+```{r}
+# FIRST PLOT: percent captured by monster type (Scooby vs Shaggy)
+captured_plot<-ggplot(captured_data, aes(y = monster_type, x = pct, fill = character)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.7) + # geom_col to make heights of bars represent % values
+  scale_x_continuous(labels = label_percent(accuracy = 1), expand = expansion(mult = c(0, .05))) + # use scales to map percents to aesthetics
+  scale_fill_ghibli_d("MarnieMedium2", direction = -1) + # nice colors from the ghibli package
+  labs(title = "Percent Capture by Monster Type",
+       subtitle = "Number of Episodes in which Scooby and Shaggy are Captured by Each Monster Type",
+       x = "Percent Captured (%)", y = "Monster Type",
+       fill = "Character") +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+        plot.title.position = "plot",
+        plot.subtitle = element_text(size = 11, hjust = 0.5),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        strip.text = element_text(face = "bold", size = 10),
+        legend.position = "top",
+        panel.grid = element_line(color = "#bccbc0", linetype = 3),
+        panel.spacing.y = unit(10, "pt"),     # space between facet rows
+        plot.margin = margin(10, 20, 10, 20))  # breathing room around plot
+
+# captured_plot
+```
+
+
+
+
+**Clean the Data for the Second Plot**  
+```{r}
+# CLEAN THE DATA
+
+# Compute action counts just for Scooby & Shaggy
+action_data <- scoobydoo_good %>%
+  filter(format == "TV Series") %>% # filter only TV series rows
+  select(index, matches("^(caught|captured|unmask|snack)_(scooby|shaggy)$")) %>% # keep index and only the four actions for the two characters, must match the regex ah!!!
+  pivot_longer(-index, names_to = "name", values_to = "value") %>%  # long format with one row per index and character action
+  separate(name, into = c("type", "char"), sep = "_", remove = TRUE, extra = "merge") %>% # i.e remove the "_" from "captured_scooby"
+  filter(true(value)) %>% # keep only rows with the action, clean up the TRUE/Yes/1 ast TRUE 
+  mutate(char = str_to_title(char),
+         type = str_to_title(type)) %>% # use stringr to mutate the character names into capitals
+  count(type, char, name = "n") # count rows of type and character (n = frequency)
+```
+
+
+**Make the Second Plot**  
+```{r}
+
+# SECOND PLOT:Total number of actions done by Shaggy and Scooby
+action_plot <- action_data %>%
+  ggplot(aes(x = type, y = n, fill = type)) + # action, counts, and characters
+  geom_col(width = 0.9, alpha = 0.95) + # geom_col to make heights of bars represent % values
+  facet_wrap(~ char, ncol = 2) +# one panel per character in two columns
+  scale_fill_ghibli_d("PonyoMedium", direction = 1) + # nice colors from the ghibli package
+  scale_x_discrete(expand = c(.3, .3), # clean up the x-axis and relabel
+                   labels = c("captured"="Captured","caught"="Caught",
+                              "snack"="Snack","unmask"="Unmask")) +
+  labs(title = "Total Number of Shaggy and Scooby Actions",
+       subtitle = "Actions: Captured, Caught, Snack Eaten, and Unmasked",
+       x = NULL, y = "Count", fill = "Type") + # removed x-axis title
+  theme_minimal(base_size = 12) +
+  theme(plot.title.position = "plot", # same theme as first plot
+        plot.subtitle = element_text(size = 11, hjust = 0.5),
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        strip.text = element_text(face = "bold", size = 10),
+        panel.grid = element_line(color = "#bccbc0", linetype = 3))
+
+# action_plot
+```
+
+**Stack the Plots into One Plot**  
+```{r}
+#| out-width: "80%"
+#| fig-height: 8
+
+
+# Stack each plot into one
+(captured_plot + plot_spacer() + action_plot) + # this uses patchwork package
+  plot_layout(ncol = 1, heights = c(1, 0.07, 1)) + # adds a gap
+  plot_annotation(title = "Scooby Doo (TV Series)",
+                  theme = theme(plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+                                plot.margin = margin(8, 8, 8, 8)))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+#| eval: false
+#| echo: false
+# Clean the data
+
+scoobydoogood_clean<-scoobydoo_good %>%
+  drop_na() %>%                                     ####Remove all NA
+  mutate(monster_status = ifelse(isTRUE(monster_real), "Real", "Fake"),
+    scooby_captured = case_when(
+      as.character(captured_scooby) %in% c("TRUE","True","true","Yes","yes","1")  ~ "Yes",
+      as.character(captured_scooby) %in% c("FALSE","False","false","No","no","0") ~ "No",
+      TRUE ~ "Unknown"),
+    monster_type = forcats::fct_lump_n(monster_type, n = 8, other_level = "Other")) # keep the 8 most common types so the plot is readable
+  
+  
+  
+# Make a plot 
+
+  ggplot(scoobydoogood_clean, aes(x = monster_type)) +
+  geom_bar(fill = "#4C78A8") +
+  facet_grid(monster_status ~ scooby_captured, scales = "free_y") + ### Facet the graphs in ?, shows each 
+  scale_color_ghibli_d("MarnieMedium2", direction = -1) + # nice colors from ghibli package
+  labs(title    = "Scooby Doo Monsters by Type",
+    subtitle = "Monsters Real/Fake and Whether Scooby was Captured",
+    x = "Monster Type", y = "Count") +
+  theme_minimal(base_size = 12) +
+  theme(strip.text = element_text(face = "bold"),
+    axis.text.x = element_text(angle = 40, hjust = 1)) # angle names so they don't overlap
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

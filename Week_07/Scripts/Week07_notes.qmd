@@ -44,6 +44,9 @@ Helpful references:
 * [Bathymetry example](https://ben-williams.github.io/updated_ggplot_figures.html#maps)  
 * [Earth Lab](https://earthlab.colorado.edu/)  
 
+Quiz: When using ggmap, never push a file with your API key to GitHub so that it is visible for everyone to see.
+
+
 
 
 ### Load Libraries  
@@ -136,6 +139,14 @@ ggplot()+
   geom_polygon(data = world, aes(x = long, y = lat)) # no group = group
 ```
 
+If I go to make a map and it looks like the image below, what did I forget to put in my code? 
+
+aes(group = group)
+
+
+
+
+
 Add color to the lines and fill.  
 ```{r}
 ggplot()+
@@ -215,6 +226,14 @@ ggplot()+
             xlim = c(-180,180)) # use sinusoidal projection
 # play around with the limits if you want to 
 ```
+
+Quiz: What function do I use to change the projection of my map?
+coord_map()
+
+
+
+
+
 
 
 Extra:  
