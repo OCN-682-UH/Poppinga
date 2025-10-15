@@ -376,7 +376,7 @@ legend_captured <- gtable_filter(ggplotGrob(scooby_bar_legend), "guide-box")
 # Base Plot: Piechart- Monster Species
 monster_pie <- ggplot(pie_data, aes(x = 1, y = pct, fill = species_one)) +
   geom_col(color = "white", width = 1) +
-  coord_polar(theta = "y", start = pi/18, clip = "off") +   # small rotation # clip off allows inset overlap
+  coord_polar(theta = "y", start = pi/18, clip = "off") +   # small rotation # clip off allows inset overlap 
   scale_fill_manual(values = pie_palette, breaks = levels_keep,  # only specific levels stay in legend, legend restricted to these
                     labels = scales::label_wrap(16),
                     name   = "Monster species!") +
