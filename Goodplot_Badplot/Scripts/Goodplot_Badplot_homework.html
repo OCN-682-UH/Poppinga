@@ -102,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#clean-the-data" id="toc-clean-the-data" class="nav-link" data-scroll-target="#clean-the-data">Clean the Data</a></li>
   <li><a href="#clean-the-data-base-pie-chart" id="toc-clean-the-data-base-pie-chart" class="nav-link" data-scroll-target="#clean-the-data-base-pie-chart">Clean the Data: Base Pie Chart</a></li>
   <li><a href="#making-the-plots-base-pie-small-insets" id="toc-making-the-plots-base-pie-small-insets" class="nav-link" data-scroll-target="#making-the-plots-base-pie-small-insets">Making the Plots: Base Pie &amp; Small Insets</a></li>
-  <li><a href="#put-the-plots-together" id="toc-put-the-plots-together" class="nav-link" data-scroll-target="#put-the-plots-together">Put the Plots Together</a></li>
+  <li><a href="#final-badplot" id="toc-final-badplot" class="nav-link" data-scroll-target="#final-badplot">Final Badplot</a></li>
   <li><a href="#bad-plot-discussion" id="toc-bad-plot-discussion" class="nav-link" data-scroll-target="#bad-plot-discussion">Bad Plot Discussion</a></li>
   </ul></li>
   <li><a href="#extra" id="toc-extra" class="nav-link" data-scroll-target="#extra">Extra</a>
@@ -500,7 +500,7 @@ Figure&nbsp;1: This is my Goodplot figure.
 <span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Base Plot: Piechart- Monster Species</span></span>
 <span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>monster_pie <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pie_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> pct, <span class="at">fill =</span> species_one)) <span class="sc">+</span></span>
 <span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta =</span> <span class="st">"y"</span>, <span class="at">start =</span> pi<span class="sc">/</span><span class="dv">18</span>, <span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span>   <span class="co"># &lt;-- small rotation # clip=off allows inset overlap</span></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta =</span> <span class="st">"y"</span>, <span class="at">start =</span> pi<span class="sc">/</span><span class="dv">18</span>, <span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span>   <span class="co"># small rotation # clip off allows inset overlap</span></span>
 <span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pie_palette, <span class="at">breaks =</span> levels_keep,  <span class="co"># only specific levels stay in legend, legend restricted to these</span></span>
 <span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_wrap</span>(<span class="dv">16</span>),</span>
 <span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>                    <span class="at">name   =</span> <span class="st">"Monster species!"</span>) <span class="sc">+</span></span>
@@ -509,8 +509,8 @@ Figure&nbsp;1: This is my Goodplot figure.
 <span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Inset plots: monster type mix, run time distribution, Scooby captured???"</span>) <span class="sc">+</span></span>
 <span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
 <span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>        <span class="at">aspect.ratio =</span> <span class="dv">1</span>, <span class="co"># square panel → larger circle</span></span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">24</span>, <span class="dv">8</span>),   <span class="co"># tighter margins</span></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>        <span class="at">aspect.ratio =</span> <span class="dv">1</span>, <span class="co"># square panel to larger circle</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">24</span>, <span class="dv">8</span>),  <span class="co"># tighter margins</span></span>
 <span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
 <span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
 <span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> grid<span class="sc">::</span><span class="fu">unit</span>(<span class="dv">6</span>, <span class="st">"pt"</span>),</span>
@@ -523,8 +523,9 @@ Figure&nbsp;1: This is my Goodplot figure.
 <span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#121418"</span>, <span class="at">color =</span> <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="put-the-plots-together" class="level3">
-<h3 class="anchored" data-anchor-id="put-the-plots-together">Put the Plots Together</h3>
+<section id="final-badplot" class="level3">
+<h3 class="anchored" data-anchor-id="final-badplot">Final Badplot</h3>
+<p><strong>Put the Plots Together</strong></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LAYERING THE PLOTS</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>

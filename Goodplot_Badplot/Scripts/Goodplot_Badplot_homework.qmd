@@ -376,7 +376,7 @@ legend_captured <- gtable_filter(ggplotGrob(scooby_bar_legend), "guide-box")
 # Base Plot: Piechart- Monster Species
 monster_pie <- ggplot(pie_data, aes(x = 1, y = pct, fill = species_one)) +
   geom_col(color = "white", width = 1) +
-  coord_polar(theta = "y", start = pi/18, clip = "off") +   # <-- small rotation # clip=off allows inset overlap
+  coord_polar(theta = "y", start = pi/18, clip = "off") +   # small rotation # clip off allows inset overlap
   scale_fill_manual(values = pie_palette, breaks = levels_keep,  # only specific levels stay in legend, legend restricted to these
                     labels = scales::label_wrap(16),
                     name   = "Monster species!") +
@@ -385,8 +385,8 @@ monster_pie <- ggplot(pie_data, aes(x = 1, y = pct, fill = species_one)) +
        subtitle = "Inset plots: monster type mix, run time distribution, Scooby captured???") +
   theme_void(base_size = 12) +
   theme(plot.title = element_text(color = "red", face = "italic", hjust = 0),
-        aspect.ratio = 1, # square panel → larger circle
-        plot.margin = margin(4, 8, 24, 8),   # tighter margins
+        aspect.ratio = 1, # square panel to larger circle
+        plot.margin = margin(4, 8, 24, 8),  # tighter margins
         legend.position = "bottom",
         legend.box = "vertical",
         legend.key.size = grid::unit(6, "pt"),
@@ -400,7 +400,8 @@ monster_pie <- ggplot(pie_data, aes(x = 1, y = pct, fill = species_one)) +
 ```
 
 
-### Put the Plots Together  
+### Final Badplot  
+**Put the Plots Together**  
 ```{r}
 #| message: false
 #| warning: false
