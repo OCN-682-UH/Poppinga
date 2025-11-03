@@ -1,0 +1,81 @@
+---
+title: "Week 10 Homework"
+author: "Haley Poppinga"
+format: 
+  html: 
+    toc: true
+    theme: sandstone
+---
+
+### Introduction  
+
+**Homework**  
+Use any dataset you would like and make two useful functions. One that is a plot and one that is not. Turn in your functions using Quarto with at least 2 examples per function showing its flexibility. Due, as always, at 1pm on Tuesday.  
+
+
+
+### Load Libraries  
+```{r}
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(here)
+library(ghibli)
+library(janitor)
+library(forcats)
+library(stringr)
+```
+
+
+### Read Data  
+```{r}
+#| warning: false
+#| message: false
+chemdata<-read_csv(here("Week_10","Data","chemicaldata_maunalua.csv")) # Maunalua chem data
+```
+
+```{r}
+#| warning: false
+#| message: false
+glimpse(chemdata)
+```
+
+### Clean the Data   
+Using janitor package, clean the variable names.  
+```{r}
+#| warning: false
+#| message: false
+chemdata_clean<-chemdata %>% 
+  clean_names()
+```
+
+```{r}
+#| warning: false
+#| message: false
+glimpse(chemdata_clean)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

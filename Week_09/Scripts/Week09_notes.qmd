@@ -77,11 +77,22 @@ as.numeric(test)
 
 If test was a factor:  
 ```{r}
-# test<-factor(test) # covert to factor
-# as.numeric(test)
+test<-factor(test) # covert to factor
+as.numeric(test)
 ```
 So, this would give you data that never should have existed.  
 So, factor store everything as integers in the background and make sure only use factors when you need to (categorical data) and use characters when you're not trying to order or organize the data.  
+
+
+Quiz:  
+If I convert the following factors into a numeric vector, what would you expect to see? data<-factor(c("3","6","NA")) data<-as.numeric(data) what will "data" look like?
+c()
+
+```{r}
+data<-factor(c("3","6","NA")) 
+data<-as.numeric(data) 
+data
+```
 
 
 
@@ -145,6 +156,11 @@ star_counts %>%
 fct_reorder: First thing is what you want to reorder specifically, and what you want to reorder it by.  
 
 
+Quiz: 
+I am making a barplot and I want to reorder my bars within ggplot to go from highest to smallest value, what function do I use?
+	
+ fct_reorder()
+ 
 
 **reordering line plots**  
 Let's say you wanted to make a line plot and reorder the legend (colors) to match the order of the lines (x-axis). We will use the income_mean dataset to illustrate this.  
@@ -248,6 +264,12 @@ starwars_clean<-starwars %>%
 levels(starwars_clean$species)
 ```
 
+Quiz:  
+I filtered out some values in a column of factors and when I make a barplot all these extra variables show up as empty that are not actually in my dataset. What did I forget to do?
+
+-> use droplevels() after I filtered out the factors
+
+
 
 
 **recode levels**  
@@ -290,4 +312,77 @@ Homework due date due on Tuesday [not Friday].
 
 
 
+### IGNORE
+
+#### Set Up Libraries
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(here)
+library(janitor)
+library(ggthemes)
+```
+
+#### Load Data and Clean
+```{r}
+#| message: false
+#| warning: false
+#Intertidal data
+intertidal <- read_csv(here("Week_09","Data","intertidaldata.csv"))
+
+#Data on the latitude of each site
+latitude <- read_csv(here("Week_09", "Data", "intertidaldata_latitude.csv"))
+```
+
+
+```{r}
+#----------------CLEAN DATA---------------------#
+#Check that there are no duplicate records using functions from janitor
+get_dupes(intertidal, Transect, Quadrat, Site)
+
+intertidal_clean <- intertidal %>%
+  clean_names() %>% #clean column names
+  mutate(quadrat = str_replace(quadrat, "\\.", ""), #remove the random . in Scripps quadrat data
+         quadrat = str_replace(quadrat, "\\ 1", ""), #remove random 1 in Scripps quadrat data
+         quadrat = str_trim(quadrat), #remove white spaces from both sides
+         tide = factor(quadrat, levels = c("Low", "Mid", "High")), #make new tide column and convert to factor
+         invertebrate_cover = rowMeans(select(., mussels, small_barnacles, large_barnacles, gooseneck_barnacles, anemone))) %>% #calculate the mean invertebrate cover
+  select(-mussels, -small_barnacles, -large_barnacles, -gooseneck_barnacles, -anemone, -quadrat, - whelks_counts, -crabs_counts, -stars_counts) %>% #remove unnecessary columns
+   group_by(site, tide) %>%
+  summarise(bare_rock = mean(bare_rock), #calculate the total means based on site and tide
+         algae = mean(algae),
+         invertebrate_cover = mean(invertebrate_cover)) %>%
+  pivot_longer(cols = c(bare_rock, algae, invertebrate_cover), #pivot the total means to plot
+               names_to = "benthic_cover",
+               values_to = "percent_cover") %>%
+ mutate(benthic_cover = recode(benthic_cover, #rename for clear legend
+                               "bare_rock" = "Rock",
+                               "algae" = "Algae",
+                               "invertebrate_cover" = "Invertebrate"))
+```
+
+
+
+#### A faceted plot
+```{r}
+#| message: false
+#| warning: false
+plot <- ggplot(intertidal_clean,
+               aes(x = tide,
+                   y = percent_cover,
+                   fill = benthic_cover)) +
+                 geom_col() + 
+                 facet_wrap(~site) +
+  labs(title = "Average Benthic Cover Type across Sites",   
+       fill = "Benthic Cover Type", 
+       x = "Tide",
+       y= "Average Cover (%)") +
+  theme_bw() + #change theme 
+  theme(axis.title = element_text(face = "plain"), #adjust axis and legend titles to plain
+        legend.title = element_text(face = "plain"), 
+        title = element_text(size = 14, face = "bold"))
+ plot
+```
 
