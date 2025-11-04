@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Haley Poppinga">
+
+<title>Week_10 Lectures</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Week10_notes_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Week10_notes_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Week10_notes_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Week10_notes_files/libs/quarto-html/popper.min.js"></script>
+<script src="Week10_notes_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Week10_notes_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Week10_notes_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Week10_notes_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Week10_notes_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Week10_notes_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Week10_notes_files/libs/bootstrap/bootstrap-268d3779a6da6cf7e66354be2ae425a0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#week-10a-lecture-functional-programming" id="toc-week-10a-lecture-functional-programming" class="nav-link active" data-scroll-target="#week-10a-lecture-functional-programming">Week 10a Lecture: Functional Programming</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries">Load Libraries</a></li>
+  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice">Practice</a></li>
+  </ul></li>
+  <li><a href="#week-10b-lecture-getting-help-in-r" id="toc-week-10b-lecture-getting-help-in-r" class="nav-link" data-scroll-target="#week-10b-lecture-getting-help-in-r">Week 10b Lecture: Getting Help in R</a>
+  <ul class="collapse">
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1">Introduction</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Week_10 Lectures</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Haley Poppinga </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="week-10a-lecture-functional-programming" class="level2">
+<h2 class="anchored" data-anchor-id="week-10a-lecture-functional-programming">Week 10a Lecture: Functional Programming</h2>
+<p><a href="https://raw.githack.com/OCN-682-UH/Poppinga/main/Week_10/Lectures/17_Functional-Programming.html#1">Lecture Slides</a><br>
+<a href="https://r4ds.hadley.nz/functions.html">Required Reading R4DS Ch. 25</a><br>
+<a href="https://r4ds.hadley.nz/workflow-help.html">Required Reading R4DS Ch. 8</a></p>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p><strong>Outline of class</strong></p>
+<p>Functional programming</p>
+<ul>
+<li>Quiz!<br>
+</li>
+<li>When to write a function<br>
+</li>
+<li>How to make a custom function</li>
+</ul>
+<p>Homework: Practice writing functions.</p>
+<p><strong>Why functions?</strong></p>
+<ul>
+<li>Anytime you have a task that you want to use more than once<br>
+</li>
+<li>Keeps your script clean<br>
+</li>
+<li>Avoids mistakes with copy and paste<br>
+</li>
+<li>Minimizes places where you need to update your code (copy and pasting code over and over makes it hard to change small things)<br>
+</li>
+<li>only have to change things once in a function</li>
+</ul>
+<p>Anytime you have to do a task more then once…<br>
+Let’s use an example where we want to rescale data in multiple columns (value - min/(max - min))</p>
+<p>First set-up your script and create a dataframe of random numbers</p>
+</section>
+<section id="load-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="load-libraries">Load Libraries</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.1     ✔ stringr   1.5.1
+✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at /Users/haleypoppinga/Desktop/Repositories/Poppinga</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'palmerpenguins'
+
+The following objects are masked from 'package:datasets':
+
+    penguins, penguins_raw</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PNWColors) <span class="co"># for the PNW color palette </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reprex) <span class="co">#reproducible example</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datapasta) <span class="co">#copy and paste</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(styler) <span class="co"># copy and paste in style)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="practice" class="level3">
+<h3 class="anchored" data-anchor-id="practice">Practice</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="co"># draws 10 random values from a normal distribution</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">c =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">d =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+       a      b      c       d
+   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1  0.515  0.535  1.71  -0.0794
+2 -1.16   0.862 -0.310 -0.642 
+3  0.748 -1.59   0.797  1.92  
+4 -1.79  -0.354 -0.624  0.126 
+5  1.97   1.02   0.633 -0.197 
+6 -0.293 -0.705 -0.490 -0.562 </code></pre>
+</div>
+</div>
+<p>rnorm = randomly distributed numbers<br>
+Basien modeling: use setseed() allows it to be consistent. Run before random number generator.</p>
+<p>Anytime you have to do a task more then once…<br>
+Let’s use an example where we want to rescale data in multiple columns (value - min/(max - min))</p>
+<p><em>Rescale every column individually</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">a =</span> (a<span class="sc">-</span><span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Replaces a withing the function to do whatever you tell it to.</p>
+<p>Now copy and paste the same code for each column without making any mistakes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">a =</span> (a<span class="sc">-</span><span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">b =</span> (b<span class="sc">-</span><span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">c =</span> (c<span class="sc">-</span><span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">d =</span> (d<span class="sc">-</span><span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Did I make a mistake?<br>
+Yes-&gt; after max()</p>
+<p>Correct:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span>df <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">a =</span> (a<span class="sc">-</span><span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">b =</span> (b<span class="sc">-</span><span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">c =</span> (c<span class="sc">-</span><span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">d =</span> (d<span class="sc">-</span><span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can write a function for this</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  value<span class="ot">&lt;-</span>(x<span class="sc">-</span><span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(value)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">a =</span> <span class="fu">rescale01</span>(a),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">b =</span> <span class="fu">rescale01</span>(b),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">c =</span> <span class="fu">rescale01</span>(c),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">d =</span> <span class="fu">rescale01</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+       a     b      c      d
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1 0.613 0.742 0.979  0.193 
+ 2 0.169 0.856 0.132  0     
+ 3 0.675 0     0.595  0.879 
+ 4 0     0.432 0      0.263 
+ 5 1     0.912 0.526  0.152 
+ 6 0.399 0.310 0.0563 0.0273
+ 7 0.139 0.832 1      0.429 
+ 8 0.864 0.817 0.136  0.0306
+ 9 0.860 0.497 0.569  0.160 
+10 0.567 1     0.876  1     </code></pre>
+</div>
+</div>
+<p>Let’s break it down There are three key steps to creating a new function:</p>
+<ol type="1">
+<li><p>You need to pick a name for the function. Here I’ve used rescale01 because this function rescales a vector to lie between 0 and 1.</p></li>
+<li><p>You list the inputs, or arguments, to the function inside function. Here we have just one argument. If we had more the call would look like function(x, y, z).</p></li>
+<li><p>You place the code you have developed in body of the function, a { block that immediately follows function(…).</p></li>
+</ol>
+<ul>
+<li>function() then {}</li>
+</ul>
+<ol start="4" type="1">
+<li>return tells us what values we want returned when you run the function</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  value<span class="ot">&lt;-</span>(x<span class="sc">-</span><span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span>(<span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="co"># value can be whatever name you want, </span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(value) </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>One argument here.<br>
+rescale01 is now the function that you’ve created (e.g.&nbsp;read_csv) A package is multiple functions put together to use in a library.</p>
+<p>Note: It is way easier to create a function when you already wrote the code rather than creating the function from scratch.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate_all(rescale01)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s make a function to covert degrees fahrenheit to celcius. What is the calculation for F to C?</p>
+<p>Start out by writing the code you want to use:<br>
+temp_C&lt;- (temp_F - 32)*5 / 9</p>
+<p>Then figure out what are the different arguments and the inputs and outputs. In this case, input is farenheit and output is celsius.</p>
+<section id="lets-make-it-a-function" class="level4">
+<h4 class="anchored" data-anchor-id="lets-make-it-a-function">Let’s make it a function!</h4>
+<p><strong>Step 1: Name the function</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fahrenheit_to_celsius <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Step 2: Put in the equation</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fahrenheit_to_celsius <span class="ot">&lt;-</span> <span class="cf">function</span>() { </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  temp_C <span class="ot">&lt;-</span> (temp_F <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">9</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Step 3: Decide what the arguments are</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fahrenheit_to_celsius <span class="ot">&lt;-</span> <span class="cf">function</span>(temp_F) {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  temp_C <span class="ot">&lt;-</span> (temp_F <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">9</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note: want to make function names applicable to everyone.</p>
+<p><strong>Step 4: Decide what is being returned</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fahrenheit_to_celsius <span class="ot">&lt;-</span> <span class="cf">function</span>(temp_F) { </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  temp_C <span class="ot">&lt;-</span> (temp_F <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">9</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(temp_C)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note: put your functions at top of your script so it is available throughout the whole script.</p>
+<p><strong>Step 5: Test it</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fahrenheit_to_celsius</span>(<span class="dv">32</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fahrenheit_to_celsius</span>(<span class="dv">212</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 100</code></pre>
+</div>
+</div>
+<p>Note: test with numbers that you know easily off the top of your head.</p>
+<section id="think-pair-share" class="level5">
+<h5 class="anchored" data-anchor-id="think-pair-share">Think, Pair, Share</h5>
+<p>Write a function that converts celcius to kelvin. (Remember Kelvin is celcius + 273.15).</p>
+<p>Code I want to use:<br>
+temp_K&lt;- (temp_C + 273.15)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>celsius_to_kelvin<span class="ot">&lt;-</span><span class="cf">function</span>(temp_C) <span class="co"># decide what the arguments are (step 3)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  {  <span class="co"># name the function (step 1)</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  temp_K<span class="ot">&lt;-</span> (temp_C <span class="sc">+</span> <span class="fl">273.15</span>) <span class="co"># put in the equation (step 2)</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(temp_K) <span class="co"># decide what is being returned (step 4)</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">celsius_to_kelvin</span>(<span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 373.15</code></pre>
+</div>
+</div>
+<p>Example use: calculate NCP or NCC</p>
+</section>
+</section>
+<section id="making-plots-into-a-function" class="level4">
+<h4 class="anchored" data-anchor-id="making-plots-into-a-function">Making plots into a function</h4>
+<p>Let’s say you have a specifically formatted plot that you like and that you plan to use over and over again. By turning it into a function, you only have to code it once.</p>
+<p>Let’s use our favorite penguin dataset and make a nice plot line plot.</p>
+<p>pal&lt;-pnw_palette(“Lake”,3, type = “discrete”) # my color palette ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = island))+ geom_point()+ geom_smooth(method = “lm”)+ # add a linear model scale_color_manual(“Island”, values=pal)+ # use pretty colors and another example of how to manually change the legend title for colors theme_bw()</p>
+<p>Note: can make a function like this to use the same theme throughout multiple plots.</p>
+<p><strong>Making plots into a function</strong></p>
+<p>Name and set-up the function.</p>
+<p>myplot&lt;-function(){ # copy and pasted code above into the body of the function here: pal&lt;-pnw_palette(“Lake”,3, type = “discrete”) # my color palette ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm, color = island))+ geom_point()+ geom_smooth(method = “lm”)+ # add a linear model scale_color_manual(“Island”, values=pal)+ # use pretty colors and change the legend title theme_bw() }</p>
+<p>What do you think our arguments should be?</p>
+<ul>
+<li>this funciton can change data, x, and y depending on what data you decide to use</li>
+</ul>
+<p>Make the names broad so it can be applicable to several values</p>
+<p>myplot&lt;-function(data, x, y){ pal&lt;-pnw_palette(“Lake”,3, type = “discrete”) # my color palette ggplot(data = data, aes(x = x, y =y , color = island))+ geom_point()+ geom_smooth(method = “lm”)+ # add a linear model scale_color_manual(“Island”, values=pal)+ # use pretty colors and change the legend title theme_bw() }</p>
+<p>Test it:</p>
+<p>Well, shoot, I got an error…. why do we think that is?<br>
+Why an error? The function does not know that those are within the data set. So we need to be explicit about what columns are.</p>
+<p>myplot(data = penguins, x = body_mass_g, y = bill_length_mm)</p>
+<p>Even though body_mass_g exists within the penguin dataframe, there is still no individual parameter called body_mass_g in our environment and R is confused.</p>
+<p><strong>There is a solution though from within the {rlang} package (a part of the tidyverse)!</strong></p>
+<ul>
+<li>{rlang} uses what is literally called a “curly-curly” {{}} to help us assign variables that are column names in dataframes.<br>
+</li>
+<li>Make it easier to manipulate them within functions</li>
+</ul>
+<p>Let’s add curly-curlies to the column names</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>myplot<span class="ot">&lt;-</span><span class="cf">function</span>(data, x, y){ </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>pal<span class="ot">&lt;-</span><span class="fu">pnw_palette</span>(<span class="st">"Lake"</span>,<span class="dv">3</span>, <span class="at">type =</span> <span class="st">"discrete"</span>) <span class="co"># my color palette </span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{x}}, <span class="at">y =</span> {{y}} , <span class="at">color =</span> island))<span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)<span class="sc">+</span> <span class="co"># add a linear model</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Island"</span>, <span class="at">values=</span>pal)<span class="sc">+</span>   <span class="co"># use pretty colors and change the legend title</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use in a function any time you want to use a column within a tibble.<br>
+{{}} is saying that you can put anything in x and anything in y</p>
+<p>Test again</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(<span class="at">data =</span> penguins, <span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Week10_notes_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Test with new variables.<br>
+Whatever continuous x or y and flip it out to whatever. Will always be the same colors to islands and same geom_smooth, etc.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(<span class="at">data =</span> penguins, <span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Week10_notes_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-defualts" class="level4">
+<h4 class="anchored" data-anchor-id="adding-defualts">Adding defualts</h4>
+<p>Let’s say you want to create a default for the function to always default to the penguins dataset. You can set those directly in the function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>myplot<span class="ot">&lt;-</span><span class="cf">function</span>(<span class="at">data =</span> penguins, x, y){ <span class="co"># going to always assume that data is penguins</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>pal<span class="ot">&lt;-</span><span class="fu">pnw_palette</span>(<span class="st">"Lake"</span>,<span class="dv">3</span>, <span class="at">type =</span> <span class="st">"discrete"</span>) <span class="co"># my color palette </span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{x}}, <span class="at">y =</span> {{y}} , <span class="at">color =</span> island))<span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)<span class="sc">+</span> <span class="co"># add a linear model</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Island"</span>, <span class="at">values=</span>pal)<span class="sc">+</span>   <span class="co"># use pretty colors and change the legend title</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Defaults<br>
+Now, you can just write…<br>
+Dont need to write data because it is assuming the data is penguins.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Week10_notes_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="layering-the-plot" class="level4">
+<h4 class="anchored" data-anchor-id="layering-the-plot">Layering the plot</h4>
+<p>You can also layer onto your plot using ‘+’ just like it is a regular ggplot to change things like labels.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)<span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Body mass (g)"</span>,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Flipper length (mm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Week10_notes_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note: can now manipulate plot in any way we already learned with the + signs</p>
+<p><strong>Add an if-else statement for more flexibility.</strong><br>
+An aside on if-else statements….</p>
+<p>If this argument is true, then add something.</p>
+<p>Imagine you want a variable to be equal to a certain value if a condition is met. This is a typical problem that requires the if … else … construct. For instance:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Suppose that if a &gt; b then f should be = to 20, else f should be equal to 10. Using if/else we:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (a <span class="sc">&gt;</span> b) { <span class="co"># my question</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># if it is true give me answer 1</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> { <span class="co"># else give me answer 2</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If a &gt; b make f assigned to 20, if it is anything else make f assigned to 10</p>
+<p>When I type f I get…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<p>Because a is less than b in this case.</p>
+<p><strong>Back to plotting</strong><br>
+Using if…else… we can make our function even more flexible.<br>
+Let’s say we want the option of adding the geom_smooth lines or not.<br>
+We can create a variable that if set to TRUE add the geom_smooth, otherwise print without.</p>
+<p>First add a new argument for lines and make the default TRUE for ease.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>myplot<span class="ot">&lt;-</span><span class="cf">function</span>(<span class="at">data =</span> penguins, x, y, <span class="at">lines=</span><span class="cn">TRUE</span> ){ <span class="co"># add new argument for lines</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>pal<span class="ot">&lt;-</span><span class="fu">pnw_palette</span>(<span class="st">"Lake"</span>,<span class="dv">3</span>, <span class="at">type =</span> <span class="st">"discrete"</span>) <span class="co"># my color palette </span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{x}}, <span class="at">y =</span> {{y}} , <span class="at">color =</span> island))<span class="sc">+</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)<span class="sc">+</span> <span class="co"># add a linear model</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Island"</span>, <span class="at">values=</span>pal)<span class="sc">+</span>   <span class="co"># use pretty colors and change the legend title</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If-else Next, add an if-else statement</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>myplot<span class="ot">&lt;-</span><span class="cf">function</span>(<span class="at">data =</span> penguins, x, y, <span class="at">lines=</span><span class="cn">TRUE</span> ){ <span class="co"># add new argument for lines</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>pal<span class="ot">&lt;-</span><span class="fu">pnw_palette</span>(<span class="st">"Lake"</span>,<span class="dv">3</span>, <span class="at">type =</span> <span class="st">"discrete"</span>) <span class="co"># my color palette </span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(lines<span class="sc">==</span><span class="cn">TRUE</span>){</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{x}}, <span class="at">y =</span> {{y}} , <span class="at">color =</span> island))<span class="sc">+</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)<span class="sc">+</span> <span class="co"># add a linear model</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Island"</span>, <span class="at">values=</span>pal)<span class="sc">+</span>   <span class="co"># use pretty colors and change the legend title</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>} <span class="co"># curly for if statement</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>{</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{x}}, <span class="at">y =</span> {{y}} , <span class="at">color =</span> island))<span class="sc">+</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span> <span class="co"># no geom_smooth here</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Island"</span>, <span class="at">values=</span>pal)<span class="sc">+</span>   <span class="co"># use pretty colors and change the legend title</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>} <span class="co"># curly for else statement</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>} <span class="co"># curly for entire function</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Test it With lines</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Week10_notes_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Without lines</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myplot</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, <span class="at">lines =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Week10_notes_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Today’s totally awesome R package<br>
+{emokid}: Make your code more emo… you’ve used the praise package, but if you need to express your frustrations now you can let the world know you are sad</p>
+<p>devtools::install_github(“itsrainingdata/emokid”) For when you are really sad</p>
+<p>library(emokid) iamsad() more nights of hugging my pillow, oh replaying memories. 😿 For when you are less sad</p>
+<p>iamlesssad() i can’t dream anymore since you left. i miss you singing me to sleep. 😔</p>
+<p>Homework Use any dataset you would like and make two useful functions. One that is a plot and one that is not. Turn in your functions using Quarto with at least 2 examples per function showing its flexibility. Due, as always, at 1pm on Tuesday.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="week-10b-lecture-getting-help-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="week-10b-lecture-getting-help-in-r">Week 10b Lecture: Getting Help in R</h2>
+<p><a href="https://raw.githack.com/OCN-682-UH/Fall_2025/main/Week_10/21_GettingHelp.html">Lecture Slides</a><br>
+<a href="https://r4ds.hadley.nz/workflow-help.html">Required Reading R4DS Ch. 8</a></p>
+<section id="introduction-1" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-1">Introduction</h3>
+<p><strong>Outline of class</strong></p>
+<section id="getting-help-with-r" class="level4">
+<h4 class="anchored" data-anchor-id="getting-help-with-r">Getting Help with R</h4>
+<ul>
+<li>Troubleshooting<br>
+</li>
+<li>Common Mistakes<br>
+</li>
+<li>Reproducible examples {reprex}<br>
+</li>
+<li>Copying and pasting {datapasta}<br>
+</li>
+<li>Make a Reprex</li>
+</ul>
+</section>
+<section id="efficiently-finding-solutions-useful-tools" class="level4">
+<h4 class="anchored" data-anchor-id="efficiently-finding-solutions-useful-tools">Efficiently finding solutions &amp; useful tools</h4>
+<p><strong>(e.g.&nbsp;R packages &amp; functions) is an important skill for a data scientist.</strong></p>
+<p>Troubleshooting is part of every data scientist’s life - there is no programmer in the world who does not have to deal with bugs &amp; errors</p>
+<p>See <a href="https://rc2e.com/gettingstarted">“Getting Started and Getting Help”</a> chapter in the R Cookbook</p>
+<p>Fun fact: “…the very first instance of a computer bug was recorded at 3:45 pm (15:45) on the 9th of September 1947. This”bug” was an actual real-life, well ex-moth, that was extracted from the number 70 relay, Panel F, of the Harvard Mark II Aiken Relay Calculator.” A literal bug! (Christopher McFadden, Interesting Engineering)</p>
+</section>
+<section id="if-youre-asking-what-package-or-function-should-i-use-to-do-this-thing" class="level4">
+<h4 class="anchored" data-anchor-id="if-youre-asking-what-package-or-function-should-i-use-to-do-this-thing">If you’re asking: What package or function should I use to do this thing?</h4>
+<p>Google it: (I ALWAYS have google open when I am coding)</p>
+<p>Search with the keywords and package/function name if known, and include .R in the search keywords (e.g.&nbsp;“dplyr::mutate add column in .R” instead of “mutate variable”)</p>
+<p>“R” is generic - so consider using “R software” or “.R” Start learning and using language common in R communities &amp; publications (e.g.&nbsp;R4DS), like data frame or tibble instead of spreadsheet</p>
+<p>For now, anything reading, wrangling, ggplot2 related:<br>
+considering navigating to documentation from <a href="https://tidyverse.org/">tidyverse.org</a>, <a href="https://www.rdocumentation.org/">rdocumentation</a>, or <a href="https://forum.posit.co/">RStudio/Posit</a> community.</p>
+<p>Don’t know what package/function to use for your purpose?<br>
+Use <a href="https://cran.r-project.org/web/views/">CRAN Task Views</a> to help you find it (grouped by topic) to search for packages by keyword</p>
+<p>Use R-specific search tools:<br>
+<a href="https://www.rdocumentation.org/">rdocumentation.org</a><br>
+<a href="https://rseek.org/">rseek.org</a>(like Google jusy for R)</p>
+<p>For more getting help &amp; searching recommendations, see <a href="https://rc2e.com/gettingstarted">Ch. 1 of the R Cookbook 2nd Edition</a> by JD Long and Paul Teers</p>
+</section>
+<section id="how-to-know-there-is-an-error-and-where-to-look-for-it" class="level4">
+<h4 class="anchored" data-anchor-id="how-to-know-there-is-an-error-and-where-to-look-for-it">How to know there is an error and where to look for it?</h4>
+<p>When you save a script, lines of code with some errors (e.g.&nbsp;unmatched parentheses) will have a red circle with an x in it next to the line number.</p>
+<p>You might also see a red squiggly line under part of your code, indicating a syntax issue. You can hover over the squiggly to see a pop-up hint about what’s going on.</p>
+<p>Also try rainbow parentheses!</p>
+<ul>
+<li>gives different color for different parantheses ()</li>
+</ul>
+<p>Error messages will show up* in the Console when you try to run the broken code</p>
+<p><strong>There are multiple types of messages that R will print. Read the message to figure out what it’s trying to tell you.</strong></p>
+<p><em>Error</em>: There’s a fatal error in your code that prevented it from being run through successfully. You need to fix it for the code to run.</p>
+<p><em>Warning</em>: Non-fatal errors (doesn’t stop the code from running, but this is a potential problem that you should know about). Will still run code but it may be wrong.</p>
+<p><em>Message</em>: Here’s some helpful information about the code you just ran (you can hide these if you want to).</p>
+</section>
+<section id="when-you-get-an-error-message-in-r" class="level4">
+<h4 class="anchored" data-anchor-id="when-you-get-an-error-message-in-r">When you get an error message in R:</h4>
+<p>Read the error message. <em>Did you read the error message? Read the error message.</em> Sometimes it will be infuriatingly vague, but often it will tell you exactly how to fix it.</p>
+<p>(e.g.&nbsp;“do you need ==?”).<br>
+For example: did you use a logical with just one equal sign instead of 2?</p>
+</section>
+<section id="some-common-errorsissues-to-keep-an-eye-out-for-at-the-beginning-and-forever-and-ever" class="level4">
+<h4 class="anchored" data-anchor-id="some-common-errorsissues-to-keep-an-eye-out-for-at-the-beginning-and-forever-and-ever">Some common errors/issues to keep an eye out for at the beginning (and forever and ever…)</h4>
+<p><strong>If R…can’t find a function that you know exists:</strong></p>
+<p>Symptom:<br>
+‘Error in _________: could not find function “_________”’</p>
+<p>Likely diagnoses:</p>
+<ul>
+<li>The library containing the function you’re trying to use hasn’t been attached.<br>
+</li>
+<li>You’ve misspelled or mistyped the function name.</li>
+</ul>
+<p>Possible solutions:</p>
+<ul>
+<li>Make sure you’ve attached the required package with <em>library(package_name)</em> - and remember this line should exist in your script before the code that uses a function from that package<br>
+</li>
+<li>Make sure you’ve run the line of code that attaches the necessary package.<br>
+</li>
+<li>Check the function spelling/formatting very carefully</li>
+</ul>
+<p><strong>If R…can’t find the pipe operator:</strong></p>
+<p>Symptom:<br>
+‘Error in ____ %&gt;% ____ : could not find function “%&gt;%”’</p>
+<p>Likely diagnoses:</p>
+<ul>
+<li>Haven’t attached the tidyverse (w/ library(tidyverse)) before using the pipe.<br>
+</li>
+<li>Haven’t run the line of code to attach the tidyverse.</li>
+</ul>
+<p>Possible solutions:</p>
+<ul>
+<li>Make sure you’ve attached the tidyverse with <em>library(tidyverse)</em> - and remember this line should exist in your script before the code that uses %&gt;%<br>
+</li>
+<li>Make sure you’ve run the line of code that attaches the tidyverse.</li>
+</ul>
+<p><strong>If R…can’t find an object (e.g.&nbsp;an object or variable) that you know you’ve stored:</strong></p>
+<p>Symptom:<br>
+‘Error in ____ : object ‘_____’ not found’</p>
+<p>Likely Diagnosis:</p>
+<ul>
+<li>The object hasn’t been created or stored<br>
+</li>
+<li>You’ve mistyped the object name</li>
+</ul>
+<p>Possible Solution:</p>
+<ul>
+<li>Make sure you’ve run the line(s) of code where you read-in or create the object (e.g read_csv)<br>
+</li>
+<li>Make sure you’ve spelled/typed the object name exactly as it exists in the Environment<br>
+</li>
+<li>Use ls() to check which objects exist in your current workspace (and if it’s not there, then it hasn’t been created/stored yet)</li>
+</ul>
+<p><strong>If R…tells you it’s ignoring an argument within a function.</strong></p>
+<p>Symptom:<br>
+‘Warning: Ignoring unknown parameters: ____’</p>
+<p>Possible diagnoses:</p>
+<ul>
+<li>You’ve included an argument that doesn’t exist for that function<br>
+</li>
+<li>You’ve mistyped an argument that does exist for that function</li>
+</ul>
+<p>Possible solutions:</p>
+<ul>
+<li>Check to ensure that the argument you’re trying to use for that function (a) exists, and (b) is entered exactly how R expects it to be in your code - especially checking for spelling, abbreviation &amp; capitalization</li>
+</ul>
+<p>How to find out what arguments are accepted by which functions:</p>
+<ul>
+<li>Viewing the R documentation with <em>?function_name</em>, and look in the ‘Arguments’ section (or ‘Aesthetics’ section for geoms in ggplot2)</li>
+</ul>
+<p><strong>If you…are trying to make a basic ggplot2 graph and you accidentally use %&gt;% between layers instead of a +</strong></p>
+<p>Symptoms:<br>
+‘Error: mapping must be created by aes()<br>
+Did you use %&gt;% instead of +?’</p>
+<p>Diagnosis:</p>
+<ul>
+<li>Used the pipe operator %&gt;% instead of + to add ggplot2 layers?</li>
+</ul>
+<p>Possible solutions:</p>
+<ul>
+<li>Switch to + for ggplot2!</li>
+</ul>
+<p><strong>If you…think your ggplot code looks perfect and you’re not getting an error message, but only an empty graph is showing up:</strong></p>
+<p>Symptoms:<br>
+Empty ggplot</p>
+<p>Possible diagnoses:</p>
+<ul>
+<li>Did you check what the data you’re trying to plot looks like? For example, did you accidentally filter out all observations in a previous step?<br>
+</li>
+<li>Did you forget a plus sign to add the geom_* layer?</li>
+</ul>
+<p>Possible solutions:</p>
+<ul>
+<li>Make sure there is a plus sign (+) between all ggplot layers.<br>
+</li>
+<li>Look at the data you’re trying to plot to ensure it exists</li>
+</ul>
+<p><strong>If you…are trying to change some aesthetic in a ggplot graph, but you’re getting an error:</strong></p>
+<p>Symptom:<br>
+Error in rep(value[[k]], length.out = n) :<br>
+attempt to replicate an object of type ‘closure’</p>
+<p>Possible diagnoses:</p>
+<ul>
+<li>Did you forget that when you’re referencing a variable in ggplot, it needs to be within an aes() function?<br>
+</li>
+<li>Put something outside of aes() instead of inside</li>
+</ul>
+<p>Possible solutions:</p>
+<ul>
+<li>Make sure that when you’re updating a graph aesthetic based on a variable in the data frame, you have that argument within aes().</li>
+</ul>
+<p><strong>If you…are trying to find a summary value for a variable that you know contains numbers, but you’re getting an NA result and/or a warning message:</strong></p>
+<p>Symptom(s):</p>
+<ul>
+<li>NA returned when summary statistic value (e.g.&nbsp;mean) expected<br>
+</li>
+<li>‘In __ : argument is not numeric or logical: returning NA’</li>
+</ul>
+<p>Possible diagnoses:</p>
+<ul>
+<li>The default argument of the function is <em>na.rm = “FALSE”</em>.<br>
+</li>
+<li>The class of non-NA values is not numeric (e.g.., there are words in the column or R otherwise doesn’t know the class should be “numeric”).
+<ul>
+<li>e.g may have to change your mean to be na.rm = “TRUE” so that you don’t get an NA when looking for mean, min, or max if that exists within dataframe<br>
+</li>
+<li>e.g trying to get mean of column that has characters (non-numeric), soi naje sure column is numeric</li>
+</ul></li>
+</ul>
+<p>Possible solutions:</p>
+<ul>
+<li>If the variable is numeric (check class), update argument to na.rm = “TRUE”<br>
+</li>
+<li>Coerce variable class to “numeric” if appropriate/possible.</li>
+</ul>
+</section>
+<section id="cant-figure-out-whats-going-on-from-the-error-message-directly" class="level4">
+<h4 class="anchored" data-anchor-id="cant-figure-out-whats-going-on-from-the-error-message-directly">Can’t figure out what’s going on from the error message directly?</h4>
+<ol type="1">
+<li><strong>Look over code very carefully</strong> - character-by-character and space-by-space. Run line-by-line to see where it breaks. Some things to pay close attention to at this point:</li>
+</ol>
+<ul>
+<li>Are all parentheses matching pairs?<br>
+</li>
+<li>Have you typed in all functions, objects, and conditions in exactly correctly?<br>
+</li>
+<li>If you run something and it doesn’t show up, did you call it to have it show up, or have you just asked R to store it?<br>
+</li>
+<li>Have you looked at all intermediate data frames during wrangling to make sure data are being subset &amp; transformed as expected?</li>
+</ul>
+<ol start="2" type="1">
+<li><p><strong>Google the copied &amp; pasted error message</strong>. Someone else has encountered and solved it before. Find them <a href="https://stackoverflow.com/questions">often on Stack Overflow</a>. Beware rabbit holes and grumps.</p></li>
+<li><p>Take a <strong>break</strong> and come back to it.</p></li>
+<li><p>Make a small, <strong>reproducible example (reprex up next!)</strong> and see if you can recreate the error. I realize and resolve many errors by trying to make something work in a simpler, self-contained example.</p></li>
+</ol>
+<p><strong>Don’t forget the flip-side!</strong><br>
+Just because you don’t get an error message doesn’t mean that you did things correctly - it just means that the code is running.</p>
+<p>So <strong>LOOK AT YOUR RAW DATA, INTERMEDIATE DATA AND RESULTS</strong> - especially just after reading it in and after wrangling steps - to ensure that what you think your code is supposed to be doing with/to your data is actually what your code is doing with/to your data.</p>
+</section>
+<section id="supportive-r-communities" class="level4">
+<h4 class="anchored" data-anchor-id="supportive-r-communities">Supportive R communities</h4>
+<p><a href="https://forum.posit.co/">The RStudio community</a><br>
+“#rstats” on BlueSky - no seriously, create an account. Some to follow right away for maximum R learning, commentary and community:<br>
+<span class="citation" data-cites="dataandme.bsky.social">@dataandme.bsky.social</span>, <span class="citation" data-cites="cedricsherer.com">@cedricsherer.com</span>, <span class="citation" data-cites="juliasilge.com">@juliasilge.com</span>, <span class="citation" data-cites="posit.co">@posit.co</span>, <span class="citation" data-cites="kawawoo.com">@kawawoo.com</span>. <span class="citation" data-cites="themockup.blog">@themockup.blog</span>, <span class="citation" data-cites="jennybryan.bsky.social">@jennybryan.bsky.social</span>,<span class="citation" data-cites="noamross.net">@noamross.net</span>, <span class="citation" data-cites="johnthegeek.com">@johnthegeek.com</span>, <span class="citation" data-cites="dslc.io">@dslc.io</span>, <span class="citation" data-cites="womenindataviz.bsky.social">@womenindataviz.bsky.social</span>, <span class="citation" data-cites="juliesquid.bsky.social">@juliesquid.bsky.social</span>, <span class="citation" data-cites="hadleywickham.bsky.social">@hadleywickham.bsky.social</span>, <span class="citation" data-cites="paul-buerkner.bsky.social">@paul-buerkner.bsky.social</span>, <span class="citation" data-cites="r-foundation.bsky.social">@r-foundation.bsky.social</span>, <span class="citation" data-cites="quarto.org">@quarto.org</span>, <span class="citation" data-cites="bigbookofr.bsky.social">@bigbookofr.bsky.social</span></p>
+<p><strong>ChatGPT</strong><br>
+Chat GPT is a “large language model” that follows an instruction in a prompt and provides a detailed response.</p>
+<p>A.I. can be a very helpful tool, but it is only as smart as you… if you do not know how to debug code and you trust it blindly you will find yourself in a lot of trouble. Use it to assist you, but do not use it to replace you.</p>
+<p>Why should you be careful with ChatGPT?</p>
+<p>“If you’re solely relying on ChatGPT to learn how to code, you could be missing out on some crucial programming principles — like knowing how to solve problems, understanding how to read tech documentation, getting comfortable with trial and error, and building things on your own. “With coding, you need to know the fundamentals,” Julie says. “If you don’t know the fundamentals, then I don’t think the tool will be that helpful to you.” Code Academy</p>
+<p>There are some good blog posts on tips for using ChatGPT to help with coding problems. Here is one from <a href="https://www.r-bloggers.com/2023/04/tips-for-using-chatgpt-to-learn-r/">R bloggers</a></p>
+<p>Here is an example of a prompt and a response:</p>
+<p>Prompt: explain this R code: m1 &lt;- gam(y ~ s(year, by = sites), data = my_data, family = “poisson”)</p>
+<p>GPT: The code m1 &lt;- gam(y ~ s(year, by = sites), data = my_data) specifies a generalized additive model (GAM) in R.</p>
+<p>Here’s what each part of the code means:</p>
+<p>m1 &lt;- : assigns the output of the model to the object named m1. gam() : specifies that we want to fit a generalized additive model. <em>y ~ s(year, by = sites) : specifies the model formula, where y is the response variable and year is the predictor variable of interest. The function s() specifies that year is a smooth function, which allows for a flexible fit to the data. The by = sites argument specifies that we want to fit separate smooth functions for each sites level, which is a way to model site-specific effects.<br>
+</em>note: anytime I have asked chat GPT to code me something slightly more complicated it has given me errors or made up functions that don’t exist. Again, use it as a tool, not a replacement for learning.</p>
+<p>Other helpful resources and a package!</p>
+<ul>
+<li><a href="https://thenewstack.io/chatgpt-smart-but-not-smart-enough/">ChatGPT</a>: Smart, but not smart enough - Can generative AI teach you to code? It’s complicated<br>
+</li>
+<li><a href="https://github.com/jcrodriguez1989/chatgpt">ChatGPT R Package</a><br>
+</li>
+<li><a href="https://www.datacamp.com/cheat-sheet/chatgpt-cheat-sheet-data-science">ChatGPT Cheat Sheet for Data Science</a></li>
+</ul>
+<p>I asked ChatGPT!<br>
+I asked ChatGPT to tell me how to best use LLMs to ask for help in R and here is what it told me. I put it into a Quarto doc for you. Note: As a UH student you have Gemini Pro for free. Basic ChatGPT, but Pro is not.</p>
+<p><a href="https://raw.githack.com/OCN-682-UH/Fall_2025/main/Week_10/RHelp.html">Quarto Help Document</a>.</p>
+</section>
+<section id="make-a-reproducible-example-to-ask-for-help" class="level4">
+<h4 class="anchored" data-anchor-id="make-a-reproducible-example-to-ask-for-help">Make a reproducible example to ask for help</h4>
+<p>install.packages(‘reprex’) #reproducible example<br>
+install.packages(‘datapasta’) #copy and paste<br>
+install.packages(‘styler’) # copy and paste in style</p>
+<p>When asking the R community for help, it is really important to give them enough information to help you. Remember, they don’t have your computer or your data and they are not in your head. Help them help you.</p>
+<p>By running code with {reprex}, you can create a reproducible example to post to Stack Overflow, Slack, GitHub, or an email to your collaborator.<br>
+They will have ewverything packaged together that they need to run your code.</p>
+</section>
+<section id="making-your-first-reprex" class="level4">
+<h4 class="anchored" data-anchor-id="making-your-first-reprex">Making your first reprex</h4>
+<p>Let’s say you are trying to make a plot with the mpg dataset and you hit an error.</p>
+<p>library(tidyverse)</p>
+<p>mpg %&gt;%<br>
+ggplot(aes(x = displ, y = hwy))%&gt;%<br>
+geom_point(aes(color = class))</p>
+<p>Error in geom_point():<br>
+mapping must be created by aes().<br>
+Did you use %&gt;% or |&gt; instead of +?</p>
+<p>Steps:</p>
+<ul>
+<li>put code into script<br>
+</li>
+<li>highlight code that you are trying to reproduce<br>
+</li>
+<li>Go to tabs and click Tools<br>
+</li>
+<li>Go to Addins -&gt; Render Reprex -&gt; Execute<br>
+</li>
+<li>Decide what venue you want</li>
+<li>Paste to the program you want.<br>
+</li>
+<li>Make sure to “append session info”. So that people know what packages you have and version of R, etc.<br>
+</li>
+<li>In bottom right “Viewer” in R, it will show you what it would look like on StackOverflow formatted and all session info of everything thats loaded for you in your session.<br>
+</li>
+<li>go to Stackoverflow, create account, ask a question, and paste into body.</li>
+</ul>
+<p><strong>Using real data</strong><br>
+Often you are working with real data and run into an issue. You need the example to be reproducible and simple. Other people on the internet do not have your data so what should we do?</p>
+<p>Open the stars.csv file and copy and paste the first few lines into R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lat    long    star_no</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 33.548    -117.805    10</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 35.534    -121.083    1</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 39.503    -123.743    25</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 32.863    -117.24    22</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 33.46    -117.671    8</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 33.548    -117.805    3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is not helpful and won’t run…</p>
+<p>{datapasta} helps you copy and past snippets of your data in a reproducible way.</p>
+</section>
+<section id="datapasta-package" class="level4">
+<h4 class="anchored" data-anchor-id="datapasta-package">datapasta Package</h4>
+<p>This time copy the code and got to Addins -&gt; paste as tribble and then name it something.</p>
+<p>Go to Tools -&gt; Addins -&gt; datapasta Tribble</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>data<span class="ot">&lt;-</span>tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>lat,    <span class="sc">~</span>long, <span class="sc">~</span>star_no,</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fl">33.548</span>, <span class="sc">-</span><span class="fl">117.805</span>,      <span class="dv">10</span>L,</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fl">35.534</span>, <span class="sc">-</span><span class="fl">121.083</span>,       <span class="dv">1</span>L,</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">39.503</span>, <span class="sc">-</span><span class="fl">123.743</span>,      <span class="dv">25</span>L,</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fl">32.863</span>,  <span class="sc">-</span><span class="fl">117.24</span>,      <span class="dv">22</span>L,</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>   <span class="fl">33.46</span>, <span class="sc">-</span><span class="fl">117.671</span>,       <span class="dv">8</span>L,</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fl">33.548</span>, <span class="sc">-</span><span class="fl">117.805</span>,       <span class="dv">3</span>L</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+    lat  long star_no
+  &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;
+1  33.5 -118.      10
+2  35.5 -121.       1
+3  39.5 -124.      25
+4  32.9 -117.      22
+5  33.5 -118.       8
+6  33.5 -118.       3</code></pre>
+</div>
+</div>
+<p>You can now use this with {reprex} to make a reproducible example that can fully run with your own data and code.</p>
+</section>
+<section id="dos-and-dont-of-reprex" class="level4">
+<h4 class="anchored" data-anchor-id="dos-and-dont-of-reprex">Do’s and don’t of reprex</h4>
+<p>1.Use the smallest, simplest, most built-in data possible.</p>
+<ul>
+<li>e.g.&nbsp;using datapasta<br>
+</li>
+<li>give them only 10 lines of data instead of all of it</li>
+</ul>
+<ol start="2" type="1">
+<li>Include commands on a strict “need to run” basis.</li>
+</ol>
+<ul>
+<li>Ruthlessly strip out anything unrelated to the specific matter at hand.<br>
+</li>
+<li>Include every single command that is required, e.g.&nbsp;loading specific packages<br>
+</li>
+<li>only load packages and code specifically required to error you have.</li>
+</ul>
+<ol start="3" type="1">
+<li>Pack it in, pack it out, and don’t take liberties with other people’s computers. You are asking people to run this code!</li>
+</ol>
+<ul>
+<li>Don’t start with rm(list = ls()). It is anti-social to clobber other people’s workspaces. This will delte their workspace.<br>
+</li>
+<li>Don’t start with setwd(“C:”), because it won’t work on anyone else’s computer.<br>
+</li>
+<li>Don’t mask built-in functions, i.e.&nbsp;don’t define a new function named c or mean.<br>
+</li>
+<li>If you change options, store original values at the start, do your thing, then restore them.<br>
+</li>
+<li>If you create files, delete them at end of reprex when you’re done.</li>
+</ul>
+<ol start="4" type="1">
+<li>Use good coding style.</li>
+</ol>
+<p><strong>The reprex code:</strong></p>
+<ul>
+<li>Must run and, therefore, should be run by the person posting. No faking it. Actually run the code.<br>
+</li>
+<li>Should be easy for others to digest, so they don’t necessarily have to run it. You are encouraged to include selected bits of output.<br>
+</li>
+<li>Should be easy for others to copy + paste + run, if and only if they so choose. Don’t let inclusion of output break execute-ability. Put outputs in hastags for example.<br>
+https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html.</li>
+</ul>
+<p><strong>Practice on your own.</strong><br>
+Make some simple code and add a bug. Use datapasta and reprex to make a reproducible example and post it to our slack channel. Make sure to add your session info.</p>
+<p>Ask someone to fix it and find a solution.<br>
+See if you can debug someone else’s errors.</p>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

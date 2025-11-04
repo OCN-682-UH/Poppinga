@@ -13,6 +13,18 @@ format:
 Use any dataset you would like and make two useful functions. One that is a plot and one that is not. Turn in your functions using Quarto with at least 2 examples per function showing its flexibility. Due, as always, at 1pm on Tuesday.  
 
 
+**Three key steps to creating a new function:**  
+
+1. You need to pick a name for the function. Here I’ve used rescale01 because this function rescales a vector to lie between 0 and 1.    
+
+2. You list the inputs, or arguments, to the function inside function. Here we have just one argument. If we had more the call would look like function(x, y, z).   
+
+3. You place the code you have developed in body of the function, a { block that immediately follows function(...).  
+  * function() then {}  
+
+4. return tells us what values we want returned when you run the function   
+
+
 
 ### Load Libraries  
 ```{r}
@@ -22,9 +34,10 @@ Use any dataset you would like and make two useful functions. One that is a plot
 library(tidyverse)
 library(here)
 library(ghibli)
-library(janitor)
 library(forcats)
 library(stringr)
+library(ggmap)
+library(sf)
 ```
 
 
@@ -41,19 +54,148 @@ chemdata<-read_csv(here("Week_10","Data","chemicaldata_maunalua.csv")) # Maunalu
 glimpse(chemdata)
 ```
 
-### Clean the Data   
-Using janitor package, clean the variable names.  
+### Clean the Data  
 ```{r}
 #| warning: false
 #| message: false
-chemdata_clean<-chemdata %>% 
-  clean_names()
+
+chemdata_clean<-chemdata %>%
+  drop_na() %>% #filters out everything that is not a complete row
+# Pivot Longer
+  pivot_longer(cols = c(pH, Salinity, NN, Silicate, Phosphate, TA, percent_sgd), # pH, salinity, and nutrients
+               names_to = "Variable",    # columns for those
+               values_to = "Value") %>%  # measurement and all metadata
+# Summarise Means and Variances
+  group_by(Site, Lat, Long, Variable) %>% # group by zone and variables
+  summarise(parameter_mean = mean(Value, na.rm = TRUE), # get mean 
+            parameter_variance = var(Value, na.rm = TRUE)) # get variance
+#View(chemdata_clean)
 ```
 
+
+
+
+## Make a Function 1 (Not a Plot)  
+
+Start out by writing the code you want to use:  
+
+variation<-(variance / ((mean)^2)
+
+Then figure out what are the different arguments and the inputs and outputs. 
+For example, I want to use Lubarsky et al. 2018 calculation of **pH variance**.  
 ```{r}
 #| warning: false
 #| message: false
-glimpse(chemdata_clean)
+
+variation_equation<-function(variance, mean) { # name the function and add arguments
+  variation<-variance / ((mean)^2) # put in equation for pH variation
+  return(variation) # output the result
+}
+```
+
+
+### Function 1 Example 1  
+Calculate pH variation of experimental locations in Wailupe from chemdata:  
+```{r}
+#| warning: false
+#| message: false
+
+pH_wailupe_variation<-chemdata %>% 
+  drop_na(pH) %>% # drop NAs for pH
+  group_by(Site, Lat, Long) %>% 
+  filter(Site == "W") %>% 
+  summarise(pH_mean = mean(pH, na.rm = TRUE),
+            pH_variance = var(pH, na.rm = TRUE)) %>% 
+  mutate(variation = variation_equation(pH_variance, pH_mean))
+
+pH_wailupe_variation
+```
+
+
+### Function 1 Example 2  
+Calculate all parameter variation in both sites from chemdata:  
+```{r}
+#| warning: false
+#| message: false
+
+chemdata_variation<-chemdata_clean %>% 
+  mutate(variation = variation_equation(parameter_variance, parameter_mean)) # calculates variation for all parameters
+head(chemdata_variation)
+```
+
+
+
+
+________________________________________________________________________________
+
+
+## Make a Function 2 (Plot)  
+Make a map plot of latitude and longitude coordinates of experimental locations, like that in Lubarsky et al. 2018 or Silbiger et al. 2020:  
+
+*Note: You will need your own Google Maps API key sorry*  
+```{r}
+#| warning: false
+#| message: false
+
+# register_google(key = "") # use your own API in between the "" in R console
+
+# Site maps for any latitude/longitude data
+
+chemdata_map<-function(data, x, y,
+                       maptype = "satellite", #Google map type
+                       zoom = 17, # zoom into center
+                       pt_size = 2,
+                       pt_col = "yellow") 
+{  # name function and determine arguments
+
+# palette<-scale_color_ghibli_d("MarnieMedium2", direction = -1) # nice colors if I am creating a legend for NEP or pH perhaps
+
+
+# Pull longitude and latitude automatically from any column data as numeric vectors
+lon<-pull(data, {{ x }}) # uses dplyr
+lat<-pull(data, {{ y }})
+
+# center map at mean coordinates
+map_center<-c(lon = mean(lon, na.rm = TRUE),
+              lat = mean(lat, na.rm = TRUE))
+
+basemap<-get_googlemap(center = map_center, 
+                 maptype = maptype, zoom = zoom) #base map from Google Maps
+
+ggmap(basemap) +
+  geom_point(data = data, mapping = aes(x = {{x}}, y = {{y}}), # uses rlang to signify it is within dataset
+                       size = pt_size, color = pt_col) + # constants outside aes()
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        panel.grid = element_blank())
+}
+```
+
+
+
+### Function 2 Example 1   
+Map of experimental locations for Wailupe:  
+```{r}
+#| warning: false
+#| message: false
+
+chemdata %>% 
+  filter(Site =="W") %>% 
+  chemdata_map(Long, Lat) + 
+  labs(x = "Longitude", y = "Latitude", title = "Wailupe Experimental Locations") # could add this into the function when I have more time to figure that out
+```
+
+
+### Function 2 Example 2  
+Map of experimental locations for Black Point:  
+```{r}
+#| warning: false
+#| message: false
+
+chemdata %>% 
+  filter(Site =="BP") %>% 
+  chemdata_map(Long, Lat, zoom = 18) + 
+  labs(x = "Longitude", y = "Latitude", title = "Black Point Experimental Locations")
 ```
 
 
@@ -61,16 +203,19 @@ glimpse(chemdata_clean)
 
 
 
+Extra:  
+Future things to do when more time: make a scale bar.  
 
+See the way [Nyssa](https://github.com/njsilbiger/MaunaluaSEM/blob/159fcb935bf467edb70d9cfb035e7200b76ab0e9/mapplot_noAPI.R) did it.  
 
-
-
-
-
-
-
-
-
+```{r}
+# ggsave(here("Week_10","Output","functionplot1_HW10.png"))
+# Empty your environment before you start working
+# Restart R
+# .rs.restartR()
+# remove whole list in enviroment
+# rm(list = ls())
+```
 
 
 
