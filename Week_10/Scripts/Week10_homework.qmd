@@ -62,7 +62,7 @@ glimpse(chemdata)
 chemdata_clean<-chemdata %>%
   drop_na() %>% #filters out everything that is not a complete row
 # Pivot Longer
-  pivot_longer(cols = c(pH, Salinity, NN, Silicate, Phosphate, TA, percent_sgd), # pH, salinity, and nutrients
+  pivot_longer(cols = c(pH, Salinity, NN, Silicate, Phosphate, TA, percent_sgd), # parameters
                names_to = "Variable",    # columns for those
                values_to = "Value") %>%  # measurement and all metadata
 # Summarise Means and Variances
@@ -88,7 +88,7 @@ For example, I want to use Lubarsky et al. 2018 calculation of **pH variance**.
 #| message: false
 
 variation_equation<-function(variance, mean) { # name the function and add arguments
-  variation<-variance / ((mean)^2) # put in equation for pH variation
+  variation<- variance / ((mean)^2) # put in equation for pH variation
   return(variation) # output the result
 }
 ```
@@ -103,10 +103,10 @@ Calculate pH variation of experimental locations in Wailupe from chemdata:
 pH_wailupe_variation<-chemdata %>% 
   drop_na(pH) %>% # drop NAs for pH
   group_by(Site, Lat, Long) %>% 
-  filter(Site == "W") %>% 
-  summarise(pH_mean = mean(pH, na.rm = TRUE),
-            pH_variance = var(pH, na.rm = TRUE)) %>% 
-  mutate(variation = variation_equation(pH_variance, pH_mean))
+  filter(Site == "W") %>%  # filter only Wailupe site
+  summarise(pH_mean = mean(pH, na.rm = TRUE), # get means
+            pH_variance = var(pH, na.rm = TRUE)) %>%  # get variances
+  mutate(variation = variation_equation(pH_variance, pH_mean)) # calculate variation using my function
 
 pH_wailupe_variation
 ```
@@ -137,7 +137,7 @@ Make a map plot of latitude and longitude coordinates of experimental locations,
 #| warning: false
 #| message: false
 
-# register_google(key = "") # use your own API in between the "" in R console
+# register_google(key = "") # use your own API in between the "" in R console after running libraries
 
 # Site maps for any latitude/longitude data
 
@@ -150,7 +150,8 @@ chemdata_map<-function(data, x, y,
 
 # palette<-scale_color_ghibli_d("MarnieMedium2", direction = -1) # nice colors if I am creating a legend for NEP or pH perhaps
 
-
+# All the body of what we want the function to do 
+  
 # Pull longitude and latitude automatically from any column data as numeric vectors
 lon<-pull(data, {{ x }}) # uses dplyr
 lat<-pull(data, {{ y }})
@@ -162,12 +163,13 @@ map_center<-c(lon = mean(lon, na.rm = TRUE),
 basemap<-get_googlemap(center = map_center, 
                  maptype = maptype, zoom = zoom) #base map from Google Maps
 
-ggmap(basemap) +
+site_maps<-ggmap(basemap) +
   geom_point(data = data, mapping = aes(x = {{x}}, y = {{y}}), # uses rlang to signify it is within dataset
                        size = pt_size, color = pt_col) + # constants outside aes()
   theme_minimal(base_size = 13) +
   theme(plot.title = element_text(face = "bold", hjust = 0.5),
         panel.grid = element_blank())
+  return(site_maps)
 }
 ```
 
