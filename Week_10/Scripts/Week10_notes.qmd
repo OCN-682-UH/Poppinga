@@ -120,7 +120,7 @@ df %>%
 
 
 
-Let's break it down
+#### Let's break it down  
 There are three key steps to creating a new function:  
 
 1. You need to pick a name for the function. Here I’ve used rescale01 because this function rescales a vector to lie between 0 and 1.  
@@ -550,6 +550,25 @@ Read the error message. *Did you read the error message? Read the error message.
 
 (e.g. “do you need ==?”).  
 For example: did you use a logical with just one equal sign instead of 2?  
+
+Quiz:  
+I come upon an error. What is the very first thing I should do.  
+Read errior message
+
+I have the following code. Data %>% summarise(Temp_mean = mean(Tempearture)). When I run it I get the following error: ‘Error in summarise : object ‘Temperature’ not found. What is one possible reason that I got this error?’
+
+I spelled the Temperature column wrong relative to my "Data" dataframe
+
+
+
+Which of the items below do you need to make a function. Check all correct answers below:
+
+* You need to pick a name for the function
+* You place the code you have developed in body of the function
+* add return(value) at the end if you want values returned
+
+If I want to write a function to convert Kelvin to Celsius, what is an example of a good function name.  
+K_to_C()  
 
 
 #### Some common errors/issues to keep an eye out for at the beginning (and forever and ever...)  

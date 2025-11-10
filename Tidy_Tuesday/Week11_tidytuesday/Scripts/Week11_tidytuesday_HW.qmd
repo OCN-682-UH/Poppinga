@@ -1,0 +1,130 @@
+---
+title: "Tidy Tuesday Week 11"
+author: "Haley Poppinga"
+format: 
+  html: 
+    toc: true
+    theme: yeti
+---
+
+### Introduction  
+**Homework**   
+Tidy Tuesday's starting instead of online classes   
+
+[Data Link](https://github.com/rfordatascience/tidytuesday)   
+
+Tidy Tuesday is an international community of R enthusiasts that create visuals from the same dataset. The goal is to practice plotting and learn something new every week. It is amazing to see how many different ways you can visualize the same data.   
+
+
+
+#### Tidy Tuesday's  
+Instead of an online lecture, you must complete one new tidy tuesday every week for the remainder of the semester (there are 6 weeks left). Always due Tuesday at 1pm.  
+
+You must use This Weeks dataset so that everyone is using the same one. Sometimes they post datasets ahead of time.  
+
+Add a dedicated Tidy_Tuesday folder to your repo for your scripts and output.  
+
+You must have proper script structure and file structure.  
+
+You must submit in a rendered quarto file. You can use any type of output (html, github doc, pdf, whatever you want).  
+
+You must save your visual in the output folder.  
+
+You must force yourself to learn at least one NEW thing each week. This could be anything from how you tidy the data to a new geom in ggplot, new table, new way to edit the theme, new package, etc. You can also learn something new within Quarto. Use this as an opportunity to really grow your coding skills. State in your Quarto file what the new thing is that you learned.  
+
+You DO NOT have to use the entirety of the weekly tidy tuesday dataset. In fact I encourage to subset it in some interesting way because the files can be huge.  
+
+
+
+### Load Libraries  
+```{r}
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(tidytuesdayR)
+library(here)
+
+```
+
+
+### Read the Data  
+```{r}
+#| warning: false
+#| message: false
+
+tuesdata<-tidytuesdayR::tt_load('2025-11-04')
+flint_mdeq <- tuesdata$flint_mdeq
+flint_vt <- tuesdata$flint_vt
+```
+
+```{r}
+#| warning: false
+#| message: false
+
+glimpse(flint_mdeq) # all samples and lead levels in parts per billion (ppb), comments about removed data
+```
+```{r}
+#| warning: false
+#| message: false
+
+glimpse(flint_vt) # samples and lead levels in parts per billion (ppb)
+```
+
+This data on lead concentration in Flint water samples in 2015 comes from Loux and Gibson 2018 via Tidy Tuesday project from the Data Science Learning Community.  
+
+
+### Clean the Data  
+```{r}
+#| warning: false
+#| message: false
+
+# add notes
+flint_mdeq <- flint_mdeq %>% 
+  mutate(notes = case_when(lead == 104 & is.na(lead2) ~ "sample removed: house had a filter",
+                           lead == 20 & is.na(lead2) ~ "sample removed: business not residence")) %>% 
+  drop_na()
+
+flint_vt %>% 
+  drop_na()
+```
+
+
+### Make a Tidy Tuesday Plot  
+```{r}
+#| warning: false
+#| message: false
+#| out-width: "80%"
+#| fig-align: "center"
+#| label: fig-TidyTuesday
+#| fig-cap: "This is my Tidy Tuesday Week 11 plot."
+#| fig-format: png
+#| fig-height: 8
+#| fig-width: 9
+
+
+
+
+```
+
+
+
+
+### New Thing Learned   
+
+This Tidy Tuesday, I used a new Quarto theme and 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
