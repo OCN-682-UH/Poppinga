@@ -26,12 +26,13 @@ MMdata_clean<-MMdata %>%
          removal = recode(removal, "a" = "Assessment", # rename removal categories
                           "e" = "Estimate",
                           "h" = "Huki",
-                          "ae" = "Area-Esitmate",
+                          "ae" = "Area-Estimate",
                           "c" = "Cleared",
                           "n" = "No Information",
-                          .default = "Unknown"),
+                          .default = NA_character_), # drop unmapped entries
          removal = fct_relevel(removal, "Huki", "Assessment", "Estimate", # reorder factor levels using Forcats 
                                "Area-Estimate", "Cleared", "No Information", "Unknown")) %>%
+  drop_na(removal) %>% 
   droplevels() %>% # drop extra levels 
   distinct() # remove empty or duplicates
 
@@ -45,7 +46,7 @@ algae_columns <- c(a = "Avrainvillea lacerata", as = "Acanthophera spicifera", g
                    gp   = "Gracilaria parvispora", gr = "Galaxaura rugosa", hal = "Halimeda discoidea",
                    hh   = "Halophila hawaiiana", hyd = "Hydroclathrus clathratus", hyp  = "Hypnea sp.",
                    lc   = "Leptolyngbya crosbyana", lyng = "Lyngbya majuscula", lau = "Laurencia nidifica",
-                   neo  = "Neoneris sp.",pad  = "Padina sp.", spy  = "Spyridia filamentosa", muf   = "Ulva flexuosa")
+                   neo  = "Neoneris sp.",pad  = "Padina sp.", spy  = "Spyridia filamentosa", uf   = "Ulva flexuosa")
 # identify taxa columns automatically and keep numeric columns that are not metadata, columns we DON'T want treated as taxa
 meta_columns<-c("lat", "long", "plot_id", "month", "year", "great_huki_year", 
                 "assess_date", "removal", "non-removal", "sand_depth_mean", "rock", "sand")
@@ -94,11 +95,11 @@ server<-function(input, output){
     req(nrow(filtered_data()) > 0)
     ggplot(filtered_data(), aes(x = removal, y = cover)) + # new ggplot with reactive data
       geom_boxplot(outlier.alpha = 0.25, alpha = 0.8, na.rm = TRUE) + # boxplot
-      coord_cartesian(ylim = c(0, 60)) + # percent cover limits up to 60% 
+      coord_cartesian(ylim = c(0, 50)) + # percent cover limits up to 60% 
       labs(title = paste("Percent Cover of", input$taxon, "(2025)"), # add a new title based on what user choose
            x = "Assessment Type",
            y = "Percent Cover") +
-      scale_fill_ghibli_d("MarnieMedium2") + # nice colors from the ghibli package
+ #     scale_fill_ghibli_d("MarnieMedium2") + # nice colors from the ghibli package
       theme_minimal(base_size = 14) + 
       theme(panel.grid.minor = element_blank(),
             axis.text.x = element_text(angle = 25, hjust = 1),
@@ -106,19 +107,25 @@ server<-function(input, output){
 # Summary Table
   output$summary_table<- renderTable({ # calculate summary table 
     # make sure we actually have rows
-    validate(need(nrow(filtered_data()) > 0, "No data for this taxon."))
+    req(nrow(filtered_data()) > 0)
+#    validate(need(nrow(filtered_data()) > 0, "No data for this taxon."))
     filtered_data() %>% 
       group_by(removal) %>% 
       summarise(n = sum(!is.na(cover)),
-                mean_cover = round(mean(cover, na.rm = TRUE)),
-                sd_cover = round(sd(cover, na.rm = TRUE)),
+                mean_cover = mean(cover, na.rm = TRUE),
+                sd_cover = sd(cover, na.rm = TRUE),
                 .groups = "drop") %>%
-      mutate(acrossc(mean_cover, sd_cover) ~ round(.x, 1))
-    removal = as.character(removal)         # ensure simple atomic cols)
-    arrange(removal) %>% 
-    as.data.frame()},
+      mutate(across(c(mean_cover, sd_cover), ~ round(.x, 2)), # keep 2 decimal places
+             removal = as.character(removal)) %>%  # ensure simple atomic cols)
+      arrange(removal) %>% 
+      rename(`Assessment Type` = removal,
+             `Sample Size (n)`  = n,
+             `Mean Cover (%)`   = mean_cover,
+             `SD Cover (%)`     = sd_cover) %>% 
+      as.data.frame()},
     rownames = FALSE, na = "", striped = TRUE, bordered = TRUE)
 }
 
 # Run the Shiny App
 shinyApp(ui = ui, server = server)
+
