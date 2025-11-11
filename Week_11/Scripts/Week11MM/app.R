@@ -7,14 +7,14 @@
 library(shiny)
 library(tidyverse)
 library(here)
-library(ghibli)
+# library(ghibli)
 library(stringr)
 library(lubridate)
 library(forcats)
 
 # Read Data
-MMdata<-read_csv(here("Week_11","Data","MMdata_2025.csv"))
-glimpse(MMdata)
+MMdata<-read_csv(here::here("Week_11","Scripts","Week11MM", "MMdata_2025.csv"))
+glimpse(MMdata) # making sure the file path works
 
 # Clean the Data
 MMdata_clean<-MMdata %>% 
@@ -23,15 +23,15 @@ MMdata_clean<-MMdata %>%
          long = as.numeric(long), 
          assess_date = ymd(assess_date), # fix the dates using lubridate
          removal = str_to_lower(removal),
-         removal = recode(removal, "a" = "Assessment", # rename removal categories
-                          "e" = "Estimate",
-                          "h" = "Huki",
+         removal = if_else(removal %in% c("e", "ae"), "ae", removal), # combine "e" and "ae" values as just ae
+         removal = recode(removal, "a" = "Monthly Assessment", # rename removal categories
                           "ae" = "Area-Estimate",
+                          "h" = "Huki",
                           "c" = "Cleared",
                           "n" = "No Information",
                           .default = NA_character_), # drop unmapped entries
-         removal = fct_relevel(removal, "Huki", "Assessment", "Estimate", # reorder factor levels using Forcats 
-                               "Area-Estimate", "Cleared", "No Information", "Unknown")) %>%
+         removal = fct_relevel(removal, "Huki", "Monthly Assessment", # reorder factor levels using Forcats 
+                               "Area-Estimate", "Cleared", "No Information")) %>%
   drop_na(removal) %>% 
   droplevels() %>% # drop extra levels 
   distinct() # remove empty or duplicates
@@ -71,9 +71,9 @@ MMdata_long<-MMdata_clean %>% # pivot the data longer
 
 ui<-fluidPage(
   # input functions
-  titlePanel("Mālama Maunalua 2025 Macroalgal Cover in Maunalua Bay"), 
+  titlePanel("Mālama Maunalua 2025 Macroalgae Cover in Maunalua Bay"), 
   sidebarLayout(sidebarPanel(selectInput("taxon",
-                                         label = "Choose an Algae Taxon",
+                                         label = "Choose an Algal Taxon",
                                          choices = sort(unique(na.omit(MMdata_long$taxon))),
                                          selected = sort(unique(na.omit(MMdata_long$taxon)))[1]),
                              width = 3),
@@ -88,20 +88,20 @@ server<-function(input, output){
   
   filtered_data<-reactive({ # reactive subset of data based on inputs
     MMdata_long %>% 
-      filter(taxon == input$taxon)})
+      filter(taxon == input$taxon)}) # get just the taxon inputs for the plot
   # {} allows us to put all our R code in one nice chunk
 # Plot Output  
   output$cover_plot<-renderPlot({
-    req(nrow(filtered_data()) > 0)
+    req(nrow(filtered_data()) > 0) # checks if dataset has at least one row
     ggplot(filtered_data(), aes(x = removal, y = cover)) + # new ggplot with reactive data
       geom_boxplot(outlier.alpha = 0.25, alpha = 0.8, na.rm = TRUE) + # boxplot
       coord_cartesian(ylim = c(0, 50)) + # percent cover limits up to 60% 
       labs(title = paste("Percent Cover of", input$taxon, "(2025)"), # add a new title based on what user choose
            x = "Assessment Type",
            y = "Percent Cover") +
- #     scale_fill_ghibli_d("MarnieMedium2") + # nice colors from the ghibli package
+   #  scale_fill_ghibli_d("MarnieMedium2") + # nice colors from the ghibli package
       theme_minimal(base_size = 14) + 
-      theme(panel.grid.minor = element_blank(),
+      theme(panel.grid.minor = element_blank(), # super simple plot for sake of time
             axis.text.x = element_text(angle = 25, hjust = 1),
             plot.title = element_text(hjust = 0.5, face = "bold", size = 15))})
 # Summary Table
@@ -112,13 +112,13 @@ server<-function(input, output){
     filtered_data() %>% 
       group_by(removal) %>% 
       summarise(n = sum(!is.na(cover)),
-                mean_cover = mean(cover, na.rm = TRUE),
-                sd_cover = sd(cover, na.rm = TRUE),
+                mean_cover = mean(cover, na.rm = TRUE), # calculate mean
+                sd_cover = sd(cover, na.rm = TRUE), # calulate standard deviation
                 .groups = "drop") %>%
       mutate(across(c(mean_cover, sd_cover), ~ round(.x, 2)), # keep 2 decimal places
              removal = as.character(removal)) %>%  # ensure simple atomic cols)
       arrange(removal) %>% 
-      rename(`Assessment Type` = removal,
+      rename(`Assessment Type` = removal, # rename title of summary table columns
              `Sample Size (n)`  = n,
              `Mean Cover (%)`   = mean_cover,
              `SD Cover (%)`     = sd_cover) %>% 

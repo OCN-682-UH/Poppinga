@@ -5,7 +5,7 @@ account: hpoppinga
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 16025777
-bundleId: 11160205
+bundleId: 11161478
 url: https://hpoppinga.shinyapps.io/Week11_shinyApp_HW/
 version: 1
 asMultiple: FALSE

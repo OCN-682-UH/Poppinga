@@ -21,81 +21,126 @@ There are folders of each week, R Project, and a README.md file.
 #### [Week 02](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02): _Reproducible Research and Workflow/Importing Data_  
 * 2025_09_02  
 * [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Data): sample data  
-* [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Scripts): first script with loaded libraries, read in data, and analysis 
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Scripts): first script with loaded libraries, read in data, and analysis 
 * [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_02/Lectures): 3/4 HTML lectures & Rmd notes
 
 
 #### [Week 03](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03): _Visuals and ggplots_  
 * 2025_09_09  
-* [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Scripts): ggplot script with nicer looking plots
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Scripts): ggplot script with nicer looking plots
 * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Output): penguin data plots, in class example, homework plot
 * [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_03/Lectures): 5/6 HTML lectures & Rmd notes
 
 
-#### [Week 04](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04): _Data Wrangling_  
+#### [Week 04](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04): _Data Wrangling_   
 * 2025_09_16  
 * [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Data): Nyssa's chem data from Maunalua
-* [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Scripts): in-class script and homework scripts
-* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Output): ChemData .csv summaries and homework plots (x2)
-* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Lectures): 7/8 HTML lectures & Rmd notes
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Scripts): in-class script and homework scripts
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Output): ChemData .csv summaries and homework plots (x2)  
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_04/Lectures): 7/8 HTML lectures & Rmd notes  
 
 
-#### [Week 05]: _Relational Data and Dates/Times (Lubridate)_  
+#### [Week 05](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05): _Relational Data and Dates/Times (Lubridate)_   
 * 2025_09_23   
-* [Data](
-* [Script](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Scripts): in-class script and homework scripts
-* [Output](
-* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Lectures): 9/10 HTML lectures & Rmd notes
+* [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Data): Conductivity and depth data   
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Scripts): in-class script and homework scripts  
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Output): CondDepth plot and summary  
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Lectures): 9/10 HTML lectures & Rmd notes  
 
-#### [Week 06]: _Quarto_
+#### [Week 06]: _Quarto_  
 * 2025_09_30  
-* [Data]
-* [Script]
-* [Output]
-* [Lectures]
+* [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_06/Data): Nyssa's chem data from Maunalua 
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_06/Scripts): In-class Quarto and homework 
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_06/Output): Penguin and chemdata figures 
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_06/Lectures): 11 HTML lecture and Quarto notes
 
-[Week 07]  
-2025_10_07  
-Contains folders for [Data], [Script], and [Output]
+#### [Week 07](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_07): _Maps_    
+* 2025_10_07  
+* [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_07/Data): CA pop data, chemical data, meteorite, stars data
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_07/Scripts): homework and notes
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_07/Output): CA pop plot na meteorite homework plot
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_07/Lectures): 13/14 HTML map lectures
 
-[Week 08]  
-2025_10_14  
-Contains folders for [Data], [Script], and [Output]
+#### [Week 08](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_08): _Strings and Advanced Plotting_  
+* 2025_10_14  
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_08/Scripts): lecture notes only
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_08/Output): mypenguin gif and penguin plot examples
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_08/Lectures): 15/16 HTML lectures
 
-[Week 09]  
-2025_10_21  
-Contains folders for [Data], [Script], and [Output]
+#### [Week 09](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_09): _Factors_  
+* 2025_10_21  
+* [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_09/Data): intertidal data
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_09/Scripts): homework and notes
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_09/Output): intertidal plot
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_09/Lectures): 18 HTML factors lecture (presentation week)
 
-[Week 10]  
+#### [Week 10](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10): _Functions and Getting Help_      
 2025_10_28  
-Contains folders for [Data], [Script], and [Output]
+* [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10/Data):  Nyssa's chem data from Maunalua 
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10/Scripts): homework and notes
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10/Output): 2 functional plots using function
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10/Lectures): 17/21 HTML lectures
 
-[Week_11]  
+#### [Week_11](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_11): _ShinyApps_  
 2025_11_04  
-Contains folders for [Data], [Script], and [Output]
+* [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_11/Data): MM data from 2025
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_11/Scripts): Example shinyApp from in-class and homework shinyApp
+* [Output]()
+* [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_11/Lectures): 20 HTML lecture ShinyApps 
 
-[Week_12]  
-2025_11_11  
-Contains folders for [Data], [Script], and [Output]
+#### [Week_12](): __    
+* 2025_11_11  
+* [Data]()
+* [Scripts]()
+* [Output]()
+* [Lectures]()
 
-[Week_13]  
-2025_11_18  
-Contains folders for [Data], [Script], and [Output]
+#### [Week_13](): __  
+* 2025_11_18  
+* [Data]()
+* [Scripts]()
+* [Output]()
+* [Lectures]()
 
-[Week_14]  
-2025_11_25  
-Contains folders for [Data], [Script], and [Output]
+#### [Week_14](): __  
+* 2025_11_25  
+* [Data]()
+* [Scripts]()
+* [Output]()
+* [Lectures]()
 
 [Week_15]  
 2025_12_02  
-Contains folders for [Data], [Script], and [Output]
+* [Data]()
+* [Scripts]()
+* [Output]()
+* [Lectures]()
 
 [Week_16]  
 2025_12_09  
-Contains folders for [Data], [Script], and [Output]
+* [Data]()
+* [Scripts]()
+* [Output]()
+* [Lectures]()
 
-[Final Project]  _Mālama Maunalua_  
-Contains folders for [Data], [Script], and [Output]
+#### [Goodplot Badplot (Week 08/09)](): _Goodplot Badplot_  
+* 2025_10_21  
+* [Data]():
+* [Scripts]():
+* [Output]():
+* [Lectures]():
+
+#### [ShinyApps Link]: _Mālama Maunalua 2025 Macroalgae Cover in Maunalua Bay_   
+* 2025_11_11  
+* [ShinyApps Link]()
+
+
+#### [Final Project](): _Mālama Maunalua_   
+* 2025_12_02
+* [Data]():
+* [Scripts]():
+* [Output]():
+* [Lectures]():
 
 ---------------------------------------------------------------------------------
 
@@ -107,7 +152,8 @@ Contains folders for [Data], [Script], and [Output]
 * ggplot: "Grammar of Graphics" used for creating data visualizations. 
 * ggthemes: A package of pre-made graph themes. 
 * praise: An essential package for this course. 
-* RcolorBrewer/ghibli: Packages of color palettes. 
+* RcolorBrewer/ghibli/fishualize: Packages of color palettes. 
+* A good data visualization [guide](https://github.com/cxli233/FriendsDontLetFriends) on GitHub.
 
 -------------------------------------------------------------------------------------
 
