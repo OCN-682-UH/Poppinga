@@ -47,7 +47,7 @@ There are folders of each week, R Project, and a README.md file.
 * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Output): CondDepth plot and summary  
 * [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_05/Lectures): 9/10 HTML lectures & Rmd notes  
 
-#### [Week 06]: _Quarto_  
+#### [Week 06](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_06): _Quarto_  
 * 2025_09_30  
 * [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_06/Data): Nyssa's chem data from Maunalua 
 * [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_06/Scripts): In-class Quarto and homework 
