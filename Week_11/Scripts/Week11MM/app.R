@@ -6,15 +6,20 @@
 # Load Libraries
 library(shiny)
 library(tidyverse)
-library(here)
+# library(here)
+# library(stringr)
+# library(lubridate)
+# library(forcats)
 # library(ghibli)
-library(stringr)
-library(lubridate)
-library(forcats)
 
 # Read Data
-MMdata<-read_csv(here::here("Week_11","Scripts","Week11MM", "MMdata_2025.csv"))
-glimpse(MMdata) # making sure the file path works
+MMdata <-read_csv("data/MMdata_2025.csv")
+# to make sure the file path works I had to set my working directory manually 
+# To Source File Location
+# I'm not sure how I should do it otherwise. Nothing work. Any insights help thanks!
+
+glimpse(MMdata) 
+
 
 # Clean the Data
 MMdata_clean<-MMdata %>% 
@@ -86,16 +91,16 @@ ui<-fluidPage(
 
 server<-function(input, output){
   
-  filtered_data<-reactive({ # reactive subset of data based on inputs
+  MMdata_filtered<-reactive({ # reactive subset of data based on inputs
     MMdata_long %>% 
       filter(taxon == input$taxon)}) # get just the taxon inputs for the plot
   # {} allows us to put all our R code in one nice chunk
 # Plot Output  
   output$cover_plot<-renderPlot({
-    req(nrow(filtered_data()) > 0) # checks if dataset has at least one row
-    ggplot(filtered_data(), aes(x = removal, y = cover)) + # new ggplot with reactive data
+    req(nrow(MMdata_filtered()) > 0) # checks if dataset has at least one row
+    ggplot(MMdata_filtered(), aes(x = removal, y = cover)) + # new ggplot with reactive data
       geom_boxplot(outlier.alpha = 0.25, alpha = 0.8, na.rm = TRUE) + # boxplot
-      coord_cartesian(ylim = c(0, 50)) + # percent cover limits up to 60% 
+      coord_cartesian(ylim = c(0, 50)) + # percent cover limits up to 50% so its better visually
       labs(title = paste("Percent Cover of", input$taxon, "(2025)"), # add a new title based on what user choose
            x = "Assessment Type",
            y = "Percent Cover") +
@@ -107,9 +112,9 @@ server<-function(input, output){
 # Summary Table
   output$summary_table<- renderTable({ # calculate summary table 
     # make sure we actually have rows
-    req(nrow(filtered_data()) > 0)
-#    validate(need(nrow(filtered_data()) > 0, "No data for this taxon."))
-    filtered_data() %>% 
+    req(nrow(MMdata_filtered()) > 0)
+#    validate(need(nrow(MMdata_filtered()) > 0, "No data for this taxon."))
+    MMdata_filtered() %>% 
       group_by(removal) %>% 
       summarise(n = sum(!is.na(cover)),
                 mean_cover = mean(cover, na.rm = TRUE), # calculate mean

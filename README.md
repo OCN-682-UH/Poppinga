@@ -8,9 +8,9 @@ This repository includes Data, Script, and Output for the purposes of the OCN 68
 There are folders of each week, R Project, and a README.md file.
 ### Folders:  
 * Data: data sets used for analyses (.csv)
-* Scripts: R scripts and functions
+* Scripts: R scripts, Quarto, and functions
 * Output: Results, plots, and processed data
-* Lectures: R Markdown files of both lecture slides, notes, and HTML file
+* Lectures: Quarto notes and R Markdown files of both lecture slides, notes, and HTML file
 
 
 #### [Week 01](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_01): _Data, Collecting Data, Metadata_  
@@ -75,17 +75,17 @@ There are folders of each week, R Project, and a README.md file.
 * [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_09/Lectures): 18 HTML factors lecture (presentation week)
 
 #### [Week 10](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10): _Functions and Getting Help_      
-2025_10_28  
+* 2025_10_28  
 * [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10/Data):  Nyssa's chem data from Maunalua 
 * [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10/Scripts): homework and notes
 * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10/Output): 2 functional plots using function
 * [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_10/Lectures): 17/21 HTML lectures
 
 #### [Week_11](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_11): _ShinyApps_  
-2025_11_04  
+* 2025_11_04  
 * [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_11/Data): MM data from 2025
 * [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_11/Scripts): Example shinyApp from in-class and homework shinyApp
-* [Output]()
+* [Output](https://hpoppinga.shinyapps.io/Week11MM/): shinyApps link (the real folder is in the Scripts folder, Output is empty)
 * [Lectures](https://github.com/OCN-682-UH/Poppinga/tree/main/Week_11/Lectures): 20 HTML lecture ShinyApps 
 
 #### [Week_12](): __    
@@ -109,30 +109,30 @@ There are folders of each week, R Project, and a README.md file.
 * [Output]()
 * [Lectures]()
 
-[Week_15]  
-2025_12_02  
+#### [Week_15](): __    
+* 2025_12_02  
 * [Data]()
 * [Scripts]()
 * [Output]()
 * [Lectures]()
 
-[Week_16]  
-2025_12_09  
+#### [Week_16](): __    
+* 2025_12_09  
 * [Data]()
 * [Scripts]()
 * [Output]()
 * [Lectures]()
 
-#### [Goodplot Badplot (Week 08/09)](): _Goodplot Badplot_  
+#### [Goodplot Badplot (Week 08/09)](https://github.com/OCN-682-UH/Poppinga/tree/main/Goodplot_Badplot): _Goodplot Badplot_  
 * 2025_10_21  
-* [Data]():
-* [Scripts]():
-* [Output]():
-* [Lectures]():
+* [Data](https://github.com/OCN-682-UH/Poppinga/tree/main/Goodplot_Badplot/Data): Scooby-Doo data
+* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Goodplot_Badplot/Scripts): homework scripts for both plots and Quarto
+* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Goodplot_Badplot/Output): Goodplot and Badplot 
+
 
 #### [ShinyApps Link]: _Mālama Maunalua 2025 Macroalgae Cover in Maunalua Bay_   
 * 2025_11_11  
-* [ShinyApps Link]()
+* [ShinyApps Link](https://hpoppinga.shinyapps.io/Week11MM/)  
 
 
 #### [Final Project](): _Mālama Maunalua_   

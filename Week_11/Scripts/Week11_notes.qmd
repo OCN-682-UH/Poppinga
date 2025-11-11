@@ -651,6 +651,14 @@ shinyApp(ui = ui, server = server)
 ```
 
 
+```{r}
+#| eval: false
+# nice colors for a density plot
+ scale_color_manual(values = c("lead" = "#2E86AB", "lead2" = "#3CAEA3", "VT" = "#ED553B"),
+                     labels = c("lead" = "MDEQ (All Samples)",
+                                "lead2" = "MDEQ (Outliers Removed)",
+                                "VT" = "Virginia Tech Community Science"))
+```
 
 
 

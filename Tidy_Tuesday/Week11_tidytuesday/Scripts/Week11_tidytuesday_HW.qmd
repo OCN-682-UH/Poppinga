@@ -44,7 +44,9 @@ You DO NOT have to use the entirety of the weekly tidy tuesday dataset. In fact 
 library(tidyverse)
 library(tidytuesdayR)
 library(here)
-
+library(fishualize)
+library(ggExtra)   # for marginal plots
+library(ggthemes) # for inverse grey theme
 ```
 
 
@@ -79,14 +81,25 @@ This data on lead concentration in Flint water samples in 2015 comes from Loux a
 #| warning: false
 #| message: false
 
-# add notes
-flint_mdeq <- flint_mdeq %>% 
-  mutate(notes = case_when(lead == 104 & is.na(lead2) ~ "sample removed: house had a filter",
-                           lead == 20 & is.na(lead2) ~ "sample removed: business not residence")) %>% 
-  drop_na()
+# MDEQ dataset: pivot lead and lead2
+flint_mdeq_long<-flint_mdeq %>%
+  select(sample, lead, lead2) %>%
+  pivot_longer(cols = c(lead, lead2),
+               names_to = "dataset",
+               values_to = "lead_ppb") %>%
+  drop_na(lead_ppb)
 
-flint_vt %>% 
-  drop_na()
+# VT dataset
+flint_vt_long <- flint_vt %>%
+  select(sample, lead) %>%
+  mutate(dataset = "VT",
+         lead_ppb = lead) %>%
+  select(sample, dataset, lead_ppb)
+
+# Combine datasets
+flint_combined <- bind_rows(flint_mdeq_long, flint_vt_long) # stack them, tried joining but didnt work
+
+glimpse(flint_combined)
 ```
 
 
@@ -103,27 +116,72 @@ flint_vt %>%
 #| fig-width: 9
 
 
-
-
+ggplot(flint_combined, aes(x = lead_ppb, fill = dataset)) +
+  geom_density(alpha = 0.5, adjust = 1.5) + # density distribution plot, opaqueness and bumpiness in peaks
+  scale_x_log10() + # log scale
+#  scale_color_fish_d(option = "Scarus_quoyi") 
+#  scale_color_fish(option = "Synchiropus_splendidus", 
+#                   labels = c("lead" = "MDEQ",
+#                              "lead2" = "MDEQ (2 Samples Removed)",
+#                              "VT" = "Virginia Tech Community Science")) +
+  scale_fill_fish_d(option = "Cirrhilabrus_solorensis", direction = -1, # Use a new fish palette
+                    labels = c("lead" = "MDEQ",
+                               "lead2" = "MDEQ (2 Samples Removed)",
+                               "VT" = "Virginia Tech Community Science")) + 
+  geom_vline(xintercept = 15, linetype = "dashed", color = "black", linewidth = 0.6) + # vertical line to mark 15 ppb: the EPA’s action level for lead in drinking water
+  labs(title = "Distribution of Lead Levels in Flint Water Samples",
+       subtitle = "MDEQ & Virginia Tech Community Science Data: Line is EPA Lead for Drinking Water",
+       x = "Lead Concentration (ppb) (Log Scale)",
+       y = "Density",
+       fill = "Dataset", color = "Dataset") +
+  theme_igray() + # inverse gray theme i like
+  theme(legend.position = "top", # legend at top to save space
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 16),
+        plot.subtitle = element_text(hjust = 0.5, size = 14))
 ```
-
 
 
 
 ### New Thing Learned   
 
-This Tidy Tuesday, I used a new Quarto theme and 
+This Tidy Tuesday, I used a new **Quarto theme** and tried out a new color palette, **fishualize** and learned how to use a density distribution plot with a log scale **(geom_density)**.  
+
+
+
+_Fishualize Palette Fish Options_:  
+
+* fishualize(n = 8, option = "Hypsypops_rubicundus", end = 0.9)  
+* scale_color_fish() and scale_fill_fish()  
+* scale_fill_fish_d(option = "Scarus_quoyi") + 
+* "Synchiropus_splendidus" (oranges and browns and muted colors)  
+* option = "Coris_gaimard", discrete = TRUE
+* option = "Coris_gaimard", discrete = TRUE, direction = -1
+* option = "Synchiropus_splendidus", discrete = T, alpha = 0.8 (pastels)
+* option = "Synchiropus_splendidus", discrete = T, alpha = 0.8, begin = 0.3, end = 1 (pastel yellows and blues)
+* "Coris_gaimard"  
+* "Trimma_lantana"  
+* "Ostracion_cubicus"  
+* option = "Hypsypops_rubicundus", direction = -1 (brighter colors)  
+* option = "Cirrhilabrus_solorensis"  
+* option = "Lepomis_megalotis", direction = -1  
+* option = "Ostracion_whitleyi", direction = -1  
+* option = "Zebrasoma_velifer", trans = "sqrt"  
+* option = "Zebrasoma_velifer", trans = "sqrt", begin = 0.3, end = 1 (yellows)    
+* n = 256, option = "Trimma_lantana"  
 
 
 
 
 
+```{r}
+# ggsave(here("Tidy_Tuesday","Week11_tidytuesday", "Output","Week11_tt.png"))
 
-
-
-
-
-
+# Empty your environment before you start working
+# Restart R
+# .rs.restartR()
+# remove whole list in enviroment
+# rm(list = ls())
+```
 
 
 
