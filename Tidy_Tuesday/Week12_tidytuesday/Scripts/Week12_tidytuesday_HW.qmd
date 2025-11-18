@@ -1,0 +1,198 @@
+---
+title: "Week 12 Tidy Tuesday"
+author: "Haley Poppinga"
+format:   
+  html: 
+    toc: true
+    theme: sandstone
+---
+
+### Introduction  
+**Tidy Tuesday's Homework**   
+
+[Data Link](https://github.com/rfordatascience/tidytuesday)   
+
+Tidy Tuesday is an international community of R enthusiasts that create visuals from the same dataset. The goal is to practice plotting and learn something new every week. It is amazing to see how many different ways you can visualize the same data.   
+
+
+
+
+### Load Libraries  
+```{r}
+#| warning: false
+#| message: false
+
+
+library(tidyverse)
+library(tidytuesdayR)
+library(here)
+library(fishualize)
+library(devtools)
+library(getTBinR)
+```
+
+
+
+### Read the Data  
+```{r}
+#| warning: false
+#| message: false
+
+tuesdata <- tidytuesdayR::tt_load('2025-11-11')
+who_tb_data <- tuesdata$who_tb_data
+
+```
+
+
+```{r}
+#| warning: false
+#| message: false
+
+glimpse(who_tb_data)
+```
+
+This data on the global tuberculosis (TB) burden estimates comes from the World Health Organization via Tidy Tuesday and getTBinR package by Sam Abbott. The dataset includes TB incidence, mortality, detection rates, and population estimates.  
+
+
+### Clean the Data  
+```{r}
+#| warning: false
+#| message: false
+
+# Install getTBinR package
+#devtools::install_github("seabbs/getTBinR")
+
+# Load WHO TB burden data
+tb_burden <- get_tb_burden()
+
+# Create a vector of variable of interest
+vars_of_interest <- c("country", "g_whoregion", "iso_numeric", "iso2", "iso3",
+                      "year", "c_cdr", "c_newinc_100k", "cfr", "e_inc_100k", 
+                      "e_inc_num", "e_mort_100k", "e_mort_exc_tbhiv_100k", 
+                      "e_mort_exc_tbhiv_num", "e_mort_num", "e_mort_tbhiv_100k",
+                      "e_mort_tbhiv_num", "e_pop_num")
+
+# Subset the dataset 
+who_tb_data <- tb_burden %>%
+  select(all_of(vars_of_interest))
+
+```
+
+
+
+### Tidy Tuesday Plot  
+```{r}
+#| warning: false
+#| message: false
+#| out-width: "80%"
+#| fig-align: "center"
+#| label: fig-TidyTuesday
+#| fig-cap: "This is my Tidy Tuesday Week 12 plot."
+#| fig-format: png
+#| fig-height: 8
+#| fig-width: 11
+
+# Calculate stuff from data
+whoregion_totals<-who_tb_data %>%   
+  group_by(g_whoregion, year) %>% 
+  drop_na() %>% 
+  summarise(deaths_all = sum(e_mort_num, na.rm = TRUE), # add up all the deaths from estimated mortality
+            deaths_noHIV = sum(e_mort_exc_tbhiv_num, na.rm = TRUE)) # add up all deaths without HIV from estimated mortality given
+
+# Faceted plot
+ggplot(whoregion_totals, aes(x = year)) + 
+  geom_line(aes(y = deaths_all, color = "All TB Deaths"), linewidth = 1) + # line for all deaths
+  geom_line(aes(y = deaths_noHIV, color = "Excluding TB/HIV Deaths"), 
+                linewidth = 1, linetype = "dashed") + # line for all deaths excluding HIV
+  facet_wrap(~g_whoregion) + # facet plots by WHO region
+  scale_x_continuous(breaks = seq(2000, 2024, by = 8)) + # breaks between years for x-axis spacing to keep labels from overlapping
+  scale_color_fish_d(option = "Scarus_quoyi", direction = -1) + # for beautiful marine colors that I love
+  labs(title = "Global Estimated Number of Deaths from Tuberculosis (TB) by WHO Region",
+       subtitle = "Data from the World Health Organization (WHO) from 2000-2024",
+       x = "Year",
+       y = "Estimated Mortality (Number of Deaths)",
+       color = NULL) + # no need legend label for the two lines
+  theme_minimal(base_size = 12) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 14),
+        plot.subtitle = element_text(hjust = 0.5, size = 12),
+        legend.position = "top",
+        panel.spacing = unit(1.2, "lines"),  # increase space between facets
+        panel.border = element_rect(fill = NA, linewidth = 0.7), # border around each plot
+        strip.text = element_text(size = 12)) # making WHO region labels bigger
+
+```
+@fig-TidyTuesday shows the estimated number of deaths for all Tuberculosis cases (Blue) and for all Tuberculosis cases excluding HIV (Pink) between 2000-2024 across six global WHO regions.  
+
+
+
+### New Thing Learned   
+
+This Tidy Tuesday, I tried out **faceting** in ggplot, which I never fully practiced and learned how to do. I also learned how to put multiple geom_lines on one plot. Played around with theme to make plot visualization easier.
+
+
+
+
+
+
+
+```{r}
+# ggsave(here("Tidy_Tuesday","Week12_tidytuesday", "Output", "Week12_tt.png"), width = 12, height = 6)
+
+# To use next time for practice with a new thing:
+# library(ggExtra)  # for marginal plots
+# library(ggthemes) # for inverse grey theme
+
+# To do before running code:
+# Empty your environment before you start working
+# Restart R
+# .rs.restartR()
+# remove whole list in environment
+# rm(list = ls())
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
