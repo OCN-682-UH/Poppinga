@@ -1,0 +1,142 @@
+---
+title: "Week 13 Tidy Tuesday"
+author: "Haley Poppinga"
+format:  
+  html: 
+    toc: true
+    theme: sandstone
+---
+
+### Introduction  
+**Tidy Tuesday's Homework**   
+
+[Data Link](https://github.com/rfordatascience/tidytuesday)   
+
+Tidy Tuesday is an international community of R enthusiasts that create visuals from the same dataset. The goal is to practice plotting and learn something new every week. It is amazing to see how many different ways you can visualize the same data.   
+
+
+
+
+### Load Libraries  
+```{r}
+#| warning: false
+#| message: false
+
+
+library(tidyverse)
+library(tidytuesdayR)
+library(here)
+library(fishualize)
+library(devtools)
+library(sherlock)
+library(ggExtra)  # for marginal plots
+```
+
+
+
+### Read the Data  
+```{r}
+#| warning: false
+#| message: false
+
+tuesdata3 <- tidytuesdayR::tt_load('2025-11-18')
+holmes <- tuesdata3$holmes
+
+```
+
+
+```{r}
+#| warning: false
+#| message: false
+
+glimpse(holmes)
+```
+
+This data shows the Sherlock Holmes stories and novels line-by-line. It has the full collection of Holmes texts organized by book and line number. The dataset is made available through the {sherlock} R package by Emil Hvitfeldt.  
+
+
+
+
+### Clean the Data  
+```{r}
+#| warning: false
+#| message: false
+
+# Load the dataset
+holmes <- sherlock::holmes %>% 
+  # Add line numbers to preserve narrative order
+  mutate(line_num = row_number(), .by = "book") %>% 
+  # Reorder columns
+  select("book", "text", "line_num")
+
+```
+
+### Data Dictionary  
+```{r}
+
+```
+
+
+
+### Tidy Tuesday Plot  
+```{r}
+#| warning: false
+#| message: false
+#| out-width: "80%"
+#| fig-align: "center"
+#| label: fig-TidyTuesday
+#| fig-cap: "This is my Tidy Tuesday Week 13 plot."
+#| fig-format: png
+#| fig-height: 8
+#| fig-width: 11
+
+
+
+```
+@fig-TidyTuesday shows .  
+
+
+
+
+
+
+
+### New Thing Learned   
+
+This Tidy Tuesday, 
+
+
+
+
+
+
+```{r}
+# ggsave(here("Tidy_Tuesday","Week13_tidytuesday", "Output", "Week13_tt.png"), width = 12, height = 8)
+
+# To use next time for practice with a new thing:
+# library(ggExtra)  # for marginal plots
+# library(ggthemes) # for inverse grey theme
+
+# To do before running code:
+# Empty your environment before you start working
+# Restart R
+# .rs.restartR()
+# remove whole list in environment
+# rm(list = ls())
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

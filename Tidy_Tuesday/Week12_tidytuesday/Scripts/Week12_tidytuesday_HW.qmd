@@ -38,8 +38,8 @@ library(getTBinR)
 #| warning: false
 #| message: false
 
-tuesdata <- tidytuesdayR::tt_load('2025-11-11')
-who_tb_data <- tuesdata$who_tb_data
+tuesdata2 <- tidytuesdayR::tt_load('2025-11-11')
+who_tb_data <- tuesdata2$who_tb_data
 
 ```
 
@@ -95,7 +95,6 @@ who_tb_data <- tb_burden %>%
 # Calculate stuff from data
 whoregion_totals<-who_tb_data %>%   
   group_by(g_whoregion, year) %>% 
-  drop_na() %>% 
   summarise(deaths_all = sum(e_mort_num, na.rm = TRUE), # add up all the deaths from estimated mortality
             deaths_noHIV = sum(e_mort_exc_tbhiv_num, na.rm = TRUE)) # add up all deaths without HIV from estimated mortality given
 
