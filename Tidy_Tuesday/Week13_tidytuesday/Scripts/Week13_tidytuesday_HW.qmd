@@ -30,6 +30,7 @@ library(fishualize)
 library(devtools)
 library(sherlock)
 library(ggExtra)  # for marginal plots
+library(kableExtra) # table
 ```
 
 
@@ -63,7 +64,7 @@ This data shows the Sherlock Holmes stories and novels line-by-line. It has the 
 #| message: false
 
 # Load the dataset
-holmes <- sherlock::holmes %>% 
+holmes %>% 
   # Add line numbers to preserve narrative order
   mutate(line_num = row_number(), .by = "book") %>% 
   # Reorder columns
@@ -73,7 +74,25 @@ holmes <- sherlock::holmes %>%
 
 ### Data Dictionary  
 ```{r}
+#| warning: false
+#| message: false
+#| label: tbl-dictionary
+#| tbl-cap: "Sherlock Holmes Data Dictionary"
 
+# Data dictionary tibble
+holmes_dictionary<-tibble(variable = c("book", "text", "line_num"),
+                          class = c("character", "character", "integer"), 
+                          description = c("Title of the Sherlock Holmes story or novel",
+                                          "Line of text extracted from the book",
+                                          "Narrative-preserving line index"))
+
+holmes_dictionary %>%
+  kbl(col.names = c("Variable", "Class", "Description"),  # make kable table and rename headers 
+      caption = "Data Dictionary for holmes.csv") %>% # add caption
+  kable_classic(full_width = FALSE, html_font = "Georgia") %>% # add a theme and font
+  row_spec(1, bold = TRUE, color = "white", background = "#2d5867") %>% # highlight row 3
+  row_spec(3, bold = TRUE, color = "white", background = "#2c003a") %>% # sherlock colors
+  kable_styling(position = "center", full_width = FALSE) # make it less wide
 ```
 
 
@@ -86,16 +105,31 @@ holmes <- sherlock::holmes %>%
 #| fig-align: "center"
 #| label: fig-TidyTuesday
 #| fig-cap: "This is my Tidy Tuesday Week 13 plot."
-#| fig-format: png
-#| fig-height: 8
-#| fig-width: 11
 
 
+holmes_clean <- holmes %>%
+  drop_na(text) %>%  # drop blank lines 
+  mutate(char_count = nchar(text))  # number of characters per line 
 
+holmes_study <- holmes_clean %>% 
+  filter(book == "A Study In Scarlet") # just one book
+
+holmes_plot<-ggplot(holmes_study,
+       aes(x = line_num, y = char_count)) +
+  geom_point(alpha = 0.3, size = 0.7) +
+  labs(title = "Line Length in 'A Study in Scarlet'",
+       x = "Line Number in Book",
+       y = "Characters Per Line") +
+  theme_sherlock() + # sherlock theme 
+  theme(plot.title = element_text(face = "bold", hjust = 0.6, size = 14),
+        panel.background = element_rect(fill = "white"),
+        plot.background  = element_rect(fill = "white"))
+
+ggMarginal(holmes_plot, type = "density",  # marginal density plot from ggExtra
+           margins = "both", alpha = 0.5, # margins, spacing, background
+           fill = "#1e2e4d", bg = "white") # sherlock hex color
 ```
-@fig-TidyTuesday shows .  
-
-
+@fig-TidyTuesday shows a scatter plot of how many characters were in each line throughout the "A Study in Scarlet" book from the Sherlock Holmes series. The margin plots shows the density. Most lines seem to have 60+ characters per line.  
 
 
 
@@ -103,19 +137,15 @@ holmes <- sherlock::holmes %>%
 
 ### New Thing Learned   
 
-This Tidy Tuesday, 
+This Tidy Tuesday, I used **hex colors** to add to the Sherlock Holmes theme, made a data dictionary **kable table** for practice, and used **marginal plots** from ggExtra, which I have never tried before.  
 
 
 
 
 
-
+##### Extra  
 ```{r}
-# ggsave(here("Tidy_Tuesday","Week13_tidytuesday", "Output", "Week13_tt.png"), width = 12, height = 8)
-
-# To use next time for practice with a new thing:
-# library(ggExtra)  # for marginal plots
-# library(ggthemes) # for inverse grey theme
+# ggsave(here("Tidy_Tuesday","Week13_tidytuesday", "Output", "Week13_tt.jpg"))
 
 # To do before running code:
 # Empty your environment before you start working

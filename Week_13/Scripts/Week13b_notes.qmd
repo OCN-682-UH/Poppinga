@@ -1,0 +1,351 @@
+---
+title: "Week 13 Lecture"
+author: "Haley Poppinga"
+format:  
+  html: 
+    toc: true
+    theme: sandstone
+---
+
+
+### Intro to modeling  
+
+1. Intro to basic linear modeling  
+2. Viewing results in base R, broom, and modelsummary  
+3. Running many models at the same time with purrr  
+4. Intro to tidy models  
+
+#### Load Libraries  
+```{r}
+library(tidyverse)
+library(here)
+library(palmerpenguins)
+library(broom) # for clean model output
+library(performance) # to check model assumptions
+library(modelsummary) # to show model output
+library(tidymodels) # for tidy models (create models to pipe directly into results and plots)
+library(pandoc) # allows you to work with Word documents
+```
+
+
+install.packages('flextable') # to look at model results in a nice table
+install.packages('see') # needs to be installed, but does not need to be loaded in the library, required for performance
+
+
+### Intro to basic linear modeling
+WARNING: This is NOT a stats class. Please make sure you understand the theory behind the statistics that you are using before you use them. Also, even though we spent the semester learning about cleaning and visualization you MUST use stats to interpret your data.  
+
+Today, I am going to show you a few cool packages that help with some modeling. There are TONS of packages and you should choose what makes the most sense to your unique type of data.  
+
+
+**Anatomy of a basic linear model**  
+To run a simple linear model you use the following formula:  
+
+mod<-lm(y~x, data = df)  
+lm = linear model, y = dependent variable, x = independent variable(s), df = dataframe  
+
+You read this as y is a function of x. 
+
+
+
+**Multiple regression**  
+mod<-lm(y~x1 + x2, data = df)  
+
+column names in dataframe  
+
+
+**Interaction term**
+mod<-lm(y~x1*x2, data = df)  
+
+the * will compute x1+x2+x1:x2
+interaction 
+shorthand for writing whole model out  
+
+
+**Model the penguin dataset**  
+We've tidied and visualized the data and have our set of hypotheses that we want to test. Now we can start modeling...  
+```{r}
+# Linear model of Bill depth ~ Bill length by species
+Peng_mod<-lm(bill_length_mm ~ bill_depth_mm*species, data = penguins)
+```
+Would expect to see different slopes for species.  
+
+
+**Check model assumptions with performace**  
+ALWAYS check the assumptions of your specific model. Make sure you know what your model is doing behind the scenes and that you meet all assumptions before interpreting your results. The {performance} package makes this super easy.  
+```{r}
+check_model(Peng_mod) # check assumptions of an lm model
+```
+You can check the assumptions in your model with the one package. Before you look at your p values  
+
+
+**View results: base R**  
+1. ANOVA Table. 
+```{r}
+anova(Peng_mod)
+```
+All are statistically significant.  
+Anova gives us if model is significant and ?  
+
+
+2. Coefficients (effect size) with error  
+```{r}
+summary(Peng_mod)
+```
+If your effect is different from 0 or your intercept or not.  
+Summary gives effect size.  
+Compares everything to intercept (base) and is in alphabetical order.  
+Standard error for each of your effect size as well.  
+
+
+
+
+**View results with broom**
+These results are not in a clean form and it is hard to extract specific values. Using {broom} we can "tidy" the results so that it is easier to view and extract. Functions tidy(), glance(), and augment() will clean up your results  
+
+**tidy makes it easier view and extract**. 
+```{r}
+# Tidy coefficients
+coeffs<-tidy(Peng_mod) # just put tidy() around it
+coeffs
+```
+Tidy up coefficients and summary.  
+Hard to extract the p-values but not anymore.  
+tidy() gives us summary data in clean format. Gives us coefficients of the model.  
+
+
+
+**glance extracts R-squared, AICs, etc of the model**  
+```{r}
+# tidy r2, etc.
+results<-glance(Peng_mod)
+results
+```
+Gives us big picture one number for whole model in the stats youre interested in
+
+
+
+**augment add residuals and predicted values to your original data and requires that you put both the model and data**  
+```{r}
+resid_fitted<-augment(Peng_mod)
+resid_fitted
+```
+Can look at observed vs predictive.  
+
+
+
+**Results in {modelsummary}**  
+{modelsummary} creates tables and plots to summarize statistical models and data in R.  
+Makes publishing easier for tweaking in Word or Illustrator later.  
+
+modelsummary includes two families of functions:
+
+*Model Summary*  
+modelsummary: Regression tables with side-by-side models.  
+modelsummary_wide: Regression tables for categorical response models or grouped coefficients.  
+modelplot: Coefficient plots.  
+ 
+*Data Summary* 
+datasummary: Powerful tool to create (multi-level) cross-tabs and data summaries.  
+datasummary_balance: Balance tables with subgroup statistics and difference in means (aka “Table 1”).  
+datasummary_correlation: Correlation tables.  
+datasummary_skim: Quick overview (“skim”) of a dataset.  
+datasummary_df: Turn dataframes into nice tables with titles, notes, etc.  
+
+
+
+Export summary tables to word, markdown, or tex document. You can also modify the tables to make them pub quality.  
+
+Let's compare the Peng_mod with one that does not have species as an interaction term.  
+```{r}
+# New model
+Peng_mod_noX<-lm(bill_length_mm ~ bill_depth_mm, data = penguins)
+
+#Make a list of models and name them
+models<-list("Model with interaction" = Peng_mod,
+             "Model with no interaction" = Peng_mod_noX)
+#Save the results as a .docx
+modelsummary(models, output = here("Week_13","Output","table.docx")) # uses pandoc package
+```
+Output will be in a Word document.  
+
+
+
+
+Modelplot
+Canned coefficient [modelplots](https://modelsummary.com/articles/modelplot.html).  
+```{r}
+#install.packages(wesanderson)
+# library(wesanderson)
+#modelplot(models) +
+#    labs(x = 'Coefficients', 
+#         y = 'Term names') +
+#    scale_color_manual(values = wes_palette('Darjeeling1'))
+
+```
+
+
+**Many models with purrr, dplyr, and broom**. 
+Combine what we just learned...  
+
+Let's say you want to plot and compare lots of different models at the same time and view the results. For example, instead of using species as an interaction term, let's make an individual model for every species.  
+
+We can essentially make a set of lists that have each dataset that we want to model and use the map functions to run the same model to every dataset. We will test it step by step.  
+
+First, let's call the penguin data and create a list for the data by each species. We do this using nest(). We are going to nest the data by species.   
+ 
+```{r}
+models<-penguins %>% 
+  ungroup() %>% # the penguin data are grouped so we need to ungroup them
+  nest(.by = species) # nest all the data by species
+models
+```
+
+The penguin package has everything grouped for some reasons so we have to ungroup it but in own dataset we prob dont have to do that part.  
+
+map a model to each of the groups in the list  
+```{r}
+models<- penguins %>%
+  ungroup()%>% # the penguin data are grouped so we need to ungroup them
+  nest(.by = species) %>% # nest all the data by species 
+  mutate(fit = map(data, ~lm(bill_length_mm~body_mass_g, data = .))) # the . is the dataframe for this species
+models
+```
+
+```{r}
+models$fit # shows you each of the 3 models
+```
+This makes it Easier to deal with more species or biogeochemical paramters. 
+Gives us formula for all models.  
+
+
+View the results. First, let's mutate the models list so that we have a tidy coefficient dataframe (using tidy()) and a tidy model results dataframe (using glance())  
+```{r}
+ results<-models %>%
+   mutate(coeffs = map(fit, tidy), # look at the coefficients
+          modelresults = map(fit, glance))  # R2 and others
+results
+```
+Extracting coefficients from fit.  
+created new columns for fit, coefficients, and model results.  
+Now we are going to look at them...  
+
+
+Next, select what we want to show and unnest it to bring it back to a dataframe  
+```{r}
+results<-models %>%
+   mutate(coeffs = map(fit, tidy), # look at the coefficients
+          modelresults = map(fit, glance)) %>% # R2 and others 
+   select(species, coeffs, modelresults) %>% # only keep the results
+   unnest() # put it back in a dataframe and specify which columns to unnest
+```
+
+```{r}
+view(results) # view the results
+```
+
+Can go from reading in data to getting all the values you care about in dataframe just using pipes.  
+
+
+
+#### Other very common stats packages  
+stats: General (lm)and generalized (glm) linear models (already loaded with base R)  
+lmer : mixed effects models  
+lmerTest' : getting results from lmer  
+nlme : non-linear mixed effects models  
+mgcv, gam : generalized additive models  
+brms, rstan, and many more : Bayesian modeling  
+lavaan, peicewiseSEM : Structural Equation Models  
+rpart, randomForest, xgboost, and more : Machine learning models  
+And so many more!  
+
+Check out here for more [modeling tips](https://r4ds.had.co.nz/model-basics.html).  
+
+Also, more info on nest models [here](https://www.kaylinpavlik.com/linear-regression-with-nested-data/) and [here](https://r4ds.had.co.nz/many-models.html)  
+
+
+{Tidymodels}
+Like almost everything else there is a modeling package that uses the tidyverse language to create models. It is called [{tidymodels}](https://www.tidymodels.org/start/models/). For full transparency, I have not used it, but it looks cool and seems particularly useful for machine learning style modeling.
+
+In tidymodels you start by specifying the functional form using the [parsnip package](https://parsnip.tidymodels.org/). In our case, we will use a linear regression which is coded like this:
+
+```{r}
+linear_reg()
+```
+
+
+Next, we need to set the engine for what type of linear regression we are modeling. For example, we could use an OLS regression or Bayesian or several other options. We will stick with OLS.
+```{r}
+lm_mod<-linear_reg() %>%
+  set_engine("lm")
+lm_mod
+```
+Next, we add the model fit.
+```{r}
+lm_mod<-linear_reg() %>%
+  set_engine("lm") %>%
+  fit(bill_length_mm ~ bill_depth_mm*species, data = penguins)
+lm_mod
+```
+Lastly, we add the tidy it. And now we can pipe this into plots, etc. Nice, tidy way to model.  
+```{r}
+lm_mod<-linear_reg() %>%
+  set_engine("lm") %>%
+  fit(bill_length_mm ~ bill_depth_mm*species, data = penguins) %>%
+  tidy()
+lm_mod
+```
+
+Pipe to a plot  
+```{r}
+lm_mod<-linear_reg() %>%
+  set_engine("lm") %>%
+  fit(bill_length_mm ~ bill_depth_mm*species, data = penguins) %>%
+  tidy() %>%
+  ggplot()+
+    geom_point(aes(x = term, y = estimate))+
+    geom_errorbar(aes(x = term, ymin = estimate-std.error,
+                      ymax = estimate+std.error), width = 0.1 )+
+  coord_flip()
+lm_mod
+```
+
+**Homework**  
+You have a set of 4 .csv files in data/homework. Each of these files is a timeseries of temperature and light data collected in tide pools in Oregon by Jenn Fields. Your goal is to bring in all 4 files and calculate the mean and standard deviation of both temperature (Temp.C) and light (Intensity.lux) for each tide pool. Use both a for loop and map() functions in your script. (Basically, do it twice). Due Tuesday at 1pm.  
+
+
+Data Dictionary
+
+Variable Name	          Description
+PoolID	                ID of the pool
+Foundation_spp	        Surfgrass or mussel dominated pool
+Removal_Control	        Was it a removal or control treatment
+Date.Time	              Date and time
+Temp.C	                Temperature in degrees C
+Intensity.lux	          Light level in lux
+LoggerDepth	            Depth of the logger in meters
+
+
+
+
+
+Total awesome R package.  
+{pushoverr}: Send push notifications to your phone from R! Does your code take forever to run and you want to go on a run yourself? Have it send your phone or smartwatch a push notification when it's done!
+
+You will have to follow the directions on the website to download the app to your phone... but, basically with one line of code you can do this!
+
+install.packages("pushoverr")
+library(pushoverr)
+pushover("Nyssa - your code is done.")
+
+pushover("Nyssa - the cats are awake and they are angry!!")
+
+
+
+
+
+
+
+
+
+

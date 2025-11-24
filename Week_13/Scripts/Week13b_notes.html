@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Haley Poppinga">
+
+<title>Week 13 Lecture</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Week13b_notes_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Week13b_notes_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Week13b_notes_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Week13b_notes_files/libs/quarto-html/popper.min.js"></script>
+<script src="Week13b_notes_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Week13b_notes_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Week13b_notes_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Week13b_notes_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Week13b_notes_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Week13b_notes_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Week13b_notes_files/libs/bootstrap/bootstrap-268d3779a6da6cf7e66354be2ae425a0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#intro-to-modeling" id="toc-intro-to-modeling" class="nav-link active" data-scroll-target="#intro-to-modeling">Intro to modeling</a></li>
+  <li><a href="#intro-to-basic-linear-modeling" id="toc-intro-to-basic-linear-modeling" class="nav-link" data-scroll-target="#intro-to-basic-linear-modeling">Intro to basic linear modeling</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Week 13 Lecture</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Haley Poppinga </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="intro-to-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="intro-to-modeling">Intro to modeling</h3>
+<ol type="1">
+<li>Intro to basic linear modeling<br>
+</li>
+<li>Viewing results in base R, broom, and modelsummary<br>
+</li>
+<li>Running many models at the same time with purrr<br>
+</li>
+<li>Intro to tidy models</li>
+</ol>
+<section id="load-libraries" class="level4">
+<h4 class="anchored" data-anchor-id="load-libraries">Load Libraries</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.1     ✔ stringr   1.5.1
+✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at /Users/haleypoppinga/Desktop/Repositories/Poppinga</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'palmerpenguins'
+
+The following objects are masked from 'package:datasets':
+
+    penguins, penguins_raw</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom) <span class="co"># for clean model output</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance) <span class="co"># to check model assumptions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'performance' was built under R version 4.5.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary) <span class="co"># to show model output</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels) <span class="co"># for tidy models (create models to pipe directly into results and plots)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.4.1 ──
+✔ dials        1.4.2     ✔ tailor       0.1.0
+✔ infer        1.0.9     ✔ tune         2.0.1
+✔ modeldata    1.5.1     ✔ workflows    1.3.0
+✔ parsnip      1.3.3     ✔ workflowsets 1.1.1
+✔ recipes      1.3.1     ✔ yardstick    1.3.2
+✔ rsample      1.3.1     
+── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ scales::discard() masks purrr::discard()
+✖ dplyr::filter()   masks stats::filter()
+✖ recipes::fixed()  masks stringr::fixed()
+✖ dplyr::lag()      masks stats::lag()
+✖ yardstick::mae()  masks performance::mae()
+✖ yardstick::rmse() masks performance::rmse()
+✖ yardstick::spec() masks readr::spec()
+✖ recipes::step()   masks stats::step()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pandoc) <span class="co"># allows you to work with Word documents</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>install.packages(‘flextable’) # to look at model results in a nice table install.packages(‘see’) # needs to be installed, but does not need to be loaded in the library, required for performance</p>
+</section>
+</section>
+<section id="intro-to-basic-linear-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="intro-to-basic-linear-modeling">Intro to basic linear modeling</h3>
+<p>WARNING: This is NOT a stats class. Please make sure you understand the theory behind the statistics that you are using before you use them. Also, even though we spent the semester learning about cleaning and visualization you MUST use stats to interpret your data.</p>
+<p>Today, I am going to show you a few cool packages that help with some modeling. There are TONS of packages and you should choose what makes the most sense to your unique type of data.</p>
+<p><strong>Anatomy of a basic linear model</strong><br>
+To run a simple linear model you use the following formula:</p>
+<p>mod&lt;-lm(y~x, data = df)<br>
+lm = linear model, y = dependent variable, x = independent variable(s), df = dataframe</p>
+<p>You read this as y is a function of x.</p>
+<p><strong>Multiple regression</strong><br>
+mod&lt;-lm(y~x1 + x2, data = df)</p>
+<p>column names in dataframe</p>
+<p><strong>Interaction term</strong> mod&lt;-lm(y~x1*x2, data = df)</p>
+<p>the * will compute x1+x2+x1:x2 interaction shorthand for writing whole model out</p>
+<p><strong>Model the penguin dataset</strong><br>
+We’ve tidied and visualized the data and have our set of hypotheses that we want to test. Now we can start modeling…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear model of Bill depth ~ Bill length by species</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Peng_mod<span class="ot">&lt;-</span><span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm<span class="sc">*</span>species, <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Would expect to see different slopes for species.</p>
+<p><strong>Check model assumptions with performace</strong><br>
+ALWAYS check the assumptions of your specific model. Make sure you know what your model is doing behind the scenes and that you meet all assumptions before interpreting your results. The {performance} package makes this super easy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(Peng_mod) <span class="co"># check assumptions of an lm model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Week13b_notes_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can check the assumptions in your model with the one package. Before you look at your p values</p>
+<p><strong>View results: base R</strong><br>
+1. ANOVA Table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(Peng_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: bill_length_mm
+                       Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+bill_depth_mm           1  561.6   561.6  93.965 &lt; 2.2e-16 ***
+species                 2 7460.3  3730.2 624.151 &lt; 2.2e-16 ***
+bill_depth_mm:species   2  134.3    67.1  11.232 1.898e-05 ***
+Residuals             336 2008.1     6.0                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>All are statistically significant.<br>
+Anova gives us if model is significant and ?</p>
+<ol start="2" type="1">
+<li>Coefficients (effect size) with error</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Peng_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bill_length_mm ~ bill_depth_mm * species, data = penguins)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.7888 -1.5415  0.0575  1.5873 10.3590 
+
+Coefficients:
+                               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                     23.0681     3.0165   7.647 2.18e-13 ***
+bill_depth_mm                    0.8570     0.1641   5.224 3.08e-07 ***
+speciesChinstrap                -9.6402     5.7154  -1.687 0.092590 .  
+speciesGentoo                   -5.8386     4.5353  -1.287 0.198850    
+bill_depth_mm:speciesChinstrap   1.0651     0.3100   3.435 0.000666 ***
+bill_depth_mm:speciesGentoo      1.1637     0.2789   4.172 3.84e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.445 on 336 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.8024,    Adjusted R-squared:  0.7995 
+F-statistic: 272.9 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>If your effect is different from 0 or your intercept or not.<br>
+Summary gives effect size.<br>
+Compares everything to intercept (base) and is in alphabetical order.<br>
+Standard error for each of your effect size as well.</p>
+<p><strong>View results with broom</strong> These results are not in a clean form and it is hard to extract specific values. Using {broom} we can “tidy” the results so that it is easier to view and extract. Functions tidy(), glance(), and augment() will clean up your results</p>
+<p><strong>tidy makes it easier view and extract</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidy coefficients</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>coeffs<span class="ot">&lt;-</span><span class="fu">tidy</span>(Peng_mod) <span class="co"># just put tidy() around it</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>coeffs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term                           estimate std.error statistic  p.value
+  &lt;chr&gt;                             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)                      23.1       3.02       7.65 2.18e-13
+2 bill_depth_mm                     0.857     0.164      5.22 3.08e- 7
+3 speciesChinstrap                 -9.64      5.72      -1.69 9.26e- 2
+4 speciesGentoo                    -5.84      4.54      -1.29 1.99e- 1
+5 bill_depth_mm:speciesChinstrap    1.07      0.310      3.44 6.66e- 4
+6 bill_depth_mm:speciesGentoo       1.16      0.279      4.17 3.84e- 5</code></pre>
+</div>
+</div>
+<p>Tidy up coefficients and summary.<br>
+Hard to extract the p-values but not anymore.<br>
+tidy() gives us summary data in clean format. Gives us coefficients of the model.</p>
+<p><strong>glance extracts R-squared, AICs, etc of the model</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tidy r2, etc.</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>results<span class="ot">&lt;-</span><span class="fu">glance</span>(Peng_mod)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.802         0.799  2.44      273. 5.69e-116     5  -788. 1590. 1617.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>Gives us big picture one number for whole model in the stats youre interested in</p>
+<p><strong>augment add residuals and predicted values to your original data and requires that you put both the model and data</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>resid_fitted<span class="ot">&lt;-</span><span class="fu">augment</span>(Peng_mod)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>resid_fitted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 342 × 10
+   .rownames bill_length_mm bill_depth_mm species .fitted   .resid    .hat
+   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+ 1 1                   39.1          18.7 Adelie     39.1  0.00553 0.00719
+ 2 2                   39.5          17.4 Adelie     38.0  1.52    0.0107 
+ 3 3                   40.3          18   Adelie     38.5  1.81    0.00716
+ 4 5                   36.7          19.3 Adelie     39.6 -2.91    0.0107 
+ 5 6                   39.3          20.6 Adelie     40.7 -1.42    0.0295 
+ 6 7                   38.9          17.8 Adelie     38.3  0.577   0.00797
+ 7 8                   39.2          19.6 Adelie     39.9 -0.666   0.0137 
+ 8 9                   34.1          18.1 Adelie     38.6 -4.48    0.00690
+ 9 10                  42            20.2 Adelie     40.4  1.62    0.0221 
+10 11                  37.8          17.1 Adelie     37.7  0.0768  0.0136 
+# ℹ 332 more rows
+# ℹ 3 more variables: .sigma &lt;dbl&gt;, .cooksd &lt;dbl&gt;, .std.resid &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Can look at observed vs predictive.</p>
+<p><strong>Results in {modelsummary}</strong><br>
+{modelsummary} creates tables and plots to summarize statistical models and data in R.<br>
+Makes publishing easier for tweaking in Word or Illustrator later.</p>
+<p>modelsummary includes two families of functions:</p>
+<p><em>Model Summary</em><br>
+modelsummary: Regression tables with side-by-side models.<br>
+modelsummary_wide: Regression tables for categorical response models or grouped coefficients.<br>
+modelplot: Coefficient plots.</p>
+<p><em>Data Summary</em> datasummary: Powerful tool to create (multi-level) cross-tabs and data summaries.<br>
+datasummary_balance: Balance tables with subgroup statistics and difference in means (aka “Table 1”).<br>
+datasummary_correlation: Correlation tables.<br>
+datasummary_skim: Quick overview (“skim”) of a dataset.<br>
+datasummary_df: Turn dataframes into nice tables with titles, notes, etc.</p>
+<p>Export summary tables to word, markdown, or tex document. You can also modify the tables to make them pub quality.</p>
+<p>Let’s compare the Peng_mod with one that does not have species as an interaction term.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># New model</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>Peng_mod_noX<span class="ot">&lt;-</span><span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm, <span class="at">data =</span> penguins)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Make a list of models and name them</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(<span class="st">"Model with interaction"</span> <span class="ot">=</span> Peng_mod,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Model with no interaction"</span> <span class="ot">=</span> Peng_mod_noX)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Save the results as a .docx</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="fu">here</span>(<span class="st">"Week_13"</span>,<span class="st">"Output"</span>,<span class="st">"table.docx"</span>)) <span class="co"># uses pandoc package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Output will be in a Word document.</p>
+<p>Modelplot Canned coefficient <a href="https://modelsummary.com/articles/modelplot.html">modelplots</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(wesanderson)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(wesanderson)</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#modelplot(models) +</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    labs(x = 'Coefficients', </span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#         y = 'Term names') +</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    scale_color_manual(values = wes_palette('Darjeeling1'))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Many models with purrr, dplyr, and broom</strong>. Combine what we just learned…</p>
+<p>Let’s say you want to plot and compare lots of different models at the same time and view the results. For example, instead of using species as an interaction term, let’s make an individual model for every species.</p>
+<p>We can essentially make a set of lists that have each dataset that we want to model and use the map functions to run the same model to every dataset. We will test it step by step.</p>
+<p>First, let’s call the penguin data and create a list for the data by each species. We do this using nest(). We are going to nest the data by species.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="co"># the penguin data are grouped so we need to ungroup them</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">.by =</span> species) <span class="co"># nest all the data by species</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>models</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  species   data              
+  &lt;fct&gt;     &lt;list&gt;            
+1 Adelie    &lt;tibble [152 × 6]&gt;
+2 Gentoo    &lt;tibble [124 × 6]&gt;
+3 Chinstrap &lt;tibble [68 × 6]&gt; </code></pre>
+</div>
+</div>
+<p>The penguin package has everything grouped for some reasons so we have to ungroup it but in own dataset we prob dont have to do that part.</p>
+<p>map a model to each of the groups in the list</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()<span class="sc">%&gt;%</span> <span class="co"># the penguin data are grouped so we need to ungroup them</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">.by =</span> species) <span class="sc">%&gt;%</span> <span class="co"># nest all the data by species </span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit =</span> <span class="fu">map</span>(data, <span class="sc">~</span><span class="fu">lm</span>(bill_length_mm<span class="sc">~</span>body_mass_g, <span class="at">data =</span> .))) <span class="co"># the . is the dataframe for this species</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>models</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  species   data               fit   
+  &lt;fct&gt;     &lt;list&gt;             &lt;list&gt;
+1 Adelie    &lt;tibble [152 × 6]&gt; &lt;lm&gt;  
+2 Gentoo    &lt;tibble [124 × 6]&gt; &lt;lm&gt;  
+3 Chinstrap &lt;tibble [68 × 6]&gt;  &lt;lm&gt;  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>models<span class="sc">$</span>fit <span class="co"># shows you each of the 3 models</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+
+Call:
+lm(formula = bill_length_mm ~ body_mass_g, data = .)
+
+Coefficients:
+(Intercept)  body_mass_g  
+  26.994139     0.003188  
+
+
+[[2]]
+
+Call:
+lm(formula = bill_length_mm ~ body_mass_g, data = .)
+
+Coefficients:
+(Intercept)  body_mass_g  
+  26.739548     0.004091  
+
+
+[[3]]
+
+Call:
+lm(formula = bill_length_mm ~ body_mass_g, data = .)
+
+Coefficients:
+(Intercept)  body_mass_g  
+  32.174193     0.004463  </code></pre>
+</div>
+</div>
+<p>This makes it Easier to deal with more species or biogeochemical paramters. Gives us formula for all models.</p>
+<p>View the results. First, let’s mutate the models list so that we have a tidy coefficient dataframe (using tidy()) and a tidy model results dataframe (using glance())</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a> results<span class="ot">&lt;-</span>models <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">coeffs =</span> <span class="fu">map</span>(fit, tidy), <span class="co"># look at the coefficients</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">modelresults =</span> <span class="fu">map</span>(fit, glance))  <span class="co"># R2 and others</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  species   data               fit    coeffs           modelresults     
+  &lt;fct&gt;     &lt;list&gt;             &lt;list&gt; &lt;list&gt;           &lt;list&gt;           
+1 Adelie    &lt;tibble [152 × 6]&gt; &lt;lm&gt;   &lt;tibble [2 × 5]&gt; &lt;tibble [1 × 12]&gt;
+2 Gentoo    &lt;tibble [124 × 6]&gt; &lt;lm&gt;   &lt;tibble [2 × 5]&gt; &lt;tibble [1 × 12]&gt;
+3 Chinstrap &lt;tibble [68 × 6]&gt;  &lt;lm&gt;   &lt;tibble [2 × 5]&gt; &lt;tibble [1 × 12]&gt;</code></pre>
+</div>
+</div>
+<p>Extracting coefficients from fit.<br>
+created new columns for fit, coefficients, and model results.<br>
+Now we are going to look at them…</p>
+<p>Next, select what we want to show and unnest it to bring it back to a dataframe</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>results<span class="ot">&lt;-</span>models <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">coeffs =</span> <span class="fu">map</span>(fit, tidy), <span class="co"># look at the coefficients</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">modelresults =</span> <span class="fu">map</span>(fit, glance)) <span class="sc">%&gt;%</span> <span class="co"># R2 and others </span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(species, coeffs, modelresults) <span class="sc">%&gt;%</span> <span class="co"># only keep the results</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">unnest</span>() <span class="co"># put it back in a dataframe and specify which columns to unnest</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `cols` is now required when using `unnest()`.
+ℹ Please use `cols = c(coeffs, modelresults)`.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">view</span>(results) <span class="co"># view the results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Can go from reading in data to getting all the values you care about in dataframe just using pipes.</p>
+<section id="other-very-common-stats-packages" class="level4">
+<h4 class="anchored" data-anchor-id="other-very-common-stats-packages">Other very common stats packages</h4>
+<p>stats: General (lm)and generalized (glm) linear models (already loaded with base R)<br>
+lmer : mixed effects models<br>
+lmerTest’ : getting results from lmer<br>
+nlme : non-linear mixed effects models<br>
+mgcv, gam : generalized additive models<br>
+brms, rstan, and many more : Bayesian modeling<br>
+lavaan, peicewiseSEM : Structural Equation Models<br>
+rpart, randomForest, xgboost, and more : Machine learning models<br>
+And so many more!</p>
+<p>Check out here for more <a href="https://r4ds.had.co.nz/model-basics.html">modeling tips</a>.</p>
+<p>Also, more info on nest models <a href="https://www.kaylinpavlik.com/linear-regression-with-nested-data/">here</a> and <a href="https://r4ds.had.co.nz/many-models.html">here</a></p>
+<p>{Tidymodels} Like almost everything else there is a modeling package that uses the tidyverse language to create models. It is called <a href="https://www.tidymodels.org/start/models/">{tidymodels}</a>. For full transparency, I have not used it, but it looks cool and seems particularly useful for machine learning style modeling.</p>
+<p>In tidymodels you start by specifying the functional form using the <a href="https://parsnip.tidymodels.org/">parsnip package</a>. In our case, we will use a linear regression which is coded like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linear_reg</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear Regression Model Specification (regression)
+
+Computational engine: lm </code></pre>
+</div>
+</div>
+<p>Next, we need to set the engine for what type of linear regression we are modeling. For example, we could use an OLS regression or Bayesian or several other options. We will stick with OLS.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>lm_mod<span class="ot">&lt;-</span><span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>lm_mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear Regression Model Specification (regression)
+
+Computational engine: lm </code></pre>
+</div>
+</div>
+<p>Next, we add the model fit.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>lm_mod<span class="ot">&lt;-</span><span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm<span class="sc">*</span>species, <span class="at">data =</span> penguins)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>lm_mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+
+Call:
+stats::lm(formula = bill_length_mm ~ bill_depth_mm * species, 
+    data = data)
+
+Coefficients:
+                   (Intercept)                   bill_depth_mm  
+                        23.068                           0.857  
+              speciesChinstrap                   speciesGentoo  
+                        -9.640                          -5.839  
+bill_depth_mm:speciesChinstrap     bill_depth_mm:speciesGentoo  
+                         1.065                           1.164  </code></pre>
+</div>
+</div>
+<p>Lastly, we add the tidy it. And now we can pipe this into plots, etc. Nice, tidy way to model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>lm_mod<span class="ot">&lt;-</span><span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm<span class="sc">*</span>species, <span class="at">data =</span> penguins) <span class="sc">%&gt;%</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>lm_mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term                           estimate std.error statistic  p.value
+  &lt;chr&gt;                             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)                      23.1       3.02       7.65 2.18e-13
+2 bill_depth_mm                     0.857     0.164      5.22 3.08e- 7
+3 speciesChinstrap                 -9.64      5.72      -1.69 9.26e- 2
+4 speciesGentoo                    -5.84      4.54      -1.29 1.99e- 1
+5 bill_depth_mm:speciesChinstrap    1.07      0.310      3.44 6.66e- 4
+6 bill_depth_mm:speciesGentoo       1.16      0.279      4.17 3.84e- 5</code></pre>
+</div>
+</div>
+<p>Pipe to a plot</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>lm_mod<span class="ot">&lt;-</span><span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm<span class="sc">*</span>species, <span class="at">data =</span> penguins) <span class="sc">%&gt;%</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> term, <span class="at">y =</span> estimate))<span class="sc">+</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">x =</span> term, <span class="at">ymin =</span> estimate<span class="sc">-</span>std.error,</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ymax =</span> estimate<span class="sc">+</span>std.error), <span class="at">width =</span> <span class="fl">0.1</span> )<span class="sc">+</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>lm_mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Week13b_notes_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Homework</strong><br>
+You have a set of 4 .csv files in data/homework. Each of these files is a timeseries of temperature and light data collected in tide pools in Oregon by Jenn Fields. Your goal is to bring in all 4 files and calculate the mean and standard deviation of both temperature (Temp.C) and light (Intensity.lux) for each tide pool. Use both a for loop and map() functions in your script. (Basically, do it twice). Due Tuesday at 1pm.</p>
+<p>Data Dictionary</p>
+<p>Variable Name Description PoolID ID of the pool Foundation_spp Surfgrass or mussel dominated pool Removal_Control Was it a removal or control treatment Date.Time Date and time Temp.C Temperature in degrees C Intensity.lux Light level in lux LoggerDepth Depth of the logger in meters</p>
+<p>Total awesome R package.<br>
+{pushoverr}: Send push notifications to your phone from R! Does your code take forever to run and you want to go on a run yourself? Have it send your phone or smartwatch a push notification when it’s done!</p>
+<p>You will have to follow the directions on the website to download the app to your phone… but, basically with one line of code you can do this!</p>
+<p>install.packages(“pushoverr”) library(pushoverr) pushover(“Nyssa - your code is done.”)</p>
+<p>pushover(“Nyssa - the cats are awake and they are angry!!”)</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

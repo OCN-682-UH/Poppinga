@@ -49,6 +49,19 @@ Examples:
 [Marine Mammal Bycatch model](https://msiple.shinyapps.io/mmrefpoints/)
 
 
+Quiz:  
+In a shiny app, the server is where you create the appearance of your app. These functions essentially write html code.   --> True  
+
+plotOutput("plot1") --> ui  
+output$plot1<- R Code --> server  
+
+What is wrong with my code?  
+sliderInput(inputID = "num",  
+label = "Choose a number",  
+value = 25, min = 1, max = 100 )  
+--> "ID" should be spelt "Id". 
+
+
 #### Starting a new Shiny app  
 Note: your Shiny app needs to be in its own folder and the foldername is the name of the app. It is really best for it to be its own standalone repo, but for today create your own folder in your lastname repo  
 
