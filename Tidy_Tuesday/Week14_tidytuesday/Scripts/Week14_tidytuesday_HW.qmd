@@ -1,0 +1,150 @@
+---
+title: "Week 13 Tidy Tuesday"
+author: "Haley Poppinga"
+format:  
+  html: 
+    grid:
+      sidebar-width: 300px
+      body-width: 900px
+      margin-width: 300px
+      gutter-width: 1.5rem
+    toc: true
+    theme: sandstone
+---
+
+### Introduction  
+**Tidy Tuesday's Homework**   
+
+[Data Link](https://github.com/rfordatascience/tidytuesday)   
+
+Tidy Tuesday is an international community of R enthusiasts that create visuals from the same dataset. The goal is to practice plotting and learn something new every week. It is amazing to see how many different ways you can visualize the same data.   
+
+### Tasks To-Do  
+
+- [x] Task 1: Load Libraries  
+- [x] Task 2: Read the Data  
+- [x] Task 3: Clean the Data  
+- [x] Task 4: Make the Plot    
+- [x] Task 5: What did I learn? THIS!    
+
+
+### Load Libraries  
+```{r}
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(tidytuesdayR)
+library(here)
+library(fishualize)
+```
+
+
+
+### Read the Data  
+```{r}
+#| warning: false
+#| message: false
+
+tuesdata4 <- tidytuesdayR::tt_load('2025-11-25')
+spi_indicators <- tuesdata4$spi_indicators
+
+```
+
+**Look at the Data**  
+```{r}
+#| warning: false
+#| message: false
+
+glimpse(spi_indicators)
+```
+
+This data shows the Statistical Performance Indicators (SPI) to monitor the statistical performance of countries. It uses dimensions: (i) data use, (ii) data services, (iii) data products, (iv) data sources, and (v) data infrastructure. The dataset is made available through the World Bank via rfordatascience.  
+
+
+### Clean the Data  
+```{r}
+#| warning: false
+#| message: false
+
+spi_filtered <- spi_indicators %>% 
+  filter(year >= 2016, year <= 2023) # only years between 2016-2023
+
+region_means <- spi_filtered %>% 
+  group_by(region, year) %>% 
+  summarise(mean_overall = mean(overall_score, na.rm = TRUE)) # mean over all score just to show in plot
+
+```
+
+
+### Tidy Tuesday Plot  
+```{r}
+#| warning: false
+#| message: false
+#| column: screen
+#| label: fig-TidyTuesday
+#| fig-cap: "This is my Tidy Tuesday Week 14 plot."
+
+# make a faceted plot by region
+Week14_tt <- ggplot(spi_filtered, 
+                    aes(x = year, y = overall_score, group = country)) +
+  geom_line(linewidth = 0.7, alpha = 0.2, color = "#727E8B") + # countries faint
+  geom_smooth(data = region_means,
+            aes(x = year, y = mean_overall, group = NULL), color = "#cc0000", linewidth = 1.2) +
+  facet_wrap(~ region) + # facet plot by region
+  scale_color_fish_d(option = "Hypsypops_rubicundus") +
+  labs(title = "Global Social Progress Index Over Time by Region",
+       subtitle = "Overall SPI score for each world region",
+       x = "Year", y = "SPI Score") +
+  scale_x_continuous(breaks = c(2016, 2020, 2023)) + # only show these years on axis
+  theme_minimal(base_size = 12) +
+  theme(strip.text = element_text(face = "bold", size = 10),
+        plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+        plot.subtitle = element_text(size = 14, hjust = 0.5),
+        axis.titles = element_text(face = "bold", size = 14),
+        panel.spacing = unit(0.8, "lines"),  # increase space between facets
+        panel.border = element_rect(fill = NA, linewidth = 0.7)) # border around each plot)
+
+Week14_tt
+```
+@fig-TidyTuesday shows a line plot of the overall SPI score from 2016-2023 (some indicators going back to 2004). Each country is shown and plots organized by world regions. Darker red line indicates the mean overall score and lighter lines represent all country's overall score.   
+
+
+
+
+
+### New Thing Learned   
+
+This Tidy Tuesday, I used **Quarto** markdown techniques to make the plot fit across the whole page and played around with the Quarto page layout. 
+
+
+
+
+
+##### Extra  
+```{r}
+# ggsave(here("Tidy_Tuesday","Week14_tidytuesday", "Output", "Week14_tt.jpg"))
+
+# summarise some data
+#spi_region <- spi_indicators %>% 
+#  group_by(region, year) %>% # eg region, type
+#  summarise(mean_overall = mean(overall_score, na.rm = TRUE)) # calculate mean overall score
+
+
+# To do before running code:
+# Empty your environment before you start working
+# Restart R
+# .rs.restartR()
+# remove whole list in environment
+# rm(list = ls())
+```
+
+
+
+
+
+
+
+
+
+
