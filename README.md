@@ -116,34 +116,34 @@ There are folders of each week, R Project, and a README.md file.
 
 #### [Tidy_Tuesday](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday): _Week 11-15 Tidy Tuesday Homeworks_  
 ##### [Week_11](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week11_tidytuesday): _Tidy Tuesday_    
-* 2025_11_04  
-* [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-04/readme.md): Flint lead GitHub data  
-* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week11_tidytuesday/Scripts): Quarto scripts  
-* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week11_tidytuesday/Output): density plot   
+###### * 2025_11_04  
+###### * [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-04/readme.md): Flint lead GitHub data  
+###### * [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week11_tidytuesday/Scripts): Quarto scripts  
+###### * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week11_tidytuesday/Output): density plot   
 
 ##### [Week_12](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week12_tidytuesday): _Tidy Tuesday_       
-* 2025_11_11  
-* [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-11/readme.md): WHO TB Github data  
-* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week12_tidytuesday/Scripts): Quarto scripts   
-* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week12_tidytuesday/Output): faceted line plot  
+###### * 2025_11_11  
+###### * [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-11/readme.md): WHO TB Github data  
+###### * [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week12_tidytuesday/Scripts): Quarto scripts   
+###### * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week12_tidytuesday/Output): faceted line plot  
 
 ##### [Week_13](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week13_tidytuesday): _Tidy Tuesday_      
-* 2025_11_18  
-* [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-18/readme.md): Sherlock Holmes GitHub data  
-* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week13_tidytuesday/Scripts): Quarto scripts   
-* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week13_tidytuesday/Output): scatter plot with margins  
+###### * 2025_11_18  
+###### * [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-18/readme.md): Sherlock Holmes GitHub data  
+###### * [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week13_tidytuesday/Scripts): Quarto scripts   
+###### * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week13_tidytuesday/Output): scatter plot with margins  
 
 ##### [Week_14](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday): _Tidy Tuesday_    
-* 2025_11_25  
-* [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-25/readme.md): SPI GitHub data  
-* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday/Scripts): Quarto scripts  
-* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday/Output): faceted line plot  
+###### * 2025_11_25  
+###### * [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-25/readme.md): SPI GitHub data  
+###### * [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday/Scripts): Quarto scripts  
+###### * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday/Output): faceted line plot  
 
 ##### [Week_15](): _Extra Credit Tidy Tuesday_    
-* 2025_12_02 - 2025_12_09  
-* [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-12-02/readme.md): Snowman GitHub data  
-* [Scripts](): Quarto scripts  
-* [Output](): 
+###### * 2025_12_02 - 2025_12_09  
+###### * [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-12-02/readme.md): Snowman GitHub data  
+###### * [Scripts](): Quarto scripts  
+###### * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week15_tidytuesday/Output): two plots for extra credit  
 
 
 #### [Final Project (in new repo Poppinga_Final_Project)](https://github.com/OCN-682-UH/Poppinga_Final_Project): _Mālama Maunalua ShinyApp_   
