@@ -134,10 +134,10 @@ There are folders of each week, R Project, and a README.md file.
 * [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week13_tidytuesday/Output): scatter plot with margins  
 
 ##### [Week_14](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday): _Tidy Tuesday_    
-<small>* 2025_11_25<small>  
-<small>* [Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-25/readme.md): SPI GitHub data<small>  
-<small>* [Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday/Scripts): Quarto scripts<small>  
-<small>* [Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday/Output): faceted line plot<small>  
+* <small>2025_11_25<small>  
+* <small>[Data](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-11-25/readme.md): SPI GitHub data<small>  
+* <small>[Scripts](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday/Scripts): Quarto scripts<small>  
+* <small>[Output](https://github.com/OCN-682-UH/Poppinga/tree/main/Tidy_Tuesday/Week14_tidytuesday/Output): faceted line plot<small>  
 
 ##### [Week_15](): _Extra Credit Tidy Tuesday_    
 * 2025_12_02 - 2025_12_09  
