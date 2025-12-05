@@ -36,6 +36,34 @@ library(here)
 ```
 
 
+Quiz:  
+I want to run a for loop to calculate the mean temperature from multiple datasets. I have already extracted the filenames, created an empty dataframe, and am ready to set-up my loop. Which of the following lines of code would go in the body of the for loop?  
+```{r}
+#for (i in 1:length(files){
+#raw_data<-read_csv(here(path, files[i]))
+#--- Temperature code here----
+#}
+#Ans: data$temperature[i]<-mean(rawdata$temperature, na.rm = TRUE)
+```
+
+
+
+If I want to do the above task from the prior question without using a for loop and using the tidyverse, what package would I use?
+purrr
+
+If I want to run a simple linear model, what function do I use?
+lm()
+
+What is one of the best packages to check your model assumptions
+
+Question 4 options:
+
+performance
+
+
+What was your favorite "totally awesome R package"?
+beepr
+
 ### for loops  
 for loops are one way to run an iterative process (do something over and over again). However, with the tidyverse you can avoid needing loops for almost any basic coding needs. Where it does come in handy is in population modeling and Bayesian modeling, for example. Also, it is integral to programming and is happening "under the hood" whether you use them or not.  
 

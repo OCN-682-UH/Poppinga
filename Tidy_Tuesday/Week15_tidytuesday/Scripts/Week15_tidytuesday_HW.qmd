@@ -1,0 +1,270 @@
+---
+title: "Week 15 Tidy Tuesday"
+author: "Haley Poppinga"
+date: "2025-12-02"
+format:
+  html:
+    toc: true
+    theme: sandstone
+---
+
+
+### Introduction  
+**Tidy Tuesday's Homework**   
+
+[Data Link](https://github.com/rfordatascience/tidytuesday)   
+
+Tidy Tuesday is an international community of R enthusiasts that create visuals from the same dataset. The goal is to practice plotting and learn something new every week. It is amazing to see how many different ways you can visualize the same data.   
+
+
+
+
+### Load Libraries  
+```{r}
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(tidytuesdayR)
+library(here)
+library(scales) # label aesthetics
+library(Rmoji) # add emojis
+# library(gghighlight) # highlight on graphs (did not end up using)
+```
+
+
+
+### Read the Data  
+```{r}
+#| warning: false
+#| message: false
+
+tuesdata5 <- tidytuesdayR::tt_load('2025-12-02')
+sechselaeuten <- tuesdata5$sechselaeuten
+
+```
+
+
+```{r}
+#| warning: false
+#| message: false
+
+glimpse(sechselaeuten)
+```
+
+This data shows the weather prediction of Zurich's infamous exploding snowman (called the Böögg). At Zurich's "Sechselaeuten" spring festival they blow up a cotton wool stuffed snowman with fireworks. "The saying goes that the quicker the Böögg's head explodes, the finer the summer will be."    
+
+
+
+### Clean the Data  
+```{r}
+#| warning: false
+#| message: false
+
+#### TIDY TUESDAY DATA CLEANING SUGGESTION 
+## burn duration ----
+# https://github.com/philshem/Sechselaeuten-data
+burn_duration <- readr::read_csv(
+  file = "https://raw.githubusercontent.com/philshem/Sechselaeuten-data/refs/heads/master/boeoegg_burn_duration.csv") |>
+  dplyr::mutate(duration = round(burn_duration_seconds / 60, digits = 2)) |>
+  dplyr::select(year, duration)
+
+## variable selection ----
+variable_selection <- c(
+  "tre200m0",
+  "tre200mn",
+  "tre200mx",
+  "sre000m0",
+  "sremaxmv",
+  "rre150m0"
+)
+
+## climate data ----
+climate_data <- readr::read_delim(
+  file = "https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/sma/ogd-smn_sma_m.csv",
+  delim = ";"
+) |>
+  dplyr::select(
+    date = reference_timestamp,
+    dplyr::any_of(variable_selection)
+  ) |>
+  dplyr::mutate(
+    date = lubridate::dmy_hm(date),
+    year = lubridate::year(date),
+    month = lubridate::month(date)
+  ) |>
+  dplyr::filter(month %in% 6:8) |>
+  dplyr::group_by(year) |>
+  dplyr::summarise(dplyr::across(.cols = -c(date, month), .fns = \(x) {
+    mean(x, na.rm = TRUE)
+  })) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(sre000m0 = sre000m0 / 60) |>
+  dplyr::mutate(dplyr::across(.cols = -c(year), .fns = \(x) {
+    round(x, digits = 2)
+  })) |>
+  dplyr::mutate(dplyr::across(.cols = -c(year), .fns = \(x) {
+    ifelse(is.nan(x), NA, x)
+  }))
+
+## combine datasets ----
+sechselaeuten <- dplyr::left_join(
+  x = burn_duration,
+  y = climate_data,
+  by = dplyr::join_by(year)
+) |>
+  dplyr::mutate(record = ifelse(tre200m0 >= 19, TRUE, FALSE))
+
+```
+
+```{r}
+#| warning: false
+#| message: false
+
+glimpse(sechselaeuten)
+```
+
+```{r}
+#| warning: false
+#| message: false
+
+### CLEAN THE DATA MORE
+climate_long<-sechselaeuten %>% 
+  select(year, duration,
+         temp_mean = tre200m0,
+         temp_min = tre200mn,
+         temp_max = tre200mx,
+         sun_hours = sre000m0,
+         sun_frac = sremaxmv,
+         precip_mm = rre150m0) %>% 
+  pivot_longer(cols = -c(year, duration),
+               names_to  = "variable",
+               values_to = "value") %>% 
+  mutate(variable = recode(variable,
+         temp_mean = "Mean Summer Temperature (°C)",
+         temp_min  = "Min Summer Temperature (°C)",
+         temp_max  = "Max Summer Temperature (°C)",
+         sun_hours = "Sunshine Duration (h)",
+         sun_frac  = "Sunshine Fraction (%)",
+         precip_mm = "Precipitation (mm)"))
+
+# correlations for each facet
+correlations <- climate_long %>%
+  group_by(variable) %>% 
+  summarise(r = cor(duration, value, use = "complete.obs"))
+```
+
+
+```{r}
+#| warning: false
+#| message: false
+
+glimpse(climate_long)
+```
+
+
+### Tidy Tuesday Plot 1  
+```{r}
+#| warning: false
+#| message: false
+#| out-width: "80%"
+#| fig-align: "center"
+#| label: fig-TidyTuesday1
+#| fig-cap: "This is my Tidy Tuesday Week 15 plot 1."
+
+# Scatter + regression lines faceted by climate variable
+ggplot(climate_long,
+       aes(x = value, y = duration, color = year)) +
+  geom_point(alpha = 0.7, size = 2) + # scatter plot
+  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 0.9) + # linear regression line 
+  geom_text(data = correlations, # add in text on plot (correlation coefficient in each panel)
+            aes(x = Inf, y = Inf, # position of r value
+            label = paste0("r = ", round(r, 2))), # r value (correlation coefficient) on plot, 2 decimals
+            inherit.aes = FALSE, # do not use main plot aesthetics 
+            hjust = 1.1, vjust = 1.9, size = 3) + # adjustments on r value placement
+  facet_wrap(~ variable, scales = "free_x") + # facet by temp, precip, sunshine variables
+  scale_colour_viridis_c(option = "B", end = 0.9) + # color scales
+  labs(title = "Does a Faster Böögg Explosion Predict a Hotter Summer?",
+       subtitle = "Correlations Between Burn Duration and Summer Climate Variables",
+       x  = NULL,
+       y = "Böögg Burn Duration (minutes)",
+       color = "Year") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank(),
+        strip.text = element_text(face = "bold", size = 8.4), # labels smaller and bold
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15),
+        plot.subtitle = element_text(hjust = 0.5, size = 12.5),
+        panel.spacing = unit(1.2, "lines"),  # increase space between facets
+        panel.border = element_rect(fill = NA, linewidth = 0.7)) # border around each plot
+```
+@fig-TidyTuesday1 shows the correlations between the snowman's burn duration and different variables like temperature, precipitation, and sunshine. Darker colors show previous years from 1925 and lighter colors show data from years up to 2025. Most weak positive correlations, except for precipitation, which shows a weak negative correlation. The data seems to show that slightly longer burn times are associated with slightly hotter summers, which contradicts the folk belief that faster explotions predict a warmer summer.  
+
+
+### Tidy Tuesday Plot 2  
+```{r}
+#| warning: false
+#| message: false
+#| out-width: "80%"
+#| fig-align: "center"
+#| label: fig-TidyTuesday2
+#| fig-cap: "This is my Tidy Tuesday Week 15 plot 2 for fun."
+
+# Filter out 1925 data which only has one year
+sechselaeuten75<-sechselaeuten %>% 
+  filter(year >= 1950)
+
+# Time series of Böögg burn duration, colored by summer temp
+ggplot(sechselaeuten75,
+       aes(x = year, y = duration)) +# line over time
+  geom_smooth(data = sechselaeuten75, fill = "grey80", method = "loess",  # non-linear trends (loess)
+              color = "black",  linewidth = 0.8) + # black line, grey fill
+  #geom_smooth(data = subset(sechselaeuten, record), fill = "#FFFFC5", color = NA) +  # no line just the highlight ribbon of record high temps
+  geom_point(aes(color = tre200m0), size = 2) + # points colored by mean summer temp
+  geom_point(data = subset(sechselaeuten, record), shape = 21, size = 5, stroke = 0.5, color = "red") +
+  scale_colour_viridis_c(option = "B", end = 0.9) + # color scales
+  #coord_cartesian(ylim = c(0, 60)) + # zoom y-axis
+  #scale_x_continuous(breaks = c(1950, 1980, 2000, 2020)) + # fix x axis to show specific years
+  labs(title = "Böögg Burn Duration Over Time",
+       subtitle = "Zurich's Exploding Snowman (Böögg) Burn Duration Time Between Years 1950 - 2025",
+       #caption = "Points circled in orange are record high summer temperatures (average above 19°C)",
+       x  = "Year", 
+       y = "Böögg Burn Duration (minutes)",
+       color = "Summer Temperature (°C)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank(),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 14),
+        plot.subtitle = element_text(hjust = 0.5, size = 11),
+        #plot.caption = element_text(hjust = 0.5, size = 10),
+        #panel.border = element_rect(fill = NA, linewidth = 0.7), # border 
+        legend.title = element_text(size = 10),
+        legend.position = "top") # position it at the top
+```
+@fig-TidyTuesday2 shows the non-parametric pattern of burn duration between the years 1950 - 2025 for a nice time-series visualization. Points with darker colors show colder temperatures and lighter colors show warmer temperatures. Points circled in red are record high summer temperatures (average above 19°C).  
+
+
+
+
+### New Thing Learned   
+
+This Tidy Tuesday, I practiced with another faceted plot and used **correlations** to understand relationships better and be able to calculate it. I played around with **color scales** too that seem to be often used in publications. I used a loess for geom_smooth and practiced highlighting specific points that show background environmental type data. I made the second plot in case you didn't like the first plot. Hopefully you are grading more on aesthetics and not on scientific coherence 😅 
+but I tried to do some cool things. I put the Summer Temperature legend up top because it fit better than on the side.  
+
+
+##### Extra  
+```{r}
+# ggsave(here("Tidy_Tuesday","Week15_tidytuesday", "Output", "Week15_tt_plot1.jpg"))
+
+# insert_emoji("grinning_face_with_sweat")
+
+# To do before running code:
+# Empty your environment before you start working
+# Restart R
+# .rs.restartR()
+# remove whole list in environment
+# rm(list = ls())
+```
+
+
+
+
+
